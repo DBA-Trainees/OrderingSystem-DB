@@ -38,9 +38,11 @@ import { SidebarComponent } from './layout/sidebar.component';
 import { SidebarLogoComponent } from './layout/sidebar-logo.component';
 import { SidebarUserPanelComponent } from './layout/sidebar-user-panel.component';
 import { SidebarMenuComponent } from './layout/sidebar-menu.component';
-import {DivisionsComponent} from './divisions/divisions.component'
-import { DivisionServiceProxy } from '@shared/service-proxies/service-proxies';
-import {CreateEditDivisionModalComponent} from './divisions/create-edit-division-modal/create-edit-division-modal.component'
+import { DivisionsComponent } from './divisions/divisions.component'
+import { CustomerServiceProxy, DivisionServiceProxy } from '@shared/service-proxies/service-proxies';
+import { CreateEditDivisionModalComponent } from './divisions/create-edit-division-modal/create-edit-division-modal.component'
+import { CustomersComponent } from './customers/customers.component'
+import { CreateEditCustomerModalComponent } from './customers/create-edit-customer-modal/create-edit-customer-modal.component'
 
 @NgModule({
     declarations: [
@@ -72,7 +74,9 @@ import {CreateEditDivisionModalComponent} from './divisions/create-edit-division
         SidebarUserPanelComponent,
         SidebarMenuComponent,
         DivisionsComponent,
-        CreateEditDivisionModalComponent
+        CreateEditDivisionModalComponent,
+        CustomersComponent,
+        CreateEditCustomerModalComponent
     ],
     imports: [
         CommonModule,
@@ -90,7 +94,8 @@ import {CreateEditDivisionModalComponent} from './divisions/create-edit-division
         NgxPaginationModule,
     ],
     providers: [
-        DivisionServiceProxy
+        DivisionServiceProxy,
+        CustomerServiceProxy
     ]
 })
 export class AppModule {}

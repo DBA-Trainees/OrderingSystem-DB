@@ -5,56 +5,56 @@ import {
   PagedRequestDto,
 } from "@shared/paged-listing-component-base";
 import {
-  DivisionDto,
-  DivisionDtoPagedResultDto,
-  DivisionServiceProxy,
+    CustomerDto,
+  CustomerDtoPagedResultDto,
+  CustomerServiceProxy
 } from "@shared/service-proxies/service-proxies";
 import { BsModalRef, BsModalService } from "ngx-bootstrap/modal";
 import { finalize } from "rxjs/operators";
-import { CreateEditDivisionModalComponent } from "./create-edit-division-modal/create-edit-division-modal.component";
+import { CreateEditCustomerModalComponent } from "./create-edit-customer-modal/create-edit-customer-modal.component";
 
-class PagedDivisionsRequestDto extends PagedRequestDto {
+class PagedCustomersRequestDto extends PagedRequestDto {
   keyword: string;
   isActive: boolean | null;
 }
 
 @Component({
-  selector: "divisions-component",
-  templateUrl: "divisions.component.html",
+  selector: "customers-component",
+  templateUrl: "customers.component.html",
   styleUrls : ['../../shared/styles/main.css'],
   animations: [appModuleAnimation()],
 })
-export class DivisionsComponent extends PagedListingComponentBase<DivisionDto> {
-  divisions: DivisionDto[] = [];
+export class CustomersComponent extends PagedListingComponentBase<CustomerDto> {
+  customers: CustomerDto[] = [];
   keyword = "";
   isActive: boolean | null;
   advancedFiltersVisible = false;
 
   constructor(
     injector: Injector,
-    private _divisionService: DivisionServiceProxy,
+    private _customerService: CustomerServiceProxy,
     private _modalService: BsModalService
   ) {
     super(injector);
   }
 
-  createDivision(): void {
-    this.showCreateOrEditDivisionDialog();
+  createCustomer(): void {
+    this.showCreateOrEditCustomerModal();
   }
 
-  editDivision(id): void {
-    this.showCreateOrEditDivisionDialog(id);
+  editCustomer(id): void {
+    this.showCreateOrEditCustomerModal(id);
   }
 
   protected list(
-    request: PagedDivisionsRequestDto,
+    request: PagedCustomersRequestDto,
     pageNumber: number,
     finishedCallback: Function
   ): void {
     request.keyword = this.keyword;
     request.isActive = this.isActive;
 
-    this._divisionService
+    this._customerService
       .getAll(
         request.keyword,
         request.isActive,
@@ -66,19 +66,19 @@ export class DivisionsComponent extends PagedListingComponentBase<DivisionDto> {
           finishedCallback();
         })
       )
-      .subscribe((result: DivisionDtoPagedResultDto) => {
-        this.divisions = result.items;
+      .subscribe((result: CustomerDtoPagedResultDto) => {
+        this.customers = result.items;
         this.showPaging(result, pageNumber);
       });
   }
 
-  protected delete(division: DivisionDto): void {
+  protected delete(customer: CustomerDto): void {
     abp.message.confirm(
-      this.l("DivisionDeleteWarningMessage", division.name),
+      this.l("CustomerDeleteWarningMessage", customer.name),
       undefined,
       (result: boolean) => {
         if (result) {
-          this._divisionService.delete(division.id).subscribe(() => {
+          this._customerService.delete(customer.id).subscribe(() => {
             abp.notify.success(this.l("SuccessfullyDeleted"));
             this.refresh();
           });
@@ -87,18 +87,18 @@ export class DivisionsComponent extends PagedListingComponentBase<DivisionDto> {
     );
   }
 
-  private showCreateOrEditDivisionDialog(id?: number): void{
-    let createOrEditDivisionDialog: BsModalRef;
+  private showCreateOrEditCustomerModal(id?: number): void{
+    let createOrEditCustomerDialog: BsModalRef;
     if(!id){
-      createOrEditDivisionDialog = this._modalService.show(
-        CreateEditDivisionModalComponent,
+        createOrEditCustomerDialog = this._modalService.show(
+        CreateEditCustomerModalComponent,
         {
           class: 'modal-lg',
         }
       );
     }else{
-      createOrEditDivisionDialog = this._modalService.show(
-        CreateEditDivisionModalComponent,
+        createOrEditCustomerDialog = this._modalService.show(
+        CreateEditCustomerModalComponent,
         {
           class: 'modal-lg',
           initialState: {
@@ -108,7 +108,7 @@ export class DivisionsComponent extends PagedListingComponentBase<DivisionDto> {
       );
     }
 
-    createOrEditDivisionDialog.content.onSave.subscribe(() =>{
+    createOrEditCustomerDialog.content.onSave.subscribe(() =>{
       this.refresh();
     })
   }

@@ -1,5 +1,7 @@
 ﻿using Abp.Application.Services;
+using Abp.Application.Services.Dto;
 using Abp.Domain.Repositories;
+using Microsoft.EntityFrameworkCore;
 using OrderingSystem.Divisions.Dto;
 using OrderingSystem.Entities;
 using System;
@@ -17,6 +19,12 @@ namespace OrderingSystem.Divisions
         public DivisionAppService(IRepository<Division, int> repository) : base(repository)
         {
             _repository = repository;
+        }
+
+        public async Task<List<DivisionDto>> GetAllDivisions()
+        {
+            var division = await _repository.GetAllListAsync();
+            return ObjectMapper.Map<List<DivisionDto>>(division);
         }
     }
 }

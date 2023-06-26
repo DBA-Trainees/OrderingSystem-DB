@@ -10,11 +10,10 @@ using System.Threading.Tasks;
 
 namespace OrderingSystem.Customers.Dto
 {
+    [AutoMapTo(typeof(Customer))]
+    [AutoMapFrom(typeof(Customer))]
     public class CustomerDto : EntityDto<int>
     {
-        [AutoMapTo(typeof(Customer))]
-        [AutoMapFrom(typeof(Customer))]
-
         public int Id { get; set; }
         public string Name { get; set; }
         public int DivisionId { get; set; }

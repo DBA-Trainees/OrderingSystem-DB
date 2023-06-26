@@ -5,7 +5,7 @@
                 <div class="col-lg-6 col-6">
                     <div class="small-box bg-success">
                         <div class="inner">
-                            <h1><strong>{{ "Division" | localize }}</strong></h1>
+                            <h1><strong>{{ "Customer" | localize }}</strong></h1>
                             <p>Dahsboard</p>
                             <div class="icon">
                                 <i class="fa fa-university"></i>
@@ -28,7 +28,7 @@
                     <a 
                     href="javascript:;" 
                     class="create-button btn btn-md" 
-                    (click)="createDivision()">
+                    (click)="createCustomer()">
                         <i class="fa fa-plus"></i>
                     </a>
                 </div>
@@ -70,31 +70,33 @@
                             <thead class="bg-light">
                                 <tr>
                                     <th>{{ "Id" | localize }}</th>
+                                    <th>{{ "Customers" | localize }}</th>
                                     <th>{{ "Division" | localize }}</th>
                                     <th class="action-th">{{ "Actions" | localize }}</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr *ngFor="let division of divisions | paginate
+                                <tr *ngFor="let customer of customers | paginate
                             : {
                                 id: 'server',
                                 itemsPerPage: pageSize,
                                 currentPage: pageNumber,
                                 totalItems: totalItems
                                 } ">
-                                    <td>{{ division.id }}</td>
-                                    <td>{{ division.name }}</td>
+                                    <td>{{ customer.id }}</td>
+                                    <td>{{ customer.name }}</td>
+                                    <td>{{ customer?.division.name}}</td>
                                     <td>
                                         <button 
                                         type="button" 
                                         class="btn btn-sm bg-blue"
-                                        (click)="editDivision(division.id)">
+                                        (click)="editCustomer(customer.id)">
                                             <i class="fas fa-pencil-alt"></i>
                                         </button>
                                         <button 
                                         type="button" 
                                         class="btn btn-md bg-danger mx-2"
-                                        (click)="delete(division)">
+                                        (click)="delete(customer)">
                                             <i class="fas fa-trash"></i>
                                         </button>
                                     </td>

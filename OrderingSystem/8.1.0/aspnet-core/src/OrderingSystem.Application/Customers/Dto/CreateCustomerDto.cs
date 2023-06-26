@@ -9,9 +9,9 @@ using System.Threading.Tasks;
 
 namespace OrderingSystem.Customers.Dto
 {
+    [AutoMapTo(typeof(Customer))]
     public class CreateCustomerDto
     {
-        [AutoMapTo(typeof(Customer))]
         public int Id { get; set; }
         public string Name { get; set; }
         public int DivisionId { get; set; }

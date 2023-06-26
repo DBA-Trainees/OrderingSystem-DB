@@ -8,9 +8,10 @@ using System.Threading.Tasks;
 
 namespace OrderingSystem.Divisions.Dto
 {
+    [AutoMapTo(typeof(Division))]
     public class CreateDivisionDto
     {
-        [AutoMapTo(typeof(Division))]
+        
         public int Id { get; set; }
         public string Name { get; set; }
     }
