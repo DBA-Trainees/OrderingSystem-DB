@@ -24,8 +24,8 @@ import { CustomersComponent } from './customers/customers.component';
                     { path: 'tenants', component: TenantsComponent, data: { permission: 'Pages.Tenants' }, canActivate: [AppRouteGuard] },
                     { path: 'about', component: AboutComponent, canActivate: [AppRouteGuard] },
                     { path: 'update-password', component: ChangePasswordComponent, canActivate: [AppRouteGuard] },
-                    { path: 'divisions', component: DivisionsComponent, canActivate: [AppRouteGuard] },
-                    { path: 'customers', component: CustomersComponent, canActivate: [AppRouteGuard] },
+                    { path: 'divisions', component: DivisionsComponent, data: { permission: 'Pages.Divisions' }, canActivate: [AppRouteGuard] },
+                    { path: 'customers', component: CustomersComponent, data: { permission: 'Pages.Customers' },canActivate: [AppRouteGuard] },
                 ]
             }
         ])

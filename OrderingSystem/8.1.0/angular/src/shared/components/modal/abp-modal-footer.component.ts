@@ -11,6 +11,7 @@ import { AppComponentBase } from '@shared/app-component-base';
 @Component({
   selector: 'abp-modal-footer',
   templateUrl: './abp-modal-footer.component.html',
+  styleUrls: ['../../styles/main.css'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AbpModalFooterComponent extends AppComponentBase {

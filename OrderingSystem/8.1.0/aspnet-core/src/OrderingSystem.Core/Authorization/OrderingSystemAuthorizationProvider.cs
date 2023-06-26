@@ -12,6 +12,8 @@ namespace OrderingSystem.Authorization
             context.CreatePermission(PermissionNames.Pages_Users_Activation, L("UsersActivation"));
             context.CreatePermission(PermissionNames.Pages_Roles, L("Roles"));
             context.CreatePermission(PermissionNames.Pages_Tenants, L("Tenants"), multiTenancySides: MultiTenancySides.Host);
+            context.CreatePermission(PermissionNames.Pages_Divisions, L("Divisions"));
+            context.CreatePermission(PermissionNames.Pages_Customers, L("Customers"));
         }
 
         private static ILocalizableString L(string name)
