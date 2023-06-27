@@ -39,11 +39,11 @@ export class DivisionsComponent extends PagedListingComponentBase<DivisionDto> {
   }
 
   createDivision(): void {
-    this.showCreateOrEditDivisionDialog();
+    this.showCreateOrEditDivisionModal();
   }
 
   editDivision(id): void {
-    this.showCreateOrEditDivisionDialog(id);
+    this.showCreateOrEditDivisionModal(id);
   }
 
   protected list(
@@ -87,17 +87,17 @@ export class DivisionsComponent extends PagedListingComponentBase<DivisionDto> {
     );
   }
 
-  private showCreateOrEditDivisionDialog(id?: number): void{
-    let createOrEditDivisionDialog: BsModalRef;
+  private showCreateOrEditDivisionModal(id?: number): void{
+    let createOrEditDivisionModal: BsModalRef;
     if(!id){
-      createOrEditDivisionDialog = this._modalService.show(
+      createOrEditDivisionModal = this._modalService.show(
         CreateEditDivisionModalComponent,
         {
           class: 'modal-lg',
         }
       );
     }else{
-      createOrEditDivisionDialog = this._modalService.show(
+      createOrEditDivisionModal = this._modalService.show(
         CreateEditDivisionModalComponent,
         {
           class: 'modal-lg',
@@ -108,7 +108,7 @@ export class DivisionsComponent extends PagedListingComponentBase<DivisionDto> {
       );
     }
 
-    createOrEditDivisionDialog.content.onSave.subscribe(() =>{
+    createOrEditDivisionModal.content.onSave.subscribe(() =>{
       this.refresh();
     })
   }

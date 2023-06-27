@@ -1,6 +1,7 @@
 ﻿using Abp.Application.Services;
 using Abp.Domain.Repositories;
 using OrderingSystem.Categories.Dto;
+using OrderingSystem.Divisions.Dto;
 using OrderingSystem.Entities;
 using System;
 using System.Collections.Generic;
@@ -17,6 +18,12 @@ namespace OrderingSystem.Categories
         public CategoryAppService(IRepository<Category, int> repository) : base(repository)
         {
             _repository = repository;
+        }
+
+        public async Task<List<CategoryDto>> GetAllFoodCategories()
+        {
+            var category = await _repository.GetAllListAsync();
+            return ObjectMapper.Map<List<CategoryDto>>(category);
         }
     }
 }

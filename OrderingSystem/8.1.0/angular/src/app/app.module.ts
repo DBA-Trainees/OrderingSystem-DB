@@ -39,10 +39,12 @@ import { SidebarLogoComponent } from './layout/sidebar-logo.component';
 import { SidebarUserPanelComponent } from './layout/sidebar-user-panel.component';
 import { SidebarMenuComponent } from './layout/sidebar-menu.component';
 import { DivisionsComponent } from './divisions/divisions.component'
-import { CustomerServiceProxy, DivisionServiceProxy } from '@shared/service-proxies/service-proxies';
+import { CategoryServiceProxy, CustomerServiceProxy, DivisionServiceProxy } from '@shared/service-proxies/service-proxies';
 import { CreateEditDivisionModalComponent } from './divisions/create-edit-division-modal/create-edit-division-modal.component'
 import { CustomersComponent } from './customers/customers.component'
 import { CreateEditCustomerModalComponent } from './customers/create-edit-customer-modal/create-edit-customer-modal.component'
+import { CategoriesComponent } from './categories/categories.component'
+import { CreateEditCategoryModalComponent } from './categories/create-edit-category-modal/create-edit-category-modal.component'
 
 @NgModule({
     declarations: [
@@ -76,7 +78,9 @@ import { CreateEditCustomerModalComponent } from './customers/create-edit-custom
         DivisionsComponent,
         CreateEditDivisionModalComponent,
         CustomersComponent,
-        CreateEditCustomerModalComponent
+        CreateEditCustomerModalComponent,
+        CategoriesComponent,
+        CreateEditCategoryModalComponent
     ],
     imports: [
         CommonModule,
@@ -95,7 +99,8 @@ import { CreateEditCustomerModalComponent } from './customers/create-edit-custom
     ],
     providers: [
         DivisionServiceProxy,
-        CustomerServiceProxy
+        CustomerServiceProxy,
+        CategoryServiceProxy
     ]
 })
 export class AppModule {}

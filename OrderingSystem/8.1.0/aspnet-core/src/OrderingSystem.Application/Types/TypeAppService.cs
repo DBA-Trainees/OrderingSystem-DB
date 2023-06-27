@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using OrderingSystem.Entities;
+using OrderingSystem.Divisions.Dto;
 
 namespace OrderingSystem.Types
 {
@@ -17,6 +18,11 @@ namespace OrderingSystem.Types
         public TypeAppService(IRepository<Entities.Type, int> repository) : base(repository)
         {
             _repository = repository;
+        }
+        public async Task<List<TypeDto>> GetAllFoodTypes()
+        {
+            var category = await _repository.GetAllListAsync();
+            return ObjectMapper.Map<List<TypeDto>>(category);
         }
     }
 }
