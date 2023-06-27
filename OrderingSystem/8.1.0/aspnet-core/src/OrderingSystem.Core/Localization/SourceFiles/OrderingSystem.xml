@@ -124,7 +124,7 @@
 	<text name="CreateNewCustomer">Create New Customer</text>
 	<text name="CustomerDeleteWarningMessage">{0} will be deleted.</text>
 	<text name="Foods">Food</text>
-	<text name="CreateNewFood">Create New Food</text>
+	<text name="CreateNewFood">Create New Food</text>                                                     
 	<text name="FoodDeleteWarningMessage">{0} will be deleted.</text>
 	<text name="Categories">Category</text>
 	<text name="CreateNewCategory">Create New Category</text>

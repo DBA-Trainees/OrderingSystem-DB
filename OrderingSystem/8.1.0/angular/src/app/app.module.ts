@@ -39,7 +39,7 @@ import { SidebarLogoComponent } from './layout/sidebar-logo.component';
 import { SidebarUserPanelComponent } from './layout/sidebar-user-panel.component';
 import { SidebarMenuComponent } from './layout/sidebar-menu.component';
 import { DivisionsComponent } from './divisions/divisions.component'
-import { CategoryServiceProxy, CustomerServiceProxy, DivisionServiceProxy, TypeServiceProxy } from '@shared/service-proxies/service-proxies';
+import { CategoryServiceProxy, CustomerServiceProxy, DivisionServiceProxy, FoodServiceProxy, TypeServiceProxy } from '@shared/service-proxies/service-proxies';
 import { CreateEditDivisionModalComponent } from './divisions/create-edit-division-modal/create-edit-division-modal.component'
 import { CustomersComponent } from './customers/customers.component'
 import { CreateEditCustomerModalComponent } from './customers/create-edit-customer-modal/create-edit-customer-modal.component'
@@ -47,6 +47,8 @@ import { CategoriesComponent } from './categories/categories.component'
 import { CreateEditCategoryModalComponent } from './categories/create-edit-category-modal/create-edit-category-modal.component'
 import { TypesComponent } from './types/types.component'
 import { CreateEditTypeModalComponent } from './types/create-edit-type-modal/create-edit-type-modal.component'
+import { FoodsComponent } from './foods/foods.component'
+import { CreateEditFoodModalComponent } from './foods/create-edit-food-modal/create-edit-food-modal.component'
 
 @NgModule({
     declarations: [
@@ -84,7 +86,9 @@ import { CreateEditTypeModalComponent } from './types/create-edit-type-modal/cre
         CategoriesComponent,
         CreateEditCategoryModalComponent,
         TypesComponent,
-        CreateEditTypeModalComponent
+        CreateEditTypeModalComponent,
+        FoodsComponent,
+        CreateEditFoodModalComponent
     ],
     imports: [
         CommonModule,
@@ -105,7 +109,8 @@ import { CreateEditTypeModalComponent } from './types/create-edit-type-modal/cre
         DivisionServiceProxy,
         CustomerServiceProxy,
         CategoryServiceProxy,
-        TypeServiceProxy
+        TypeServiceProxy,
+        FoodServiceProxy
     ]
 })
 export class AppModule {}
