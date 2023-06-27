@@ -8,8 +8,8 @@ using System.Threading.Tasks;
 
 namespace OrderingSystem.Types.Dto
 {
-    [AutoMapTo(typeof(Type))]
-    [AutoMapFrom(typeof(Type))]
+    [AutoMapTo(typeof(Entities.Type))]
+    [AutoMapFrom(typeof(Entities.Type))]
     public class TypeDto : EntityDto<int>
     {
         public string Name { get; set; }

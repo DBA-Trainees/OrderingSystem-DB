@@ -1,27 +1,27 @@
 import { Component, EventEmitter, Injector, OnInit, Output } from "@angular/core";
 import { AppComponentBase } from "@shared/app-component-base";
-import { CategoryDto, CategoryServiceProxy } from "@shared/service-proxies/service-proxies";
+import { TypeDto, TypeServiceProxy } from "@shared/service-proxies/service-proxies";
 import { BsModalRef } from "ngx-bootstrap/modal";
 
 @Component({
-    selector: "create-edit-category-modal",
-    templateUrl: "create-edit-category-modal.component.html",
+    selector: "create-edit-type-modal",
+    templateUrl: "create-edit-type-modal.component.html",
     styleUrls : ['../../../shared/styles/main.css']
   })
 
-  export class CreateEditCategoryModalComponent
+  export class CreateEditTypeModalComponent
     extends AppComponentBase
     implements OnInit
   {
     saving = false;
-    category: CategoryDto = new CategoryDto();
+    type: TypeDto = new TypeDto();
     id: number = 0;
 
     @Output() onSave = new EventEmitter<any>();
 
     constructor(
       injector: Injector,
-      private _categoryService: CategoryServiceProxy,
+      private _typeService: TypeServiceProxy,
       public bsModalRef: BsModalRef
     ) {
       super(injector);
@@ -29,8 +29,8 @@ import { BsModalRef } from "ngx-bootstrap/modal";
 
     ngOnInit() {
       if (this.id) {
-        this._categoryService.get(this.id).subscribe((res) => {
-          this.category = res;
+        this._typeService.get(this.id).subscribe((res) => {
+          this.type = res;
         });
       }
     }
@@ -39,7 +39,7 @@ import { BsModalRef } from "ngx-bootstrap/modal";
       this.saving = true;
 
       if (this.id !== 0) {
-        this._categoryService.update(this.category).subscribe(
+        this._typeService.update(this.type).subscribe(
           () => {
             this.notify.info(this.l("SavedSuccessfully"));
             this.bsModalRef.hide();
@@ -50,7 +50,7 @@ import { BsModalRef } from "ngx-bootstrap/modal";
           }
         );
       } else {
-        this._categoryService.create(this.category).subscribe(
+        this._typeService.create(this.type).subscribe(
           () => {
             this.notify.info(this.l("SavedSuccessfully"));
             this.bsModalRef.hide();
@@ -63,5 +63,5 @@ import { BsModalRef } from "ngx-bootstrap/modal";
       }
 
     }
-    
+
   }

@@ -1,0 +1,41 @@
+<form
+  class="form-horizontal"
+  autocomplete="off"
+  #createTypeModal="ngForm"
+  (ngSubmit)="save()">
+  <abp-modal-header 
+  [title]="'CreateNewType' | localize" 
+  (onCloseClick)="bsModalRef.hide()"
+  ></abp-modal-header>
+  <div class="modal-body">
+        <div class="form-group row required">
+          <label 
+          class="col-md-3 col-form-label" 
+          for="typeName">
+            {{ "Types" | localize }}
+          </label>
+          <div class="col-md-9">
+            <input
+              type="text"
+              class="form-control"
+              name="typeName"
+              id="typeName"
+              required
+              [(ngModel)]="type.name"
+              #typeNameModel="ngModel"
+              #typeNameEl
+            />
+            <abp-validation-summary
+              [control]="typeNameModel"
+              [controlEl]="typeNameEl"
+            ></abp-validation-summary>
+          </div>
+        </div>
+    </div>
+    <abp-modal-footer
+    [cancelDisabled]="saving"
+    [saveDisabled]="!createTypeModal.form.valid || saving"
+    (onCancelClick)="bsModalRef.hide()"
+  ></abp-modal-footer>
+</form>
+  
