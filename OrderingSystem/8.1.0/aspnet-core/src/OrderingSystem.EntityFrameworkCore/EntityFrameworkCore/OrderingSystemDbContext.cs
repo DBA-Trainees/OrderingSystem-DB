@@ -20,5 +20,6 @@ namespace OrderingSystem.EntityFrameworkCore
         public DbSet<Category> Categories { get; set; }
         public DbSet<Type> Types { get; set; }
         public DbSet<Food> Foods { get; set; }
+        public DbSet<Order> Orders { get; set; }
     }
 }

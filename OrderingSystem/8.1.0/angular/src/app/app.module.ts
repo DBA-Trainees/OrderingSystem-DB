@@ -39,7 +39,7 @@ import { SidebarLogoComponent } from './layout/sidebar-logo.component';
 import { SidebarUserPanelComponent } from './layout/sidebar-user-panel.component';
 import { SidebarMenuComponent } from './layout/sidebar-menu.component';
 import { DivisionsComponent } from './divisions/divisions.component'
-import { CategoryServiceProxy, CustomerServiceProxy, DivisionServiceProxy, FoodServiceProxy, TypeServiceProxy } from '@shared/service-proxies/service-proxies';
+import { CategoryServiceProxy, CustomerServiceProxy, DivisionServiceProxy, FoodServiceProxy, OrderServiceProxy, TypeServiceProxy } from '@shared/service-proxies/service-proxies';
 import { CreateEditDivisionModalComponent } from './divisions/create-edit-division-modal/create-edit-division-modal.component'
 import { CustomersComponent } from './customers/customers.component'
 import { CreateEditCustomerModalComponent } from './customers/create-edit-customer-modal/create-edit-customer-modal.component'
@@ -49,6 +49,8 @@ import { TypesComponent } from './types/types.component'
 import { CreateEditTypeModalComponent } from './types/create-edit-type-modal/create-edit-type-modal.component'
 import { FoodsComponent } from './foods/foods.component'
 import { CreateEditFoodModalComponent } from './foods/create-edit-food-modal/create-edit-food-modal.component'
+import { OrdersComponent } from './orders/orders.component'
+import { CreateEditOrderModalComponent } from './orders/create-edit-order-modal/create-edit-order-modal.component'
 
 @NgModule({
     declarations: [
@@ -88,7 +90,9 @@ import { CreateEditFoodModalComponent } from './foods/create-edit-food-modal/cre
         TypesComponent,
         CreateEditTypeModalComponent,
         FoodsComponent,
-        CreateEditFoodModalComponent
+        CreateEditFoodModalComponent,
+        OrdersComponent,
+        CreateEditOrderModalComponent
     ],
     imports: [
         CommonModule,
@@ -110,7 +114,8 @@ import { CreateEditFoodModalComponent } from './foods/create-edit-food-modal/cre
         CustomerServiceProxy,
         CategoryServiceProxy,
         TypeServiceProxy,
-        FoodServiceProxy
+        FoodServiceProxy,
+        OrderServiceProxy
     ]
 })
 export class AppModule {}

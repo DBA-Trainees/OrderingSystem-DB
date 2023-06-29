@@ -1,5 +1,6 @@
 ﻿using Abp.Application.Services;
 using Abp.Domain.Repositories;
+using OrderingSystem.Categories.Dto;
 using OrderingSystem.Entities;
 using OrderingSystem.Foods.Dto;
 using System;
@@ -17,6 +18,12 @@ namespace OrderingSystem.Foods
         public FoodAppService(IRepository<Food, int> repository) : base(repository)
         {
             _repository = repository;
+        }
+
+        public async Task<List<FoodDto>> GetAllFoods()
+        {
+            var food = await _repository.GetAllListAsync();
+            return ObjectMapper.Map<List<FoodDto>>(food);
         }
     }
 }

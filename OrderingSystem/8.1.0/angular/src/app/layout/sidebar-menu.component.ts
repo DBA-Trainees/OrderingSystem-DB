@@ -43,11 +43,12 @@ export class SidebarMenuComponent extends AppComponentBase implements OnInit {
 
     getMenuItems(): MenuItem[] {
         return [
-            new MenuItem(this.l('Divisions'), '/app/divisions', 'fas fa-home', 'Pages.Divisions'),
-            new MenuItem(this.l('Customers'), '/app/customers', 'fas fa-home', 'Pages.Customers'),
-            new MenuItem(this.l('Categories'), '/app/categories', 'fas fa-home', 'Pages.Categories'),
-            new MenuItem(this.l('Types'), '/app/types', 'fas fa-home', 'Pages.Types'),
-            new MenuItem(this.l('Foods'), '/app/foods', 'fas fa-info-circle'),
+            new MenuItem(this.l('Divisions'), '/app/divisions', 'fas fa-user-friends', 'Pages.Divisions'),
+            new MenuItem(this.l('Customers'), '/app/customers', 'fas fa-restroom', 'Pages.Customers'),
+            new MenuItem(this.l('Food Categories'), '/app/categories', 'fas fa-hamburger', 'Pages.Categories'),
+            new MenuItem(this.l('Food Types'), '/app/types', 'fas fa-home', 'Pages.Types'),
+            new MenuItem(this.l('Foods'), '/app/foods', 'fa fa-cutlery'),
+            new MenuItem(this.l('Cart/Order'), '/app/orders', 'fa fa-shopping-cart'),
             new MenuItem(this.l('About'), '/app/about', 'fas fa-info-circle'),
             new MenuItem(this.l('HomePage'), '/app/home', 'fas fa-home'),            
             new MenuItem(

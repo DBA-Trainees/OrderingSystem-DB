@@ -12,5 +12,7 @@
         public const string Pages_Customers = "Pages.Customers";
         public const string Pages_Categories = "Pages.Categories";
         public const string Pages_Types = "Pages.Types";
+        public const string Pages_Foods = "Pages.Foods";
+        public const string Pages_Orders = "Pages.Orders";
     }
 }
