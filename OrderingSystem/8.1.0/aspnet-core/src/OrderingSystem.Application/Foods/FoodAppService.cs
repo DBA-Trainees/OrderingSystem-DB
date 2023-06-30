@@ -1,5 +1,7 @@
 ﻿using Abp.Application.Services;
+using Abp.Application.Services.Dto;
 using Abp.Domain.Repositories;
+using Microsoft.EntityFrameworkCore;
 using OrderingSystem.Categories.Dto;
 using OrderingSystem.Entities;
 using OrderingSystem.Foods.Dto;
@@ -20,10 +22,37 @@ namespace OrderingSystem.Foods
             _repository = repository;
         }
 
+        public override async Task<FoodDto> CreateAsync(CreateFoodDto input)
+        {
+            var food = ObjectMapper.Map<Food>(input);
+            await _repository.InsertAsync(food);
+
+            food.Availability = true;
+            await _repository.UpdateAsync(food);
+            return base.MapToEntityDto(food);
+        }
+
+        public override async Task<PagedResultDto<FoodDto>> GetAllAsync(PagedFoodResultRequestDto input)
+        {
+            var food = await _repository.GetAll()
+                .Include(x => x.Category)
+                .Include(x => x.Type)
+                .OrderByDescending(x => x.Id)
+                .Select(x => ObjectMapper.Map<FoodDto>(x))
+                .ToListAsync();
+
+            return new PagedResultDto<FoodDto> (food.Count(), food);
+        }
+
         public async Task<List<FoodDto>> GetAllFoods()
         {
             var food = await _repository.GetAllListAsync();
             return ObjectMapper.Map<List<FoodDto>>(food);
+        }
+
+        public override Task<FoodDto> GetAsync(EntityDto<int> input)
+        {
+            return base.GetAsync(input);
         }
     }
 }

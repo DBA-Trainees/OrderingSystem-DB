@@ -32,8 +32,8 @@ import { OrdersComponent } from './orders/orders.component';
                     { path: 'customers', component: CustomersComponent, data: { permission: 'Pages.Customers' }, canActivate: [AppRouteGuard] },
                     { path: 'categories', component: CategoriesComponent, data: { permission: 'Pages.Categories' }, canActivate: [AppRouteGuard] },
                     { path: 'types', component: TypesComponent, data: { permission: 'Pages.Types' }, canActivate: [AppRouteGuard] },
-                    { path: 'foods', component: FoodsComponent, data: { permission: 'Pages.Types' },canActivate: [AppRouteGuard] },
-                    { path: 'orders', component: OrdersComponent, canActivate: [AppRouteGuard] },
+                    { path: 'foods', component: FoodsComponent, data: { permission: 'Pages.Foods' },canActivate: [AppRouteGuard] },
+                    { path: 'orders', component: OrdersComponent, data: { permission: 'Pages.Orders' },canActivate: [AppRouteGuard] },
                 
                 ]
             }

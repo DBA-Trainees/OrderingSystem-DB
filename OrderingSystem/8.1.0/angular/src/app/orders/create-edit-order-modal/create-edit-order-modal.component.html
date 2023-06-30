@@ -1,0 +1,161 @@
+<form
+  class="form-horizontal"
+  autocomplete="off"
+  #createOrderModal="ngForm"
+  (ngSubmit)="save()">
+  <abp-modal-header 
+  [title]="'CreateNewCustomer' | localize" 
+  (onCloseClick)="bsModalRef.hide()"
+  ></abp-modal-header>
+  <div class="modal-body">
+        <div class="form-group row required">
+          <label 
+          class="col-md-3 col-form-label" 
+          for="customerName">
+            {{ "Customer" | localize }}
+          </label>
+          <div class="col-md-9">
+            <input
+              type="text"
+              class="form-control"
+              name="customerName"
+              id="customerName"
+              required
+              [(ngModel)]="order.customerName"
+              #customerNameModel="ngModel"
+              #customerNameEl
+            />
+            <abp-validation-summary
+              [control]="customerNameModel"
+              [controlEl]="customerNameEl"
+            ></abp-validation-summary>
+          </div>
+        </div>
+        <div class="form-group row required">
+            <label 
+            class="col-md-3 col-form-label" 
+            for="foodName">
+              {{ "Food" | localize }}
+            </label>
+            <div class="col-md-9">
+              <input
+                type="text"
+                class="form-control"
+                name="foodName"
+                id="foodName"
+                required
+                [(ngModel)]="order.foodName"
+                #foodNameModel="ngModel"
+                #foodNameEl
+              />
+              <abp-validation-summary
+                [control]="foodNameModel"
+                [controlEl]="foodNameEl"
+              ></abp-validation-summary>
+            </div>
+          </div>
+          <div class="form-group row required">
+            <label 
+            class="col-md-3 col-form-label" 
+            for="foodQty">
+              {{ "Qty" | localize }}
+            </label>
+            <div class="col-md-9">
+              <input
+                type="text"
+                class="form-control"
+                name="foodQty"
+                id="foodQty"
+                required
+                [(ngModel)]="order.quantity"
+                #foodQtyModel="ngModel"
+                #foodQtyEl
+              />
+              <abp-validation-summary
+                [control]="foodQtyModel"
+                [controlEl]="foodQtyEl"
+              ></abp-validation-summary>
+            </div>
+          </div>
+          <div class="form-group row required">
+            <label 
+            class="col-md-3 col-form-label" 
+            for="foodSize">
+              {{ "Size" | localize }}
+            </label>
+            <div class="col-md-9">
+              <input
+                type="text"
+                class="form-control"
+                name="foodSize"
+                id="foodSize"
+                required
+                [(ngModel)]="order.size"
+                #foodSizeModel="ngModel"
+                #foodSizeEl
+              />
+              <abp-validation-summary
+                [control]="foodSizeModel"
+                [controlEl]="foodSizeEl"
+              ></abp-validation-summary>
+            </div>
+          </div>
+          <div class="form-group row required">
+            <label 
+            class="col-md-3 col-form-label" 
+            for="notes">
+              {{ "Notes" | localize }}
+            </label>
+            <div class="col-md-9">
+              <textarea
+                type="text"
+                class="form-control"
+                name="notes"
+                id="notes"
+                required
+                [(ngModel)]="order.notes"
+                #notesModel="ngModel"
+                #notesEl
+              ></textarea>
+              <abp-validation-summary
+                [control]="notesModel"
+                [controlEl]="notesEl"
+              ></abp-validation-summary>
+            </div>
+          </div>
+          <div class="form-group row required" disabled>
+            <label 
+            class="col-md-3 col-form-label" 
+            for="dateTimeOrdered">
+              {{ "Date and Time Order" | localize }}
+            </label>
+            <div class="col-md-9">
+              <input
+                type="today"
+                class="form-control"
+                name="dateTimeOrdered"
+                id="dateTimeOrdered"
+                required
+                [(ngModel)]="order.dateTimeOrdered"
+              />
+            </div>
+          </div>
+          <div class="form-group row required">
+            <label class="col-md-3 col-form-label" for="orderStatus">
+                {{ "Order Status" | localize }}
+            </label>
+            <div class="col-md-9">
+                <select class="form-control" name="orderStatus" id="orderStatus" required
+                    [(ngModel)]="selectedOrderStatus">
+                    <option *ngFor="let order of orderStatus" [ngValue]="order.id">{{order.name}}</option>
+                </select>
+            </div>
+        </div>  
+    </div>
+    <abp-modal-footer
+    [cancelDisabled]="saving"
+    [saveDisabled]="!createOrderModal.form.valid || saving"
+    (onCancelClick)="bsModalRef.hide()"
+  ></abp-modal-footer>
+</form>
+  

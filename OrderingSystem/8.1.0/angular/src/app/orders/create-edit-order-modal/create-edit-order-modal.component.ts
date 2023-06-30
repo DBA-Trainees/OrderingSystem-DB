@@ -24,6 +24,10 @@ export class CreateEditOrderModalComponent
   extends AppComponentBase
   implements OnInit
 {
+  orderStatus =[
+    {id: 1, name: 'Add to Cart'},
+    {id: 2, name: 'Buy Now'}
+  ];
   saving = false;
   order: OrderDto = new OrderDto();
   id: number = 0;
@@ -31,6 +35,8 @@ export class CreateEditOrderModalComponent
   customers: CustomerDto[] = [];
   selectedFood: number = null;
   selectedCustomer: number = null;
+  today = new Date();
+  selectedOrderStatus: number;
 
   @Output() onSave = new EventEmitter<any>();
 
@@ -43,6 +49,9 @@ export class CreateEditOrderModalComponent
   ) {
     super(injector);
   }
+
+  
+
   ngOnInit() {
     if(this.id){
         this._orderService.get(this.id).subscribe((res) =>{
@@ -60,6 +69,7 @@ export class CreateEditOrderModalComponent
     this.saving = true;
     this.order.foodId = this.selectedFood;
     this.order.customerId = this.selectedCustomer;
+    this.selectedOrderStatus = 1;
 
     if (this.id !== 0) {
       this._orderService.update(this.order).subscribe(

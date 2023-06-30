@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace OrderingSystem.Entities
 {
-    public class Order: FullAuditedEntity<int>
+    public class Order : FullAuditedEntity<int>
     {
         public int? CustomerId { get; set; }
         public string CustomerName { get; set; }
@@ -19,6 +19,6 @@ namespace OrderingSystem.Entities
         public Food Food { get; set; }
         public string? Notes { get; set; }
         public DateTime DateTimeOrdered { get; set; }
-        public bool OrderStatus { get; set; }
+        public int OrderStatus { get; set; }
     }
 }

@@ -1,6 +1,11 @@
 import { Component, EventEmitter, Injector, OnInit, Output } from "@angular/core";
 import { AppComponentBase } from "@shared/app-component-base";
-import { CategoryDto, CategoryServiceProxy, FoodDto, FoodServiceProxy, TypeDto, TypeServiceProxy } from "@shared/service-proxies/service-proxies";
+import { 
+  CategoryDto, 
+  CategoryServiceProxy, 
+  FoodDto, 
+  FoodServiceProxy, 
+  TypeDto, TypeServiceProxy } from "@shared/service-proxies/service-proxies";
 import { BsModalRef } from "ngx-bootstrap/modal";
 
 @Component({
@@ -14,7 +19,7 @@ import { BsModalRef } from "ngx-bootstrap/modal";
     implements OnInit
   {
     saving = false;
-    food: FoodDto = new FoodDto();
+    food : FoodDto = new FoodDto();
     types: TypeDto[] = [];
     categories: CategoryDto[] = [];
     id: number = 0;
@@ -22,6 +27,7 @@ import { BsModalRef } from "ngx-bootstrap/modal";
     selectedType:number = null;
 
     @Output() onSave = new EventEmitter<any>();
+    base64textString: string;
 
     constructor(
       injector: Injector,
@@ -37,6 +43,8 @@ import { BsModalRef } from "ngx-bootstrap/modal";
     if (this.id) {
       this._foodService.get(this.id).subscribe((res) => {
         this.food = res;
+        this.selectedCategory = res.categoryId;
+        this.selectedType = res.typeId;
       });
     }
     this._categoryService.getAllFoodCategories().subscribe((res) =>{
@@ -47,32 +55,56 @@ import { BsModalRef } from "ngx-bootstrap/modal";
     });
   }
 
+  /* convertToBlob(dataURI: string): Blob{
+    const [contentType, base64Data] = dataURI.split(',');
+    const byteString = atob(base64Data);
+    const buffer = new ArrayBuffer(byteString.length);
+    const binaryArray = new Uint8Array(buffer);
+
+    for (let i=0; i< byteString.length; i++){
+      binaryArray[i] = byteString.charCodeAt(i);
+    }
+
+    return new Blob([binaryArray], {type: contentType});
+  } */
+
   save(): void{
     this.saving = true;
+    /* this.food.image  = this.base64textString; */
+    this.food.typeId = this.selectedType;
+    this.food.categoryId = this.selectedCategory;
+    
 
-    if (this.id !== 0) {
-      this._foodService.update(this.food).subscribe(
-        () => {
-          this.notify.info(this.l("SavedSuccessfully"));
-          this.bsModalRef.hide();
-          this.onSave.emit();
-        },
-        () => {
-          this.saving = false;
-        }
-      );
-    } else {
-      this._foodService.create(this.food).subscribe(
-        () => {
-          this.notify.info(this.l("SavedSuccessfully"));
-          this.bsModalRef.hide();
-          this.onSave.emit();
-        },
-        () => {
-          this.saving = false;
-        }
-      );
-    }
+    /* const reader = new FileReader();
+    reader.onload = () =>{
+      this.base64textString = reader.result as string;
+      this.food.image  = this.base64textString; */
+
+      if (this.id !== 0) {
+        this._foodService.update(this.food).subscribe(
+          () => {
+            this.notify.info(this.l("SavedSuccessfully"));
+            this.bsModalRef.hide();
+            this.onSave.emit();
+          },
+          () => {
+            this.saving = false;
+          }
+        );
+      } else {
+        this._foodService.create(this.food).subscribe(
+          () => {
+            this.notify.info(this.l("SavedSuccessfully"));
+            this.bsModalRef.hide();
+            this.onSave.emit();
+          },
+          () => {
+            this.saving = false;
+          }
+        );
+      }
+      /* reader.readAsDataURL(this.convertToBlob(this.food.image));
+    }   */
   }
 
   }

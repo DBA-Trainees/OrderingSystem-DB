@@ -88,16 +88,16 @@ export class CustomersComponent extends PagedListingComponentBase<CustomerDto> {
   }
 
   private showCreateOrEditCustomerModal(id?: number): void{
-    let createOrEditCustomerDialog: BsModalRef;
+    let createOrEditCustomerModal: BsModalRef;
     if(!id){
-        createOrEditCustomerDialog = this._modalService.show(
+      createOrEditCustomerModal = this._modalService.show(
         CreateEditCustomerModalComponent,
         {
           class: 'modal-lg',
         }
       );
     }else{
-        createOrEditCustomerDialog = this._modalService.show(
+      createOrEditCustomerModal = this._modalService.show(
         CreateEditCustomerModalComponent,
         {
           class: 'modal-lg',
@@ -108,7 +108,7 @@ export class CustomersComponent extends PagedListingComponentBase<CustomerDto> {
       );
     }
 
-    createOrEditCustomerDialog.content.onSave.subscribe(() =>{
+    createOrEditCustomerModal.content.onSave.subscribe(() =>{
       this.refresh();
     })
   }

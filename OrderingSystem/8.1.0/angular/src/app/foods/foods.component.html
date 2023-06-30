@@ -69,8 +69,16 @@
                         [busy]="isTableLoading">
                             <thead class="bg-light">
                                 <tr>
-                                    <th>{{ "Id" | localize }}</th>
-                                    <th>{{ "Foods" | localize }}</th>
+                                    <th>{{ "Food Id" | localize }}</th>
+                                    <th>{{ "Image" | localize }}</th>
+                                    <th>{{ "Image Type" | localize }}</th>
+                                    <th>{{ "Food" | localize }}</th>
+                                    <th>{{ "Availability" | localize }}</th>
+                                    <th>{{ "Qty" | localize }}</th>
+                                    <th>{{ "Category" | localize }}</th>
+                                    <th>{{ "Type" | localize }}</th>
+                                    <th>{{ "Size" | localize }}</th>
+                                    <th>{{ "Price" | localize }}</th>
                                     <th class="action-th">{{ "Actions" | localize }}</th>
                                 </tr>
                             </thead>
@@ -83,7 +91,15 @@
                                 totalItems: totalItems
                                 } ">
                                     <td>{{ food.id }}</td>
+                                    <td>{{ food.image }}</td>
+                                    <td>{{ food.imageType }}</td>
                                     <td>{{ food.name }}</td>
+                                    <td>{{ food.availibity }}</td>
+                                    <td>{{ food.quantity }}</td>
+                                    <td>{{ food?.category.name }}</td>
+                                    <td>{{ food?.type.name }}</td>
+                                    <td>{{ food.size }}</td>
+                                    <td>{{ food.price }}</td>
                                     <td>
                                         <button 
                                         type="button" 

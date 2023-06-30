@@ -1,12 +1,18 @@
-<form class="form-horizontal" autocomplete="off" #createDFoodModal="ngForm" (ngSubmit)="save()">
-    <abp-modal-header [title]="'CreateNewFood' | localize" (onCloseClick)="bsModalRef.hide()"></abp-modal-header>
+<form 
+class="form-horizontal" 
+autocomplete="off" 
+#createDFoodModal="ngForm" 
+(ngSubmit)="save()">
+    <abp-modal-header 
+    [title]="'CreateNewFood' | localize" 
+    (onCloseClick)="bsModalRef.hide()"></abp-modal-header>
     <div class="modal-body">
         <div class="form-group row required">
             <label class="col-md-3 col-form-label" for="foodImage">
                 {{ "Attached Image" | localize }}
             </label>
             <div class="col-md-9">
-                <input type="text" class="form-control" name="foodImage" id="foodImage" required
+                <input type="file" class="form-control" name="foodImage" id="foodImage" required
                     [(ngModel)]="food.image" />
             </div>
         </div>
@@ -61,14 +67,24 @@
                 </select>
             </div>
         </div>
-        <div class="form-group row required">
-            <label class="col-md-3 col-form-label" for="foodQty">
+        <div class="form-group row">
+            <label class="col-md-3 col-form-label" for="foodSize">
                 {{ "Size" | localize }}
             </label>
             <div class="col-md-9">
-                <input type="text" class="form-control" name="foodQty" id="foodQty" required
-                    [(ngModel)]="food.quantity" #foodQtyModel="ngModel" #foodQtyEl />
-                <abp-validation-summary [control]="foodQtyModel" [controlEl]="foodQtyEl"></abp-validation-summary>
+                <input type="text" class="form-control" name="foodSize" id="foodSize"
+                    [(ngModel)]="food.size" #foodSizeModel="ngModel" #foodSizeEl />
+                <abp-validation-summary [control]="foodSizeModel" [controlEl]="foodSizeEl"></abp-validation-summary>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-md-3 col-form-label" for="foodPrice">
+                {{ "Price" | localize }}
+            </label>
+            <div class="col-md-9">
+                <input type="text" class="form-control" name="foodPrice" id="foodPrice"
+                    [(ngModel)]="food.price" #foodPriceModel="ngModel" #foodPriceEl />
+                <abp-validation-summary [control]="foodPriceModel" [controlEl]="foodPriceEl"></abp-validation-summary>
             </div>
         </div>
     </div>
