@@ -46,7 +46,7 @@
                                 <div class="input-group-prepend">
                                     <button 
                                     type="button" 
-                                    class="btn bg-blue" 
+                                    class="btn bg-info" 
                                     (click)="getDataPage(1)">
                                         <i class="fas fa-search"></i>
                                     </button>
@@ -81,7 +81,7 @@
                                 itemsPerPage: pageSize,
                                 currentPage: pageNumber,
                                 totalItems: totalItems
-                                } ">
+                                } | search: keyword: ['name']">
                                     <td>{{ type.id }}</td>
                                     <td>{{ type.name }}</td>
                                     <td>

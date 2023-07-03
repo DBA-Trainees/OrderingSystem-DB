@@ -13,6 +13,11 @@
         public const string Pages_Categories = "Pages.Categories";
         public const string Pages_Types = "Pages.Types";
         public const string Pages_Foods = "Pages.Foods";
-        public const string Pages_Orders = "Pages.Orders";
+        public const string Pages_ViewOrders = "Pages.ViewOrders";
+        public const string Pages_Reports = "Pages.Reports";
+        public const string Pages_PurchaseHistory = "Pages.PurchaseHistory";
+        public const string Pages_OrderHistory = "Pages.OrderHistory";
+        public const string Pages_AddToCart = "Pages.Carts";
+        public const string Pages_OrderList = "Pages.OrderList";
     }
 }

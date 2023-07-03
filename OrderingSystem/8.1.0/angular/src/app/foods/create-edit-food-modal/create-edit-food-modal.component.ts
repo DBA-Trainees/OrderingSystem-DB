@@ -6,6 +6,7 @@ import {
   FoodDto, 
   FoodServiceProxy, 
   TypeDto, TypeServiceProxy } from "@shared/service-proxies/service-proxies";
+import { size } from "lodash-es";
 import { BsModalRef } from "ngx-bootstrap/modal";
 
 @Component({
@@ -18,13 +19,20 @@ import { BsModalRef } from "ngx-bootstrap/modal";
     extends AppComponentBase
     implements OnInit
   {
+
+    foodSizes=[
+      {id:1, name:'Regular'},
+      {id:2, name:'Medium'},
+      {id:3, name:'Large'}
+    ]
     saving = false;
-    food : FoodDto = new FoodDto();
+    food = new FoodDto();
     types: TypeDto[] = [];
     categories: CategoryDto[] = [];
     id: number = 0;
     selectedCategory:number = null;
     selectedType:number = null;
+    selectedSize: string = null;
 
     @Output() onSave = new EventEmitter<any>();
     base64textString: string;
@@ -45,14 +53,21 @@ import { BsModalRef } from "ngx-bootstrap/modal";
         this.food = res;
         this.selectedCategory = res.categoryId;
         this.selectedType = res.typeId;
+        
       });
     }
     this._categoryService.getAllFoodCategories().subscribe((res) =>{
       this.categories = res;
-    });
+    })
     this._typeService.getAllFoodTypes().subscribe((res) =>{
       this.types = res;
-    });
+    })
+    /* if(this.food.image){
+      var foodImage = this.food.image;
+      var foodImageType = foodImage.split(".").pop();
+      this.food.imageType = foodImageType;
+      console.log(foodImageType);
+    } */    
   }
 
   /* convertToBlob(dataURI: string): Blob{
@@ -70,9 +85,9 @@ import { BsModalRef } from "ngx-bootstrap/modal";
 
   save(): void{
     this.saving = true;
-    /* this.food.image  = this.base64textString; */
-    this.food.typeId = this.selectedType;
+    this.food.image  = this.base64textString;    
     this.food.categoryId = this.selectedCategory;
+    this.food.typeId = this.selectedType;
     
 
     /* const reader = new FileReader();

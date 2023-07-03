@@ -25,12 +25,12 @@
                     </div>
                 </div>
                 <div class="col-12 text-right">
-                    <a 
+                    <!-- <a 
                     href="javascript:;" 
                     class="create-button btn btn-md" 
                     (click)="createOrder()">
                         <i class="fa fa-plus"></i>
-                    </a>
+                    </a> -->
                 </div>
             </div>
         </div>
@@ -46,7 +46,7 @@
                                 <div class="input-group-prepend">
                                     <button 
                                     type="button" 
-                                    class="btn bg-blue" 
+                                    class="btn bg-info" 
                                     (click)="getDataPage(1)">
                                         <i class="fas fa-search"></i>
                                     </button>
@@ -72,6 +72,7 @@
                                     <thead class="bg-light">
                                         <tr>
                                             <th>{{ "Id" | localize }}</th>
+                                            <th>{{ "Customer Name" | localize }}</th>
                                             <th>{{ "Food Name" | localize }}</th>
                                             <th>{{ "Qty" | localize }}</th>
                                             <th>{{ "Size" | localize }}</th>
@@ -89,11 +90,12 @@
                                         totalItems: totalItems
                                         } ">
                                             <td>{{ order.id }}</td>
-                                            <td>{{ order.food.name }}</td>
-                                            <td>{{ order.food.qty }}</td>
-                                            <td>{{ order.food.size }}</td>
-                                            <td>{{ order.datetimeordered }}</td>
-                                            <td>
+                                            <td>{{ order.customer?.name }}</td>
+                                            <td>{{ order.food?.name }}</td>
+                                            <td>{{ order.food?.qty }}</td>
+                                            <td>{{ order.food?.size }}</td>
+                                            <td>{{ order.dateTimeOrdered }}</td>
+                                            <!-- <td>
                                                 <button 
                                                 type="button" 
                                                 class="btn btn-sm bg-blue"
@@ -106,7 +108,7 @@
                                                 (click)="delete(order)">
                                                     <i class="fas fa-trash"></i>
                                                 </button>
-                                            </td>
+                                            </td> -->
                                         </tr>
                                     </tbody>
                                 </table>

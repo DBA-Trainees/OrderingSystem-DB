@@ -13,7 +13,11 @@ import { CustomersComponent } from './customers/customers.component';
 import { CategoriesComponent } from './categories/categories.component';
 import { TypesComponent } from './types/types.component';
 import { FoodsComponent } from './foods/foods.component';
-import { OrdersComponent } from './orders/orders.component';
+import { ViewOrdersComponent } from './view-orders/view-orders.component';
+import { AddToCartsComponent } from './carts/carts.component';
+import { OrderHistoryComponent } from './order-history/order-history.component';
+import { PurchaseHistoryComponent } from './purchase-history/purchase-history.component';
+import { ReportsComponent } from './reports/reports.component';
 
 @NgModule({
     imports: [
@@ -33,7 +37,12 @@ import { OrdersComponent } from './orders/orders.component';
                     { path: 'categories', component: CategoriesComponent, data: { permission: 'Pages.Categories' }, canActivate: [AppRouteGuard] },
                     { path: 'types', component: TypesComponent, data: { permission: 'Pages.Types' }, canActivate: [AppRouteGuard] },
                     { path: 'foods', component: FoodsComponent, data: { permission: 'Pages.Foods' },canActivate: [AppRouteGuard] },
-                    { path: 'orders', component: OrdersComponent, data: { permission: 'Pages.Orders' },canActivate: [AppRouteGuard] },
+                    { path: 'view-orders', component: ViewOrdersComponent, data: { permission: 'Pages.ViewOrders' },canActivate: [AppRouteGuard] },
+                    { path: 'carts', component: AddToCartsComponent, canActivate: [AppRouteGuard] },
+                    { path: 'order-history', component: OrderHistoryComponent, canActivate: [AppRouteGuard] },
+                    { path: 'order-list', component: OrderHistoryComponent, canActivate: [AppRouteGuard] },
+                    { path: 'purchase-history', component: PurchaseHistoryComponent, canActivate: [AppRouteGuard] },
+                    { path: 'reports', component: ReportsComponent, canActivate: [AppRouteGuard] },
                 
                 ]
             }

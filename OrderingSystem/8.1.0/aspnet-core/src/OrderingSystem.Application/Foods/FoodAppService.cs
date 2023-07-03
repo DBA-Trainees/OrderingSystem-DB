@@ -20,17 +20,7 @@ namespace OrderingSystem.Foods
         public FoodAppService(IRepository<Food, int> repository) : base(repository)
         {
             _repository = repository;
-        }
-
-        public override async Task<FoodDto> CreateAsync(CreateFoodDto input)
-        {
-            var food = ObjectMapper.Map<Food>(input);
-            await _repository.InsertAsync(food);
-
-            food.Availability = true;
-            await _repository.UpdateAsync(food);
-            return base.MapToEntityDto(food);
-        }
+        }        
 
         public override async Task<PagedResultDto<FoodDto>> GetAllAsync(PagedFoodResultRequestDto input)
         {
@@ -54,5 +44,6 @@ namespace OrderingSystem.Foods
         {
             return base.GetAsync(input);
         }
+
     }
 }

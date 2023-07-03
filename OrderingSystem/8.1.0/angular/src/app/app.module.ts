@@ -49,8 +49,13 @@ import { TypesComponent } from './types/types.component'
 import { CreateEditTypeModalComponent } from './types/create-edit-type-modal/create-edit-type-modal.component'
 import { FoodsComponent } from './foods/foods.component'
 import { CreateEditFoodModalComponent } from './foods/create-edit-food-modal/create-edit-food-modal.component'
-import { OrdersComponent } from './orders/orders.component'
-import { CreateEditOrderModalComponent } from './orders/create-edit-order-modal/create-edit-order-modal.component'
+import { ViewOrdersComponent } from './view-orders/view-orders.component'
+import { ReportsComponent } from './reports/reports.component'
+import { AddToCartsComponent } from './carts/carts.component'
+import { OrderListComponent } from './order-list/order-list.component'
+import { PurchaseHistoryComponent } from './purchase-history/purchase-history.component'
+import { OrderHistoryComponent } from './order-history/order-history.component'
+
 
 @NgModule({
     declarations: [
@@ -91,8 +96,12 @@ import { CreateEditOrderModalComponent } from './orders/create-edit-order-modal/
         CreateEditTypeModalComponent,
         FoodsComponent,
         CreateEditFoodModalComponent,
-        OrdersComponent,
-        CreateEditOrderModalComponent
+        ViewOrdersComponent,
+        AddToCartsComponent,
+        OrderHistoryComponent,
+        OrderListComponent,
+        PurchaseHistoryComponent,
+        ReportsComponent
     ],
     imports: [
         CommonModule,

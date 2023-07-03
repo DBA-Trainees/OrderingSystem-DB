@@ -12,12 +12,17 @@ namespace OrderingSystem.Authorization
             context.CreatePermission(PermissionNames.Pages_Users_Activation, L("UsersActivation"));
             context.CreatePermission(PermissionNames.Pages_Roles, L("Roles"));
             context.CreatePermission(PermissionNames.Pages_Tenants, L("Tenants"), multiTenancySides: MultiTenancySides.Host);
-            context.CreatePermission(PermissionNames.Pages_Divisions, L("Divisions"));
-            context.CreatePermission(PermissionNames.Pages_Customers, L("Customers"));
-            context.CreatePermission(PermissionNames.Pages_Categories, L("Categories"));
-            context.CreatePermission(PermissionNames.Pages_Types, L("Types"));
-            context.CreatePermission(PermissionNames.Pages_Foods, L("Foods"));
-            context.CreatePermission(PermissionNames.Pages_Orders, L("Orders"));
+            context.CreatePermission(PermissionNames.Pages_Divisions, L("Division"));
+            context.CreatePermission(PermissionNames.Pages_Customers, L("Customer"));
+            context.CreatePermission(PermissionNames.Pages_Categories, L("Category"));
+            context.CreatePermission(PermissionNames.Pages_Types, L("Type"));
+            context.CreatePermission(PermissionNames.Pages_Foods, L("Food"));
+            context.CreatePermission(PermissionNames.Pages_ViewOrders, L("ViewOrder"));
+            context.CreatePermission(PermissionNames.Pages_Reports, L("Reports"));
+            context.CreatePermission(PermissionNames.Pages_PurchaseHistory, L("PurchaseHistory"));
+            context.CreatePermission(PermissionNames.Pages_OrderHistory, L("OrderHistory"));
+            context.CreatePermission(PermissionNames.Pages_AddToCart, L("AddToCart"));
+            context.CreatePermission(PermissionNames.Pages_OrderList, L("OrderList"));
         }
 
         private static ILocalizableString L(string name)

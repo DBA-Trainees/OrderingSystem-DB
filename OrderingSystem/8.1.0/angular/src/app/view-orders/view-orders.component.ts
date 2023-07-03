@@ -11,7 +11,6 @@ import {
 } from "@shared/service-proxies/service-proxies";
 import { BsModalRef, BsModalService } from "ngx-bootstrap/modal";
 import { finalize } from "rxjs/operators";
-import { CreateEditOrderModalComponent } from "./create-edit-order-modal/create-edit-order-modal.component";
 
 class PagedOrdersRequestDto extends PagedRequestDto {
   keyword: string;
@@ -20,11 +19,11 @@ class PagedOrdersRequestDto extends PagedRequestDto {
 
 @Component({
   selector: "orders-component",
-  templateUrl: "orders.component.html",
+  templateUrl: "view-orders.component.html",
   styleUrls: ["../../shared/styles/main.css"],
   animations: [appModuleAnimation()],
 })
-export class OrdersComponent extends PagedListingComponentBase<OrderDto> {
+export class ViewOrdersComponent extends PagedListingComponentBase<OrderDto> {
   orders: OrderDto[] = [];
   keyword = "";
   isActive: boolean | null;
@@ -64,14 +63,6 @@ export class OrdersComponent extends PagedListingComponentBase<OrderDto> {
       });
   }
 
-  createOrder(): void {
-    this.showCreateOrEditOrderModal();
-  }
-
-  editOrder(id): void {
-    this.showCreateOrEditOrderModal(id);
-  }
-
   protected delete(order: OrderDto): void {
     abp.message.confirm(
       this.l("OrderDeleteWarningMessage", order.food.name),
@@ -85,31 +76,5 @@ export class OrdersComponent extends PagedListingComponentBase<OrderDto> {
         }
       }
     );
-  }
-
-  private showCreateOrEditOrderModal(id?: number): void{
-    let createOrEditOrderDialog: BsModalRef;
-    if(!id){
-        createOrEditOrderDialog = this._modalService.show(
-        CreateEditOrderModalComponent,
-        {
-          class: 'modal-lg',
-        }
-      );
-    }else{
-        createOrEditOrderDialog = this._modalService.show(
-            CreateEditOrderModalComponent,
-        {
-          class: 'modal-lg',
-          initialState: {
-            id: id,
-          },
-        }
-      );
-    }
-
-    createOrEditOrderDialog.content.onSave.subscribe(() =>{
-      this.refresh();
-    })
   }
 }
