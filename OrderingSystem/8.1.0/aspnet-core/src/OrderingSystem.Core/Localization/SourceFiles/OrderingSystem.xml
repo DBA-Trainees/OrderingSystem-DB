@@ -134,9 +134,9 @@
 	<text name="TypeDeleteWarningMessage">{0} will be deleted.</text>
 	<text name="ViewOrder">View Order</text>
 	<text name="AddToCart">Add To Cart</text>
-	<text name="OrderHistory">Order History</text>
+	<text name="OrderSpentReport">Order Spent Report</text>
 	<text name="OrderList">Order List</text>
 	<text name="PurchaseHistory">Purchase History</text>
-	<text name="Reports">Sales Report</text>
+	<text name="SalesReport">Sales Report</text>
   </texts>
 </localizationDictionary>

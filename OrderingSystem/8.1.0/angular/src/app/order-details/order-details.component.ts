@@ -2,9 +2,9 @@ import { Component, OnInit } from '@angular/core';
 
 @Component({
     selector: 'selector-name',
-    templateUrl: 'order-history.component.html'
+    templateUrl: 'order-details.component.html'
 })
 
-export class OrderHistoryComponent{
+export class OrderDetailsComponent{
 
 }

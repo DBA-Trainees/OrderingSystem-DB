@@ -15,9 +15,10 @@ import { TypesComponent } from './types/types.component';
 import { FoodsComponent } from './foods/foods.component';
 import { ViewOrdersComponent } from './view-orders/view-orders.component';
 import { AddToCartsComponent } from './carts/carts.component';
-import { OrderHistoryComponent } from './order-history/order-history.component';
+import { OrderSpentReportComponent } from './order-spent-report/order-spent-report.component';
 import { PurchaseHistoryComponent } from './purchase-history/purchase-history.component';
 import { ReportsComponent } from './reports/reports.component';
+import { OrderListComponent } from './order-list/order-list.component';
 
 @NgModule({
     imports: [
@@ -38,11 +39,11 @@ import { ReportsComponent } from './reports/reports.component';
                     { path: 'types', component: TypesComponent, data: { permission: 'Pages.Types' }, canActivate: [AppRouteGuard] },
                     { path: 'foods', component: FoodsComponent, data: { permission: 'Pages.Foods' },canActivate: [AppRouteGuard] },
                     { path: 'view-orders', component: ViewOrdersComponent, data: { permission: 'Pages.ViewOrders' },canActivate: [AppRouteGuard] },
-                    { path: 'carts', component: AddToCartsComponent, canActivate: [AppRouteGuard] },
-                    { path: 'order-history', component: OrderHistoryComponent, canActivate: [AppRouteGuard] },
-                    { path: 'order-list', component: OrderHistoryComponent, canActivate: [AppRouteGuard] },
-                    { path: 'purchase-history', component: PurchaseHistoryComponent, canActivate: [AppRouteGuard] },
-                    { path: 'reports', component: ReportsComponent, canActivate: [AppRouteGuard] },
+                    { path: 'carts', component: AddToCartsComponent, data: { permission: 'Pages.AddToCart' }, canActivate: [AppRouteGuard] },
+                    { path: 'order-spent-report', component: OrderSpentReportComponent, data: { permission: 'Pages.OrderSpentReport' }, canActivate: [AppRouteGuard] },
+                    { path: 'order-list', component: OrderListComponent, data: { permission: 'Pages.OrderList' }, canActivate: [AppRouteGuard] },
+                    { path: 'purchase-history', component: PurchaseHistoryComponent, data: { permission: 'Pages.PurchaseHistory' }, canActivate: [AppRouteGuard] },
+                    { path: 'reports', component: ReportsComponent, data: { permission: 'Pages.SalesReports' }, canActivate: [AppRouteGuard] },
                 
                 ]
             }

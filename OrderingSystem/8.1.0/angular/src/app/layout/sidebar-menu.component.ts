@@ -43,17 +43,72 @@ export class SidebarMenuComponent extends AppComponentBase implements OnInit {
 
     getMenuItems(): MenuItem[] {
         return [
-            new MenuItem(this.l('Divisions'), '/app/divisions', 'fas fa-user-friends', 'Pages.Divisions'),
-            new MenuItem(this.l('Customers'), '/app/customers', 'fas fa-restroom', 'Pages.Customers'),
-            new MenuItem(this.l('Food Categories'), '/app/categories', 'fas fa-hamburger', 'Pages.Categories'),
-            new MenuItem(this.l('Food Types'), '/app/types', 'fas fa-drumstick-bite', 'Pages.Types'),
-            new MenuItem(this.l('Foods'), '/app/foods', 'fa fa-cutlery','Pages.Foods'),
-            new MenuItem(this.l('ViewOrder'), '/app/view-orders', 'fa fa-shopping-cart','Pages.VIewOrders'),
-            new MenuItem(this.l('AddToCart'), '/app/carts', 'fa fa-cart-plus'),
-            new MenuItem(this.l('OrderHistory'), '/app/order-history', 'fa fa-calendar'),
-            new MenuItem(this.l('OrderList'), '/app/order-list', 'fas fa-th-list'),
-            new MenuItem(this.l('PurchaseHistory'), '/app/purchase-history', 'fa fa-history'),
-            new MenuItem(this.l('Reports'), '/app/reports', 'fa fa-pie-chart'),
+            new MenuItem(
+                this.l('Divisions'), 
+                '/app/divisions', 
+                'fas fa-user-friends', 
+                'Pages.Divisions'
+                ),
+            new MenuItem(
+                this.l('Customers'), 
+                '/app/customers', 
+                'fas fa-restroom', 
+                'Pages.Customers'
+                ),
+            new MenuItem(
+                this.l('Food Categories'), 
+                '/app/categories', 
+                'fas fa-hamburger', 
+                'Pages.Categories'
+                ),
+            new MenuItem(
+                this.l('Food Types'), 
+                '/app/types', 
+                'fas fa-drumstick-bite', 
+                'Pages.Types'
+                ),
+            new MenuItem(
+                this.l('Foods'), 
+                '/app/foods', 
+                'fa fa-cutlery', 
+                'Pages.Foods'
+                ),
+            new MenuItem(
+                this.l('ViewOrder'), 
+                '/app/view-orders', 
+                'fa fa-shopping-cart',
+                'Pages.ViewOrders'
+                ),
+            new MenuItem(
+                this.l('AddToCart'), 
+                '/app/carts', 
+                'fa fa-cart-plus',
+                'Pages.AddToCart'
+                ),
+            new MenuItem(
+                this.l('OrderSpentReport'), 
+                '/app/order-spent-report', 
+                'fa fa-calendar',
+                'Pages.OrderSpentReport'
+                ),
+            new MenuItem(
+                this.l('OrderList'), 
+                '/app/order-list', 
+                'fas fa-th-list',
+                'Pages.OrderList'
+                ),
+            new MenuItem(
+                this.l('PurchaseHistory'), 
+                '/app/purchase-history', 
+                'fa fa-history',
+                'Pages.PurchaseHistory'
+                ),
+            new MenuItem(
+                this.l('Reports'), 
+                '/app/reports', 
+                'fa fa-pie-chart',
+                'Pages.SalesReports'
+                ),
             new MenuItem(this.l('About'), '/app/about', 'fas fa-info-circle'),
             new MenuItem(this.l('HomePage'), '/app/home', 'fas fa-home'),            
             new MenuItem(

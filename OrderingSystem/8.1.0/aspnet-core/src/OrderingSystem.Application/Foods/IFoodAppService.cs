@@ -13,5 +13,6 @@ namespace OrderingSystem.Foods
     public interface IFoodAppService : IAsyncCrudAppService <FoodDto, int, PagedFoodResultRequestDto, CreateFoodDto, FoodDto>
     {
         Task<PagedResultDto<FoodDto>> GetAllAsync(PagedFoodResultRequestDto input);
+        Task<FoodDto> CreateAsync(CreateFoodDto input);
     }
 }

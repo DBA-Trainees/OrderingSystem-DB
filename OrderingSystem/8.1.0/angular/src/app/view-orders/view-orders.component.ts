@@ -63,7 +63,11 @@ export class ViewOrdersComponent extends PagedListingComponentBase<OrderDto> {
       });
   }
 
-  protected delete(order: OrderDto): void {
+  addToCart(){
+    
+  }
+
+  /* protected delete(order: OrderDto): void {
     abp.message.confirm(
       this.l("OrderDeleteWarningMessage", order.food.name),
       undefined,
@@ -76,5 +80,5 @@ export class ViewOrdersComponent extends PagedListingComponentBase<OrderDto> {
         }
       }
     );
-  }
+  } */
 }

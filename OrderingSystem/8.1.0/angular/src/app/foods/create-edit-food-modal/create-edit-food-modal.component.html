@@ -28,29 +28,6 @@
           <div class="form-group row required">
             <label 
             class="col-md-3 col-form-label" 
-            for="imageType">
-              {{ "Image Type" | localize }}
-            </label>
-            <div class="col-md-9">
-              <input
-                type="text"
-                class="form-control"
-                name="imageType"
-                id="imageType"
-                required
-                [(ngModel)]="food.imageType"
-                #imageTypeModel="ngModel"
-                #imageTypeEl
-              />
-              <abp-validation-summary
-                [control]="imageTypeModel"
-                [controlEl]="imageTypeEl"
-              ></abp-validation-summary>
-            </div>
-          </div>
-          <div class="form-group row required">
-            <label 
-            class="col-md-3 col-form-label" 
             for="foodName">
               {{ "Food Name" | localize }}
             </label>
@@ -130,29 +107,34 @@
                 (ngModelChange)="selectedType=$event"          
                 >
                 <option *ngFor="let type of types"
-                [ngValue]="type.name">{{type.name}}</option>
+                [ngValue]="type.id">{{type.name}}</option>
                 </select>
             </div>            
         </div>
-        <div class="form-group row required">
+        <!-- <div class="form-group row mb-0 required">
             <label 
             class="col-md-3 col-form-label" 
             for="foodSize">
                 {{ "Size" | localize }}
             </label>
-            <div class="col-md-9">
-                <select 
-                class="form-control" 
-                name="orderStatus" 
-                id="orderStatus" 
-                required                    
-                [(ngModel)]="selectedSize">
-                    <option 
-                    *ngFor="let foodsize of foodSizes" 
-                    [ngValue]="foodsize.id">{{foodsize.name}}</option>
-                </select>
-            </div>
-        </div>
+            <div class="form-group col-md-6">
+              <ng-container *ngFor="let foodsize of foodSizes">
+                <div class="col-md-6">
+                  <div class="custom-control custom-checkbox">
+                    <input
+                    type="checkbox"
+                    class="form-control"              
+                    name="foodSize"
+                    id="foodSize"
+                    required
+                    [(ngModel)]="food.size"
+                  />
+                  <label class="custom-control-label">{{foodsize.name}}</label><br>
+                  </div>
+                </div>
+              </ng-container>   
+            </div>         
+        </div> -->
           <div class="form-group row required">
             <label 
             class="col-md-3 col-form-label" 
@@ -161,7 +143,7 @@
             </label>
             <div class="col-md-9">
               <input
-                type="double"
+                type="number"
                 class="form-control"
                 name="foodPrice"
                 id="foodPrice"

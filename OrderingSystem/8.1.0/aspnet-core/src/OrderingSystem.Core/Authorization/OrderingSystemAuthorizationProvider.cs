@@ -18,9 +18,9 @@ namespace OrderingSystem.Authorization
             context.CreatePermission(PermissionNames.Pages_Types, L("Type"));
             context.CreatePermission(PermissionNames.Pages_Foods, L("Food"));
             context.CreatePermission(PermissionNames.Pages_ViewOrders, L("ViewOrder"));
-            context.CreatePermission(PermissionNames.Pages_Reports, L("Reports"));
+            context.CreatePermission(PermissionNames.Pages_SalesReports, L("SalesReport"));
             context.CreatePermission(PermissionNames.Pages_PurchaseHistory, L("PurchaseHistory"));
-            context.CreatePermission(PermissionNames.Pages_OrderHistory, L("OrderHistory"));
+            context.CreatePermission(PermissionNames.Pages_OrderSpentReport, L("OrderSpentReport"));
             context.CreatePermission(PermissionNames.Pages_AddToCart, L("AddToCart"));
             context.CreatePermission(PermissionNames.Pages_OrderList, L("OrderList"));
         }

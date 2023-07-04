@@ -4497,7 +4497,8 @@ export interface ICreateDivisionDto {
 
 export class CreateFoodDto implements ICreateFoodDto {
     image: string | undefined;
-    imageType: string | undefined;
+    imageName: string | undefined;
+    imageFileType: string | undefined;
     name: string | undefined;
     availability: boolean;
     quantity: number;
@@ -4518,7 +4519,8 @@ export class CreateFoodDto implements ICreateFoodDto {
     init(_data?: any) {
         if (_data) {
             this.image = _data["image"];
-            this.imageType = _data["imageType"];
+            this.imageName = _data["imageName"];
+            this.imageFileType = _data["imageFileType"];
             this.name = _data["name"];
             this.availability = _data["availability"];
             this.quantity = _data["quantity"];
@@ -4539,7 +4541,8 @@ export class CreateFoodDto implements ICreateFoodDto {
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
         data["image"] = this.image;
-        data["imageType"] = this.imageType;
+        data["imageName"] = this.imageName;
+        data["imageFileType"] = this.imageFileType;
         data["name"] = this.name;
         data["availability"] = this.availability;
         data["quantity"] = this.quantity;
@@ -4560,7 +4563,8 @@ export class CreateFoodDto implements ICreateFoodDto {
 
 export interface ICreateFoodDto {
     image: string | undefined;
-    imageType: string | undefined;
+    imageName: string | undefined;
+    imageFileType: string | undefined;
     name: string | undefined;
     availability: boolean;
     quantity: number;
@@ -5312,7 +5316,8 @@ export interface IFlatPermissionDto {
 export class FoodDto implements IFoodDto {
     id: number;
     image: string | undefined;
-    imageType: string | undefined;
+    imageName: string | undefined;
+    imageFileType: string | undefined;
     name: string | undefined;
     availability: boolean;
     quantity: number;
@@ -5336,7 +5341,8 @@ export class FoodDto implements IFoodDto {
         if (_data) {
             this.id = _data["id"];
             this.image = _data["image"];
-            this.imageType = _data["imageType"];
+            this.imageName = _data["imageName"];
+            this.imageFileType = _data["imageFileType"];
             this.name = _data["name"];
             this.availability = _data["availability"];
             this.quantity = _data["quantity"];
@@ -5360,7 +5366,8 @@ export class FoodDto implements IFoodDto {
         data = typeof data === 'object' ? data : {};
         data["id"] = this.id;
         data["image"] = this.image;
-        data["imageType"] = this.imageType;
+        data["imageName"] = this.imageName;
+        data["imageFileType"] = this.imageFileType;
         data["name"] = this.name;
         data["availability"] = this.availability;
         data["quantity"] = this.quantity;
@@ -5384,7 +5391,8 @@ export class FoodDto implements IFoodDto {
 export interface IFoodDto {
     id: number;
     image: string | undefined;
-    imageType: string | undefined;
+    imageName: string | undefined;
+    imageFileType: string | undefined;
     name: string | undefined;
     availability: boolean;
     quantity: number;
