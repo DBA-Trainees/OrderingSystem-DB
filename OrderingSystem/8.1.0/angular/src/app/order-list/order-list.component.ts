@@ -2,10 +2,10 @@ import { Component, Injector, OnInit } from '@angular/core';
 import { appModuleAnimation } from '@shared/animations/routerTransition';
 import { AppComponentBase } from '@shared/app-component-base';
 import { PagedListingComponentBase, PagedRequestDto } from '@shared/paged-listing-component-base';
-import { OrderDto, OrderDtoPagedResultDto, OrderServiceProxy } from '@shared/service-proxies/service-proxies';
+import { FoodDto, FoodDtoPagedResultDto, FoodServiceProxy, OrderDto, OrderDtoPagedResultDto, OrderServiceProxy } from '@shared/service-proxies/service-proxies';
 import { finalize } from 'rxjs/operators';
 
-class PagedOrdersRequestDto extends PagedRequestDto {
+class PagedFoodsRequestDto extends PagedRequestDto {
     keyword: string;
     isActive: boolean | null;
   }
@@ -17,27 +17,29 @@ class PagedOrdersRequestDto extends PagedRequestDto {
     animations: [appModuleAnimation()],
 })
 
-export class OrderListComponent extends PagedListingComponentBase<OrderDto> {
+export class OrderListComponent extends PagedListingComponentBase<FoodDto> {
     orders: OrderDto[] = [];
+    foods: FoodDto[] = [];
     keyword = "";
     isActive: boolean | null;
 
     constructor(
         injector: Injector,
+        private _foodService : FoodServiceProxy,
         private _orderService: OrderServiceProxy
     ){
         super(injector)
     }
 
     protected list(
-        request: PagedOrdersRequestDto,
+        request: PagedFoodsRequestDto,
         pageNumber: number,
         finishedCallback: Function
       ): void {
         request.keyword = this.keyword;
         request.isActive = this.isActive;
     
-        this._orderService
+        this._foodService
           .getAll(
             request.keyword,
             request.isActive,
@@ -49,8 +51,8 @@ export class OrderListComponent extends PagedListingComponentBase<OrderDto> {
               finishedCallback();
             })
           )
-          .subscribe((result: OrderDtoPagedResultDto) => {
-            this.orders = result.items;
+          .subscribe((result: FoodDtoPagedResultDto) => {
+            this.foods = result.items;
             this.showPaging(result, pageNumber);
           });
       }

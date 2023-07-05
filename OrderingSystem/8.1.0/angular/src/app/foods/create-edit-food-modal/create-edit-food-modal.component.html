@@ -22,30 +22,49 @@
               id="image"
               required
               [(ngModel)]="food.image"
+              (change)="displayImage($event)"
             />
           </div>
         </div>
           <div class="form-group row required">
             <label 
             class="col-md-3 col-form-label" 
-            for="foodName">
+            for="name">
               {{ "Food Name" | localize }}
             </label>
             <div class="col-md-9">
               <input
                 type="text"
                 class="form-control"
-                name="foodName"
-                id="foodName"
+                name="name"
+                id="name"
                 required
                 [(ngModel)]="food.name"
-                #foodNameModel="ngModel"
-                #foodNameEl
+                #nameModel="ngModel"
+                #nameEl
               />
               <abp-validation-summary
-                [control]="foodNameModel"
-                [controlEl]="foodNameEl"
+                [control]="nameModel"
+                [controlEl]="nameEl"
               ></abp-validation-summary>
+            </div>
+          </div>
+          <div class="form-group row required">
+            <label 
+            class="col-md-3 col-form-label" 
+            for="availability">
+              {{ "Is Available?" | localize }}
+            </label>
+            <div class="custom-control custom-checkbox">
+              <input
+                type="checkbox"
+                class="custom-control-input"
+                name="availability"
+                id="availability{}"
+                required
+                [checked]="true"
+              />
+              <label class="custom-control-label">Available</label>
             </div>
           </div>
           <div class="form-group row required">
@@ -111,6 +130,28 @@
                 </select>
             </div>            
         </div>
+        <!-- <div class="form-group row mb-0">
+          <label class="col-md-3 col-form-label" for="foodSize">
+            {{ "Size" | localize }}
+          </label>
+          <ng-container *ngFor="let foodSize of foodSizes">
+            <div class="col-md-3">
+              <div class="custom-control custom-checkbox">
+                <input
+                  type="checkbox"
+                  class="custom-control-input"
+                  name="foodSize"
+                  id="foodSize{{ foodSize.id }}"
+                  required
+                  [(ngModel)]="food.size"                  
+                />
+                <label class="custom-control-label" for="foodSize{{ foodSize.id }}">
+                  {{ foodSize.name }}
+                </label>
+              </div>
+            </div>
+          </ng-container>
+        </div> -->
         <!-- <div class="form-group row mb-0 required">
             <label 
             class="col-md-3 col-form-label" 

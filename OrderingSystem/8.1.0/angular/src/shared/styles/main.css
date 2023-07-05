@@ -20,3 +20,14 @@ button {
 .action-th{
     width: 150px;
 }
+
+img{
+    width:  auto;
+    height: 150px;
+    display: block;
+    margin: auto;
+}
+
+th,td,img{
+    text-align: center;
+}

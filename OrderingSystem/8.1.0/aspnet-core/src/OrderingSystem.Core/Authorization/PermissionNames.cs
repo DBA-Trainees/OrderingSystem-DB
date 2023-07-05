@@ -19,5 +19,6 @@
         public const string Pages_AddToCart = "Pages.Carts";
         public const string Pages_OrderList = "Pages.OrderList";
         public const string Pages_OrderSpentReport = "Pages.OrderSpentReport";
+        public const string Pages_OrderDetails = "Pages.OrderDetails";
     }
 }

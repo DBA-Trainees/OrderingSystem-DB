@@ -23,6 +23,7 @@ namespace OrderingSystem.Authorization
             context.CreatePermission(PermissionNames.Pages_OrderSpentReport, L("OrderSpentReport"));
             context.CreatePermission(PermissionNames.Pages_AddToCart, L("AddToCart"));
             context.CreatePermission(PermissionNames.Pages_OrderList, L("OrderList"));
+            context.CreatePermission(PermissionNames.Pages_OrderDetails, L("OrderDetails"));
         }
 
         private static ILocalizableString L(string name)

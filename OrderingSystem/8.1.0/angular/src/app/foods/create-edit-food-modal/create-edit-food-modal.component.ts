@@ -18,11 +18,7 @@ import { HttpClient } from "@angular/common/http";
 })
 export class CreateEditFoodModalComponent extends AppComponentBase implements OnInit {
 
-  foodSizes = [
-    { id: 1, name: 'Regular' },
-    { id: 2, name: 'Medium' },
-    { id: 3, name: 'Large' }
-  ];
+  foodSizes: string[] = ['Regular', 'Medium', 'Large'];
   saving = false;
   food = new FoodDto();
   types: TypeDto[] = [];
@@ -31,13 +27,10 @@ export class CreateEditFoodModalComponent extends AppComponentBase implements On
   selectedCategory: number = null;
   selectedType: number = null;
   selectedSize: string = null;
-  checkAllSize: boolean;
+  isAvailable: boolean= true;
 
   @Output() onSave = new EventEmitter<any>();
-  base64textString: string;
-  base64Image: string;
   base64ImagePath: string;
-  imageTypeExtension: string;
 
   constructor(
     injector: Injector,
@@ -70,25 +63,34 @@ export class CreateEditFoodModalComponent extends AppComponentBase implements On
     });
   }
 
-  save(): void {
-    this.saving = true;
-    const isBase64Encoded = this.food.image.startsWith('data:image');
+  displayImage(event: any): void{
+    const foodFile = event.target.files[0];
+    const foodFileType = foodFile.type;
+    const foodFileName = foodFile.name;
+  
+    const fileNameWithoutExtension = foodFileName.split('.').slice(0, -1).join('.');
+    const fileTypeOnly = foodFileName.split('.').pop();
+  
+    const reader = new FileReader();
+    reader.onload = (e: any) => {
+      const base64String = e.target.result.split(',')[1];
+      this.food.image = base64String;
+      this.food.imageFileType = fileTypeOnly;
+      this.food.imageName = fileNameWithoutExtension;
+    };
+    reader.readAsDataURL(foodFile);
+  }
 
-    if (!isBase64Encoded) {
-      const reader = new FileReader();
-      reader.onload = () => {
-        this.base64textString = reader.result as string;
-        this.food.image = this.base64textString.split(',')[1];
-        this.saveFood();
-      };
-      const blob = new Blob([this.food.image], { type: 'data/image' });
-      reader.readAsDataURL(blob);
-    } else {
-      this.saveFood();
+  isFoodAvailable(){
+    if(this.isAvailable){
+      this.food.availability=this.isAvailable;
+    }else{
+      this.food.availability=false;
     }
   }
 
-  saveFood(): void {
+  save(): void {
+    this.saving = true;
     this.food.categoryId = this.selectedCategory;
     this.food.typeId = this.selectedType;
     this.food.size = this.selectedSize;
