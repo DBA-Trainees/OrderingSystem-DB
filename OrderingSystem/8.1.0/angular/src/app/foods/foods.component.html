@@ -98,7 +98,7 @@
                                 'price']"
                                 >
                                     <td>{{ food.id }}</td>
-                                    <td><img class="center" [src]="'data:image/png;base64,' + food.image" /></td>
+                                    <td><img class="center" [src]="'data:image/' + food.imageType + ';base64,' + food.image" /></td>
                                     <td>{{ food.imageName }}</td>
                                     <td>{{ food.name }}</td>
                                     <td *ngIf="food.availability==1; else NotAvailable "><strong>Available</strong></td>

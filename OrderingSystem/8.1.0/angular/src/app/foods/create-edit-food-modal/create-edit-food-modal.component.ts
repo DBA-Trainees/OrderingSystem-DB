@@ -18,7 +18,11 @@ import { HttpClient } from "@angular/common/http";
 })
 export class CreateEditFoodModalComponent extends AppComponentBase implements OnInit {
 
-  foodSizes: string[] = ['Regular', 'Medium', 'Large'];
+  foodSizes=[
+    {id: 1, value:"Regular"},
+    {id: 2, value:"Medium"},
+    {id: 3, value:"Large"}
+  ];
   saving = false;
   food = new FoodDto();
   types: TypeDto[] = [];
@@ -81,12 +85,12 @@ export class CreateEditFoodModalComponent extends AppComponentBase implements On
     reader.readAsDataURL(foodFile);
   }
 
-  isFoodAvailable(){
-    if(this.isAvailable){
-      this.food.availability=this.isAvailable;
-    }else{
-      this.food.availability=false;
-    }
+  isFoodAvailable(event: any): void{
+    this.food.availability = event.target.checked;
+  }
+
+  isFoodSizeChecked(event: any): void{
+    this.food.size = event.target.checked;
   }
 
   save(): void {

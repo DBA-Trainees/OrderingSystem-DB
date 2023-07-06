@@ -56,64 +56,34 @@
                     </div>
                 </div>
             </div>
-            <tabset>
-                <div class="row">
-                    <div class="col-1.9 mb-5" *ngFor="let food of foods">
-                        <div class="card mb-1">
-                            <div class="card-body">
-                                <div class="card-img-wrapper">
-                                    <img [src]="'data:image/png;base64,' + food.image" class="center" />
-                                </div>
-                                <div class="card-text">
-                                    <h6 class="card-text text-center">
-                                        <!-- <i class="fa fa-user me-2"> </i>  -->
-                                        <strong>{{food.name}}</strong>
-                                    </h6>
-                                    <h6 class="text-center">{{food.category?.name}}</h6>
-                                    <p class="card-text text-muted text-center bg-info"><strong>₱ {{food.price}}</strong></p>
-                                    <ul class="list-inline animate text-center">
-                                        <li class="list-inline-item ">
-                                            <button class="btn text-center inline bg-blue"><i class="fa fa-shopping-basket"></i> Cart</button>                                        
-                                        </li>
-                                        <li class="list-inline-item">
-                                            <button class="btn text-center inline bg-success"><i class="fa fa-cart-plus"></i> Buy</button>
-                                        </li>
-                                    </ul>
-                                </div>
+            <div class="row">
+                <div class="col-2 mb-5" *ngFor="let food of foods">
+                    <div class="card mb-4">
+                        <div class="card-body">
+                            <div class="card-body p-1">
+                                <img [src]="'data:image/png;base64,' + food.image" class="center" />
                             </div>
+                            <h5 class="card-text text-center mb-1">
+                                <!-- <i class="fa fa-user me-2"> </i>  -->
+                                <strong>{{food.name}}</strong>
+                            </h5>
+                            <h6 class="text-center">{{food.category?.name}}</h6>
+                            <h5 class="card-text text-muted text-center bg-info"><strong>₱ {{food.price}}.00</strong>
+                            </h5>
                         </div>
+                        <ul class="list-inline animate text-center">
+                            <li class="list-inline-item ">
+                                <button class="btn text-center inline bg-blue"><i class="fa fa-shopping-basket"></i>
+                                    Cart</button>
+                            </li>
+                            <li class="list-inline-item">
+                                <button class="btn text-center inline bg-success"><i class="fa fa-cart-plus"></i>
+                                    Buy</button>
+                            </li>
+                        </ul>
                     </div>
                 </div>
-            </tabset>
-            <tabset>
-                <div class="row">
-                    <div class="col-1.9 mb-5" *ngFor="let food of foods">
-                        <div class="card mb-1">
-                            <div class="card-body">
-                                <div class="card-img-wrapper">
-                                    <img [src]="'data:image/png;base64,' + food.image" class="center" />
-                                </div>
-                                <div class="card-text">
-                                    <h6 class="card-text text-center">
-                                        <!-- <i class="fa fa-user me-2"> </i>  -->
-                                        <strong>{{food.name}}</strong>
-                                    </h6>
-                                    <h6 class="text-center">{{food.category?.name}}</h6>
-                                    <p class="card-text text-muted text-center bg-info"><strong>₱ {{food.price}}</strong></p>
-                                    <ul class="list-inline animate text-center">
-                                        <li class="list-inline-item ">
-                                            <button class="btn text-center inline bg-blue"><i class="fa fa-shopping-basket"></i> Cart</button>                                        
-                                        </li>
-                                        <li class="list-inline-item">
-                                            <button class="btn text-center inline bg-success"><i class="fa fa-cart-plus"></i> Buy</button>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </tabset>
+            </div>
         </div>
         <div class="card-footer table-card-footer bg-light border-top">
             <div class="row">

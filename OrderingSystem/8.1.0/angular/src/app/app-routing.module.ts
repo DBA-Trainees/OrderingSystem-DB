@@ -19,6 +19,7 @@ import { OrderSpentReportComponent } from './order-spent-report/order-spent-repo
 import { PurchaseHistoryComponent } from './purchase-history/purchase-history.component';
 import { ReportsComponent } from './reports/reports.component';
 import { OrderListComponent } from './order-list/order-list.component';
+import { OrderDetailsComponent } from './order-details/order-details.component';
 
 @NgModule({
     imports: [
@@ -44,6 +45,7 @@ import { OrderListComponent } from './order-list/order-list.component';
                     { path: 'order-list', component: OrderListComponent, data: { permission: 'Pages.OrderList' }, canActivate: [AppRouteGuard] },
                     { path: 'purchase-history', component: PurchaseHistoryComponent, data: { permission: 'Pages.PurchaseHistory' }, canActivate: [AppRouteGuard] },
                     { path: 'reports', component: ReportsComponent, data: { permission: 'Pages.SalesReports' }, canActivate: [AppRouteGuard] },
+                    { path: 'order-details', component: OrderDetailsComponent, canActivate: [AppRouteGuard] },
                 
                 ]
             }
