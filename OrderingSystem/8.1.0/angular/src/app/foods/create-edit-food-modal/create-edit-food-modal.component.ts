@@ -9,7 +9,6 @@ import {
   TypeServiceProxy
 } from "@shared/service-proxies/service-proxies";
 import { BsModalRef } from "ngx-bootstrap/modal";
-import { HttpClient } from "@angular/common/http";
 
 @Component({
   selector: "create-edit-food-modal",
@@ -30,7 +29,7 @@ export class CreateEditFoodModalComponent extends AppComponentBase implements On
   id: number = 0;
   selectedCategory: number = null;
   selectedType: number = null;
-  selectedSize: string = null;
+  selectedSize: string[] =[];
   isAvailable: boolean= true;
 
   @Output() onSave = new EventEmitter<any>();
@@ -89,15 +88,22 @@ export class CreateEditFoodModalComponent extends AppComponentBase implements On
     this.food.availability = event.target.checked;
   }
 
-  isFoodSizeChecked(event: any): void{
-    this.food.size = event.target.checked;
+  isFoodSizeChecked(size: string, checked: boolean): void{
+   if(checked){
+    this.selectedSize.push(size);
+   }else{
+    const index = this.selectedSize.indexOf(size);
+    if(index !== -1){
+      this.selectedSize.splice(index, 1);
+    }
+   }
   }
 
   save(): void {
     this.saving = true;
     this.food.categoryId = this.selectedCategory;
     this.food.typeId = this.selectedType;
-    this.food.size = this.selectedSize;
+    this.food.size = this.selectedSize[0];
 
     if (this.id !== 0) {
       this._foodService.update(this.food).subscribe(

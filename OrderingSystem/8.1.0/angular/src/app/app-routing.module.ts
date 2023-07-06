@@ -45,7 +45,7 @@ import { OrderDetailsComponent } from './order-details/order-details.component';
                     { path: 'order-list', component: OrderListComponent, data: { permission: 'Pages.OrderList' }, canActivate: [AppRouteGuard] },
                     { path: 'purchase-history', component: PurchaseHistoryComponent, data: { permission: 'Pages.PurchaseHistory' }, canActivate: [AppRouteGuard] },
                     { path: 'reports', component: ReportsComponent, data: { permission: 'Pages.SalesReports' }, canActivate: [AppRouteGuard] },
-                    { path: 'order-details', component: OrderDetailsComponent, canActivate: [AppRouteGuard] },
+                    { path: 'order-details', component: OrderDetailsComponent, data: { permission: 'Pages.OrderDetails' },canActivate: [AppRouteGuard] },
                 
                 ]
             }
