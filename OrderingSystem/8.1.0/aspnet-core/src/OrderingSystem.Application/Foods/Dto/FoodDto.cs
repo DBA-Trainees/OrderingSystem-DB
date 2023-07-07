@@ -13,7 +13,7 @@ namespace OrderingSystem.Foods.Dto
 {
     [AutoMapTo(typeof(Food))]
     [AutoMapFrom(typeof(Food))]
-    public class FoodDto :EntityDto<int>
+    public class FoodDto : EntityDto<int>
     {
         public byte[] Image { get; set; }
         public string ImageName { get; set; }

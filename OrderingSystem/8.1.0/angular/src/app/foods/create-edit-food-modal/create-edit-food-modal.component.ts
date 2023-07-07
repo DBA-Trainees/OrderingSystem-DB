@@ -8,6 +8,7 @@ import {
   TypeDto,
   TypeServiceProxy
 } from "@shared/service-proxies/service-proxies";
+import { size } from "lodash-es";
 import { BsModalRef } from "ngx-bootstrap/modal";
 
 @Component({
@@ -31,6 +32,7 @@ export class CreateEditFoodModalComponent extends AppComponentBase implements On
   selectedType: number = null;
   selectedSize: string[] =[];
   isAvailable: boolean= true;
+  checkedFoodSize: {[key: string]: boolean} = {};
 
   @Output() onSave = new EventEmitter<any>();
   base64ImagePath: string;
@@ -84,26 +86,52 @@ export class CreateEditFoodModalComponent extends AppComponentBase implements On
     reader.readAsDataURL(foodFile);
   }
 
+  /* setFoodSizeStatus():void{
+    _map(this.foodSizes, (item) =>{
+      this.checkedFoodSize[item.value] = this.isFoodSizeChecked(
+        item.value
+      );
+    })
+  } */
+
   isFoodAvailable(event: any): void{
-    this.food.availability = event.target.checked;
+    this.isAvailable = event.target.checked;
   }
 
-  isFoodSizeChecked(size: string, checked: boolean): void{
-   if(checked){
-    this.selectedSize.push(size);
-   }else{
-    const index = this.selectedSize.indexOf(size);
-    if(index !== -1){
+  isFoodSizeChecked(size: string): boolean{
+   return this.selectedSize[size] || false;
+  }
+
+  /* onFoodSizeChange(size: string, checked: boolean): void{
+    if(checked){
+      if (!this.food.size){
+        this.food.size = [];
+      }
+      this.food.size.push(size);
+    }else{
+      const index = this.food.size.indexOf(size);
+      if (index !== -1){
+        this.food.size.splice(index, 1);
+      }
+    }
+  } */
+
+  onFoodSizeChanged(foodSize: {id: number; value: string}, $event){
+    const size = foodSize.value;
+    this.selectedSize[size] = $event.target.checked;
+
+    if($event.target.checked && ! this.food.size.includes(size)){
+      this.selectedSize.push(size);
+    }else if (!$event.target.checked && this.food.size.includes(size)) {
+      const index = this.food.size.indexOf(size);
       this.selectedSize.splice(index, 1);
     }
-   }
   }
 
   save(): void {
     this.saving = true;
     this.food.categoryId = this.selectedCategory;
     this.food.typeId = this.selectedType;
-    this.food.size = this.selectedSize[0];
 
     if (this.id !== 0) {
       this._foodService.update(this.food).subscribe(

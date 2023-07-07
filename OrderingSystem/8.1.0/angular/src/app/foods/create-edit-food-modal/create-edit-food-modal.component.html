@@ -155,13 +155,12 @@
                 <input
                 type="checkbox"
                   class="form-check-input"
-                  name="foodSize"
-                  id="'foodSize' + foodSize.id"
-                  [value]="foodSize.value"
-                  [(ngModel)]="selectedSize"
-                  (change)="isFoodSizeChecked(foodSize.value, $event.target.checked)"
+                  [id]="foodSize.id"
+                  [name]="foodSize.value"
+                  [value]="isAvailable"
+                  (change)="isFoodAvailable($event)"
                 />
-                <label class="form-check-label" for="'foodSize'+ foodSize.id">
+                <label class="form-check-label" for="foodSize.id">
                   {{ foodSize.value }}
                 </label>
               </div>
