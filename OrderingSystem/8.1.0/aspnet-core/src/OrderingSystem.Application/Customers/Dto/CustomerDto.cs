@@ -14,7 +14,6 @@ namespace OrderingSystem.Customers.Dto
     [AutoMapFrom(typeof(Customer))]
     public class CustomerDto : EntityDto<int>
     {
-        public int Id { get; set; }
         public string Name { get; set; }
         public int DivisionId { get; set; }
         public DivisionDto Division { get; set; }

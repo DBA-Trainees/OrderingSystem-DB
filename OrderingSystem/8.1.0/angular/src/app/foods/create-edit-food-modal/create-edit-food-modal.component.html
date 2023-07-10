@@ -2,199 +2,195 @@
   class="form-horizontal"
   autocomplete="off"
   #createFoodModal="ngForm"
-  (ngSubmit)="save()">
-  <abp-modal-header 
-  [title]="'CreateNewFood' | localize" 
-  (onCloseClick)="bsModalRef.hide()"
+  (ngSubmit)="save()"
+>
+  <abp-modal-header
+    [title]="'CreateNewFood' | localize"
+    (onCloseClick)="bsModalRef.hide()"
   ></abp-modal-header>
   <div class="modal-body">
-        <div class="form-group row required">
-          <label 
-          class="col-md-2 col-form-label" 
-          for="image">
-            {{ "Food Photo" | localize }}
-          </label>
-          <div class="col-md-10">
-            <input
-              type="file"
-              class="form-control"
-              name="image"
-              id="image"
-              required
-              (change)="displayImage($event)"
-            /><br>
-            <div class="col-md-10">
-              <img 
-              class="center" 
-              [src]="'data:image/' + food.imageFileType + ';base64,' + food.image" 
-              /><br>
-              <input 
-              *ngIf="food.id > 0"
-              type="text"
-              class="form-control"
-              name="image"
-              id="image"
-              [(ngModel)]="food.imageName + food.imageFileType"
-              required
-              />              
-            </div>
-          </div>
+    <div class="form-group row required">
+      <label class="col-md-2 col-form-label" for="image">
+        {{ "Food Photo" | localize }}
+      </label>
+      <div class="col-md-10">
+        <input
+          type="file"
+          class="form-control"
+          name="image"
+          id="image"
+          required
+          (change)="displayImage($event)"
+        /><br />
+        <div class="col-md-10">
+          <img
+            *ngIf="food.imageFileType && food.image"
+            class="center"
+            [src]="'data:image/' + food.imageFileType + ';base64,' + food.image"
+          />
+          <br />
+          <input
+            *ngIf="food.id > 0"
+            type="text"
+            class="form-control"
+            name="image"
+            id="image"
+            [(ngModel)]="food.imageName + food.imageFileType"
+            required
+          />
         </div>
-          <div class="form-group row required">
-            <label 
-            class="col-md-2 col-form-label" 
-            for="name">
-              {{ "Food Name" | localize }}
-            </label>
-            <div class="col-md-10">
-              <input
-                type="text"
-                class="form-control"
-                name="name"
-                id="name"
-                required
-                [(ngModel)]="food.name"
-                #nameModel="ngModel"
-                #nameEl
-              />
-              <abp-validation-summary
-                [control]="nameModel"
-                [controlEl]="nameEl"
-              ></abp-validation-summary>
-            </div>
-          </div>
-          <div class="form-group row required">
-            <label 
-            class="col-md-2 col-form-label" 
-            for="availability">
-              {{ "Is Available?" | localize }}
-            </label>
-            <div class="form-check form-check-inline">
-              <input
-                type="checkbox"
-                class="form-check-input"
-                name="availability"
-                id="availability"                
-                [checked]="food.availability"
-                (change)="isFoodAvailable($event)"
-              />
-              <label class="form-check-label"> Available</label>
-            </div>
-          </div>
-          <div class="form-group row required">
-            <label 
-            class="col-md-2 col-form-label" 
-            for="foodQty">
-              {{ "Qty" | localize }}
-            </label>
-            <div class="col-md-10">
-              <input
-                type="number"
-                class="form-control"
-                name="foodQty"
-                id="foodQty"
-                required
-                [(ngModel)]="food.quantity"
-                #foodQtyModel="ngModel"
-                #foodQtyEl
-              />
-              <abp-validation-summary
-                [control]="foodQtyModel"
-                [controlEl]="foodQtyEl"
-              ></abp-validation-summary>
-            </div>
-          </div>
-        <div class="form-group row required">
-            <label 
-            class="col-md-2 col-form-label" 
-            for="categoryName">
-                {{ "Food Category" | localize }}
-            </label>
-            <div class="col-md-10">
-                <select 
-                class="form-control"
-                name="categoryName"
-                id="categoryName"
-                required            
-                [ngModel]="selectedCategory"     
-                (ngModelChange)="selectedCategory=$event"          
-                >
-                <option *ngFor="let Category of categories"
-                [ngValue]="Category.id">{{Category.name}}</option>
-                </select>
-            </div>            
-        </div>
-        <div class="form-group row required">
-            <label 
-            class="col-md-2 col-form-label" 
-            for="typeName">
-                {{ "Food Type" | localize }}
-            </label>
-            <div class="col-md-10">
-                <select 
-                class="form-control"
-                name="typeName"
-                id="typeName"
-                required            
-                [ngModel]="selectedType"     
-                (ngModelChange)="selectedType=$event"          
-                >
-                <option *ngFor="let type of types"
-                [ngValue]="type.id">{{type.name}}</option>
-                </select>
-            </div>            
-        </div>
-        <div class="form-group row required">
-          <label 
-           for="foodSize"
-           class="col-md-4 col-form-label">
-           {{"Size" | localize}}
-          </label>
-            <ng-container *ngFor="let foodSize of foodSizes">
-              <div class="form-check form-check-inline">
-                <input
-                type="checkbox"
-                  class="form-check-input"
-                  [id]="foodSize.id"
-                  [name]="foodSize.value"
-                  [value]="isAvailable"
-                  (change)="isFoodAvailable($event)"
-                />
-                <label class="form-check-label" for="foodSize.id">
-                  {{ foodSize.value }}
-                </label>
-              </div>
-            </ng-container>          
-        </div>
-          <div class="form-group row required">
-            <label 
-            class="col-md-2 col-form-label" 
-            for="foodPrice">
-              {{ "Price" | localize }}
-            </label>
-            <div class="col-md-10">
-              <input
-                type="number"
-                class="form-control"
-                name="foodPrice"
-                id="foodPrice"
-                value="₱"
-                required
-                [(ngModel)]="food.price"
-                #foodPriceModel="ngModel"
-                #foodPriceEl
-              />
-              <abp-validation-summary
-                [control]="foodPriceModel"
-                [controlEl]="foodPriceEl"
-              ></abp-validation-summary>
-            </div>
-          </div>
+      </div>
     </div>
-    <abp-modal-footer
+    <div class="form-group row required">
+      <label class="col-md-2 col-form-label" for="name">
+        {{ "Food Name" | localize }}
+      </label>
+      <div class="col-md-10">
+        <input
+          type="text"
+          class="form-control"
+          name="name"
+          id="name"
+          required
+          [(ngModel)]="food.name"
+          #nameModel="ngModel"
+          #nameEl
+        />
+        <abp-validation-summary
+          [control]="nameModel"
+          [controlEl]="nameEl"
+        ></abp-validation-summary>
+      </div>
+    </div>
+    <div class="form-group row required">
+      <label class="col-md-2 col-form-label" for="availability">
+        {{ "Is Available?" | localize }}
+      </label>
+      <ng-container >
+        <div class="form-check form-check-inline">
+          <input
+            type="checkbox"
+            class="form-check-input"
+            name="availability"
+            id="availability"
+            [(ngModel)]="food.availability"
+            [checked]="food.availability"
+            (change)="isFoodAvailable($event)"
+          />
+          <label class="form-check-label"> Available</label>
+        </div>
+      </ng-container>
+    </div>
+    <div class="form-group row required">
+      <label class="col-md-2 col-form-label" for="foodQty">
+        {{ "Qty" | localize }}
+      </label>
+      <div class="col-md-10">
+        <input
+          type="number"
+          class="form-control"
+          name="foodQty"
+          id="foodQty"
+          required
+          [(ngModel)]="food.quantity"
+          #foodQtyModel="ngModel"
+          #foodQtyEl
+        />
+        <abp-validation-summary
+          [control]="foodQtyModel"
+          [controlEl]="foodQtyEl"
+        ></abp-validation-summary>
+      </div>
+    </div>
+    <div class="form-group row required">
+      <label class="col-md-2 col-form-label" for="categoryName">
+        {{ "Food Category" | localize }}
+      </label>
+      <div class="col-md-10">
+        <select
+          class="form-control"
+          name="categoryName"
+          id="categoryName"
+          required
+          [ngModel]="selectedCategory"
+          (ngModelChange)="selectedCategory = $event"
+        >
+          <option *ngFor="let Category of categories" [ngValue]="Category.id">
+            {{ Category.name }}
+          </option>
+        </select>
+      </div>
+    </div>
+    <div class="form-group row required">
+      <label class="col-md-2 col-form-label" for="typeName">
+        {{ "Food Type" | localize }}
+      </label>
+      <div class="col-md-10">
+        <select
+          class="form-control"
+          name="typeName"
+          id="typeName"
+          required
+          [ngModel]="selectedType"
+          (ngModelChange)="selectedType = $event"
+        >
+          <option *ngFor="let type of types" [ngValue]="type.id">
+            {{ type.name }}
+          </option>
+        </select>
+      </div>
+    </div>
+    <div class="form-group row required">
+      <label for="foodSize" class="col-md-4 col-form-label">{{
+        "Size" | localize
+      }}</label>
+      <ng-container *ngFor="let foodSize of foodSizes">
+        <div class="form-check form-check-inline">
+          <input
+            type="checkbox"
+            class="form-check-input"
+            [id]="'foodSize' + foodSize.id"
+            [name]="'foodSize'"
+            [value]="foodSize.value"
+            [checked]="isFoodSizeChecked(foodSize.value)"
+            (change)="onFoodSizeChanged(foodSize.value, $event.target.checked)"
+          />
+          <label class="form-check-label" [for]="'foodSize' + foodSize.id">{{
+            foodSize.value
+          }}</label>
+        </div>
+      </ng-container>
+    </div>
+    <div class="form-group row required">
+      <label class="col-md-2 col-form-label" for="foodPrice">
+        {{ "Price" | localize }}
+      </label>
+      <div class="col-md-10">
+        <div class="input-group">
+          <div class="input-group-prepend">
+            <span class="input-group-text">&#8369;</span>
+          </div>
+          <input
+            type="number"
+            class="form-control currency"
+            name="foodPrice"
+            id="foodPrice"
+            required
+            [(ngModel)]="food.price"
+            #foodPriceModel="ngModel"
+            #foodPriceEl
+          />
+          <abp-validation-summary
+            [control]="foodPriceModel"
+            [controlEl]="foodPriceEl"
+          ></abp-validation-summary>
+        </div>
+      </div>
+    </div>
+  </div>
+  <abp-modal-footer
     [cancelDisabled]="saving"
     [saveDisabled]="!createFoodModal.form.valid || saving"
     (onCancelClick)="bsModalRef.hide()"
   ></abp-modal-footer>
 </form>
-  

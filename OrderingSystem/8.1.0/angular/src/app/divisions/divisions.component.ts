@@ -26,6 +26,7 @@ class PagedDivisionsRequestDto extends PagedRequestDto {
 })
 export class DivisionsComponent extends PagedListingComponentBase<DivisionDto> {
   divisions: DivisionDto[] = [];
+  id: number;
   keyword = "";
   isActive: boolean | null;
   advancedFiltersVisible = false;
@@ -38,13 +39,7 @@ export class DivisionsComponent extends PagedListingComponentBase<DivisionDto> {
     super(injector);
   }
 
-  createDivision(): void {
-    this.showCreateOrEditDivisionModal();
-  }
-
-  editDivision(id): void {
-    this.showCreateOrEditDivisionModal(id);
-  }
+  
 
   protected list(
     request: PagedDivisionsRequestDto,
@@ -70,6 +65,14 @@ export class DivisionsComponent extends PagedListingComponentBase<DivisionDto> {
         this.divisions = result.items;
         this.showPaging(result, pageNumber);
       });
+  }
+
+  createDivision(): void {
+    this.showCreateOrEditDivisionModal();
+  }
+
+  editDivision(id): void {
+    this.showCreateOrEditDivisionModal(id);
   }
 
   protected delete(division: DivisionDto): void {

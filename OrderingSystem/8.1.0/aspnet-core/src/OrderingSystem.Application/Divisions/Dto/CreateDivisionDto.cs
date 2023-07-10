@@ -10,9 +10,7 @@ namespace OrderingSystem.Divisions.Dto
 {
     [AutoMapTo(typeof(Division))]
     public class CreateDivisionDto
-    {
-        
-        public int Id { get; set; }
+    {        
         public string Name { get; set; }
     }
 }

@@ -7,8 +7,7 @@ import {
 import {
   FoodDto,
   FoodDtoPagedResultDto,
-  FoodServiceProxy,
-  TypeServiceProxy,
+  FoodServiceProxy
 } from "@shared/service-proxies/service-proxies";
 import { BsModalRef, BsModalService } from "ngx-bootstrap/modal";
 import { finalize } from "rxjs/operators";

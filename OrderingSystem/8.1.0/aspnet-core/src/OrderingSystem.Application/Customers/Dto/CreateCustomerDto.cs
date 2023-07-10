@@ -12,9 +12,7 @@ namespace OrderingSystem.Customers.Dto
     [AutoMapTo(typeof(Customer))]
     public class CreateCustomerDto
     {
-        public int Id { get; set; }
         public string Name { get; set; }
         public int DivisionId { get; set; }
-        public DivisionDto Division { get; set; }
     }
 }

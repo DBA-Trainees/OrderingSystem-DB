@@ -1,7 +1,9 @@
 ﻿using Abp.Application.Services;
 using Abp.Application.Services.Dto;
+using Abp.Authorization;
 using Abp.Domain.Repositories;
 using Microsoft.EntityFrameworkCore;
+using OrderingSystem.Authorization;
 using OrderingSystem.Categories.Dto;
 using OrderingSystem.Entities;
 using OrderingSystem.Foods.Dto;
@@ -13,6 +15,7 @@ using System.Threading.Tasks;
 
 namespace OrderingSystem.Foods
 {
+    [AbpAuthorize(PermissionNames.Pages_Foods)]
     public class FoodAppService : AsyncCrudAppService <Food, FoodDto, int, PagedFoodResultRequestDto, CreateFoodDto, FoodDto>, IFoodAppService
     {
         private readonly IRepository <Food, int> _repository;
@@ -20,7 +23,18 @@ namespace OrderingSystem.Foods
         public FoodAppService(IRepository<Food, int> repository) : base(repository)
         {
             _repository = repository;
-        }        
+        }
+
+        [AbpAuthorize(PermissionNames.Pages_Foods_Create_Update)]
+        public override Task<FoodDto> CreateAsync(CreateFoodDto input)
+        {
+            return base.CreateAsync(input);
+        }
+
+        public override Task DeleteAsync(EntityDto<int> input)
+        {
+            return base.DeleteAsync(input);
+        }
 
         public override async Task<PagedResultDto<FoodDto>> GetAllAsync(PagedFoodResultRequestDto input)
         {
@@ -45,5 +59,10 @@ namespace OrderingSystem.Foods
             return base.GetAsync(input);
         }
 
+        [AbpAuthorize(PermissionNames.Pages_Foods_Create_Update)]
+        public override Task<FoodDto> UpdateAsync(FoodDto input)
+        {
+            return base.UpdateAsync(input);
+        }
     }
 }

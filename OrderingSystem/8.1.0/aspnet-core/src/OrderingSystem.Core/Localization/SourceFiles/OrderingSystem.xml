@@ -138,5 +138,7 @@
 	<text name="OrderList">Order List</text>
 	<text name="PurchaseHistory">Purchase History</text>
 	<text name="SalesReport">Sales Report</text>
+	<text name="OrderDetails">Order Details</text>
+	<text name="FoodCreateEdit">Food_Create_Edit</text>
   </texts>
 </localizationDictionary>

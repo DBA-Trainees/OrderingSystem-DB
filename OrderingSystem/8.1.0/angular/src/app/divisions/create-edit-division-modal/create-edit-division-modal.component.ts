@@ -16,7 +16,7 @@ export class CreateEditDivisionModalComponent
   implements OnInit
 {
   saving = false;
-  division: DivisionDto = new DivisionDto();
+  division = new DivisionDto();
   id: number = 0;
 
   @Output() onSave = new EventEmitter<any>();
@@ -40,7 +40,7 @@ export class CreateEditDivisionModalComponent
   save(): void {
     this.saving = true;
 
-    if (this.id !== 0) {
+    if (this.id != 0) {
       this._divisionService.update(this.division).subscribe(
         () => {
           this.notify.info(this.l("SavedSuccessfully"));

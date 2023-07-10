@@ -43,14 +43,6 @@
                         <div class="col-md-6">&emsp;</div>
                         <div class="col-md-6">
                             <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <button 
-                                    type="button" 
-                                    class="btn bg-info" 
-                                    (click)="getDataPage(1)">
-                                        <i class="fas fa-search"></i>
-                                    </button>
-                                </div>
                                 <input 
                                 type="text" 
                                 class="form-control" 
@@ -90,7 +82,7 @@
                                 currentPage: pageNumber,
                                 totalItems: totalItems
                                 } | search: keyword: ['name',
-                                'availibity',
+                                'availability',
                                 'quantity',
                                 'category.name',
                                 'type.name',
@@ -98,7 +90,11 @@
                                 'price']"
                                 >
                                     <td>{{ food.id }}</td>
-                                    <td><img class="center" [src]="'data:image/' + food.imageType + ';base64,' + food.image" /></td>
+                                    <td>
+                                        <img class="center" 
+                                        [src]="'data:image/' + food.imageType + ';base64,' + food.image" 
+                                        />
+                                    </td>
                                     <td>{{ food.imageName }}</td>
                                     <td>{{ food.name }}</td>
                                     <td *ngIf="food.availability==1; else NotAvailable "><strong>Available</strong></td>
@@ -109,7 +105,12 @@
                                     <td>{{ food.category?.name }}</td>
                                     <td>{{ food.type?.name }}</td>
                                     <td>{{ food.size }}</td>
-                                    <td>₱{{ food.price }}.00</td>
+                                    <td>
+                                        <span class="input-group-prefend">
+                                            &#8369;
+                                        </span>
+                                        {{ food.price }}
+                                    </td>
                                     <td>
                                         <button 
                                         type="button" 

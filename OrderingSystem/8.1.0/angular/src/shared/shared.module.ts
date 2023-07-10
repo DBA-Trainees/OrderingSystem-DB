@@ -9,6 +9,7 @@ import { AppAuthService } from './auth/app-auth.service';
 import { AppRouteGuard } from './auth/auth-route-guard';
 import { LocalizePipe } from '@shared/pipes/localize.pipe';
 import { SearchPipe } from '@shared/pipes/search.pipe';
+import { CurrencyPipeComponent } from '@shared/pipes/currency.pipe';
 
 import { AbpPaginationControlsComponent } from './components/pagination/abp-pagination-controls.component';
 import { AbpValidationSummaryComponent } from './components/validation/abp-validation.summary.component';
@@ -33,7 +34,8 @@ import { EqualValidator } from './directives/equal-validator.directive';
         LocalizePipe,
         BusyDirective,
         EqualValidator,
-        SearchPipe
+        SearchPipe,
+        CurrencyPipeComponent
     ],
     exports: [
         AbpPaginationControlsComponent,
@@ -43,7 +45,8 @@ import { EqualValidator } from './directives/equal-validator.directive';
         LocalizePipe,
         BusyDirective,
         EqualValidator,
-        SearchPipe
+        SearchPipe,
+        CurrencyPipeComponent
     ]
 })
 export class SharedModule {
