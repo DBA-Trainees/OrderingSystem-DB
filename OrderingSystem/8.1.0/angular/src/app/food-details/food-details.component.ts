@@ -16,14 +16,14 @@ class PagedFoodsRequestDto extends PagedRequestDto {
 }
 
 @Component({
-  selector: "order-details",
-  templateUrl: "order-details.component.html",
+  selector: "food-details",
+  templateUrl: "food-details.component.html",
   styleUrls: [
-    "./order-details.component.css",
+    "./food-details.component.css",
     "../../shared/styles/styles.css",
   ],
 })
-export class OrderDetailsComponent extends PagedListingComponentBase<FoodDto> {
+export class FoodDetailsComponent extends PagedListingComponentBase<FoodDto> {
   foods: FoodDto[] = [];
   keyword = "";
   isActive: boolean | null;

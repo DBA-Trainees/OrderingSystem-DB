@@ -52,10 +52,10 @@ import { CreateEditFoodModalComponent } from './foods/create-edit-food-modal/cre
 import { ViewOrdersComponent } from './view-orders/view-orders.component'
 import { ReportsComponent } from './reports/reports.component'
 import { AddToCartsComponent } from './carts/carts.component'
-import { OrderListComponent } from './order-list/order-list.component'
+import { FoodListComponent } from './food-list/food-list.component'
 import { PurchaseHistoryComponent } from './purchase-history/purchase-history.component'
 import { OrderSpentReportComponent } from './order-spent-report/order-spent-report.component'
-import { OrderDetailsComponent } from './order-details/order-details.component'
+import { FoodDetailsComponent } from './food-details/food-details.component'
 
 
 @NgModule({
@@ -100,10 +100,10 @@ import { OrderDetailsComponent } from './order-details/order-details.component'
         ViewOrdersComponent,
         AddToCartsComponent,
         OrderSpentReportComponent,
-        OrderListComponent,
+        FoodListComponent,
         PurchaseHistoryComponent,
         ReportsComponent,
-        OrderDetailsComponent
+        FoodDetailsComponent
     ],
     imports: [
         CommonModule,

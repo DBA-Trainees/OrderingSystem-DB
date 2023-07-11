@@ -58,7 +58,7 @@
             </div>
             <div class="row">
                 <div class="col-2 mb-5" *ngFor="let food of foods">
-                    <div class="card mb-4">
+                    <div class="card mb-4" *ngIf="food.availability">
                         <div class="card-body">
                             <div class="card-body p-1">
                                 <img [src]="'data:image/png;base64,' + food.image" class="center" />
@@ -73,8 +73,8 @@
                         </div>
                         <ul class="list-inline animate text-center">
                             <li class="list-inline-item ">
-                                <button class="btn text-center inline bg-blue"><i class="fa fa-shopping-basket"></i>
-                                    Cart</button>
+                                <a [routerLink]="['../food-details']" class="btn text-center inline bg-blue"><i class="fa fa-shopping-basket"></i>
+                                    Cart</a>
                             </li>
                             <li class="list-inline-item">
                                 <button class="btn text-center inline bg-success"><i class="fa fa-cart-plus"></i>

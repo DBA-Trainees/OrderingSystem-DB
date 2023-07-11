@@ -14,8 +14,15 @@ namespace OrderingSystem.Authorization
             context.CreatePermission(PermissionNames.Pages_Tenants, L("Tenants"), multiTenancySides: MultiTenancySides.Host);
 
             //var vendorView = context.CreatePermission("Vendor");
-            var foodPage = context.CreatePermission(PermissionNames.Pages_Foods, L("Food"));
-            foodPage.CreateChildPermission(PermissionNames.Pages_Foods_Create_Update, L("FoodCreateEdit"));
+            //var foodPage = context.CreatePermission(PermissionNames.Pages_Foods, L("Food"));
+            //foodPage.CreateChildPermission(PermissionNames.Pages_Foods_Create_Update, L("FoodCreateEdit"));
+            //foodPage.CreateChildPermission(PermissionNames.Pages_Foods_FoodList, L("FoodList"));
+            //foodPage.CreateChildPermission(PermissionNames.Pages_Foods_FoodDetails, L("FoodDetails"));
+
+            context.CreatePermission(PermissionNames.Pages_Foods, L("Food"));
+            context.CreatePermission(PermissionNames.Pages_Foods_Create_Update, L("FoodCreateEdit"));
+            context.CreatePermission(PermissionNames.Pages_Foods_FoodList, L("FoodList"));
+            context.CreatePermission(PermissionNames.Pages_Foods_FoodDetails, L("FoodDetails"));
 
             context.CreatePermission(PermissionNames.Pages_Divisions, L("Division"));
             context.CreatePermission(PermissionNames.Pages_Customers, L("Customer"));
@@ -26,8 +33,6 @@ namespace OrderingSystem.Authorization
             context.CreatePermission(PermissionNames.Pages_PurchaseHistory, L("PurchaseHistory"));
             context.CreatePermission(PermissionNames.Pages_OrderSpentReport, L("OrderSpentReport"));
             context.CreatePermission(PermissionNames.Pages_AddToCart, L("AddToCart"));
-            context.CreatePermission(PermissionNames.Pages_OrderList, L("OrderList"));
-            context.CreatePermission(PermissionNames.Pages_OrderDetails, L("OrderDetails"));
         }
 
         private static ILocalizableString L(string name)

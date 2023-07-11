@@ -15,7 +15,7 @@ using System.Threading.Tasks;
 
 namespace OrderingSystem.Foods
 {
-    [AbpAuthorize(PermissionNames.Pages_Foods)]
+    //[AbpAuthorize(PermissionNames.Pages_Foods)]
     public class FoodAppService : AsyncCrudAppService <Food, FoodDto, int, PagedFoodResultRequestDto, CreateFoodDto, FoodDto>, IFoodAppService
     {
         private readonly IRepository <Food, int> _repository;
@@ -24,8 +24,8 @@ namespace OrderingSystem.Foods
         {
             _repository = repository;
         }
-
-        [AbpAuthorize(PermissionNames.Pages_Foods_Create_Update)]
+        //[AbpAuthorize(PermissionNames.Pages_Foods)]
+        //[AbpAuthorize(PermissionNames.Pages_Foods_Create_Update)]
         public override Task<FoodDto> CreateAsync(CreateFoodDto input)
         {
             return base.CreateAsync(input);
@@ -35,7 +35,9 @@ namespace OrderingSystem.Foods
         {
             return base.DeleteAsync(input);
         }
-
+        //[AbpAuthorize(PermissionNames.Pages_Foods)]
+        //[AbpAuthorize(PermissionNames.Pages_Foods_FoodList)]
+        //[AbpAuthorize(PermissionNames.Pages_Foods_FoodDetails)]
         public override async Task<PagedResultDto<FoodDto>> GetAllAsync(PagedFoodResultRequestDto input)
         {
             var food = await _repository.GetAll()
@@ -53,13 +55,13 @@ namespace OrderingSystem.Foods
             var food = await _repository.GetAllListAsync();
             return ObjectMapper.Map<List<FoodDto>>(food);
         }
-
+        //[AbpAuthorize(PermissionNames.Pages_Foods)]
         public override Task<FoodDto> GetAsync(EntityDto<int> input)
         {
             return base.GetAsync(input);
         }
-
-        [AbpAuthorize(PermissionNames.Pages_Foods_Create_Update)]
+        //[AbpAuthorize(PermissionNames.Pages_Foods)]
+        //[AbpAuthorize(PermissionNames.Pages_Foods_Create_Update)]
         public override Task<FoodDto> UpdateAsync(FoodDto input)
         {
             return base.UpdateAsync(input);

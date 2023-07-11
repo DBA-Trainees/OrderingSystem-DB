@@ -12,6 +12,7 @@ import {
 import { BsModalRef, BsModalService } from "ngx-bootstrap/modal";
 import { finalize } from "rxjs/operators";
 import { CreateEditFoodModalComponent } from "./create-edit-food-modal/create-edit-food-modal.component";
+import { CurrencyPipeComponent } from "../../shared/pipes/currency.pipe"
 
 class PagedFoodsRequestDto extends PagedRequestDto {
   keyword: string;

@@ -1,6 +1,5 @@
-import { Component, Injector, OnInit } from '@angular/core';
+import { Component, Injector } from '@angular/core';
 import { appModuleAnimation } from '@shared/animations/routerTransition';
-import { AppComponentBase } from '@shared/app-component-base';
 import { PagedListingComponentBase, PagedRequestDto } from '@shared/paged-listing-component-base';
 import { FoodDto, FoodDtoPagedResultDto, FoodServiceProxy, OrderDto, OrderDtoPagedResultDto, OrderServiceProxy } from '@shared/service-proxies/service-proxies';
 import { finalize } from 'rxjs/operators';
@@ -11,13 +10,13 @@ class PagedFoodsRequestDto extends PagedRequestDto {
   }
 
 @Component({
-    selector: 'order-list',
-    templateUrl: 'order-list.component.html',
+    selector: 'food-list',
+    templateUrl: 'food-list.component.html',
     styleUrls: ["../../shared/styles/main.css"],
     animations: [appModuleAnimation()],
 })
 
-export class OrderListComponent extends PagedListingComponentBase<FoodDto> {
+export class FoodListComponent extends PagedListingComponentBase<FoodDto> {
     orders: OrderDto[] = [];
     foods: FoodDto[] = [];
     keyword = "";

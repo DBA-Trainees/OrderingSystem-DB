@@ -135,10 +135,10 @@
 	<text name="ViewOrder">View Order</text>
 	<text name="AddToCart">Add To Cart</text>
 	<text name="OrderSpentReport">Order Spent Report</text>
-	<text name="OrderList">Order List</text>
+	<text name="FoodList">Food List</text>
 	<text name="PurchaseHistory">Purchase History</text>
 	<text name="SalesReport">Sales Report</text>
-	<text name="OrderDetails">Order Details</text>
+	<text name="FoodDetails">Food Details</text>
 	<text name="FoodCreateEdit">Food_Create_Edit</text>
   </texts>
 </localizationDictionary>

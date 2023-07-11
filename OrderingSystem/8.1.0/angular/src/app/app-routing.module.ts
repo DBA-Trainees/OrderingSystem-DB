@@ -18,8 +18,8 @@ import { AddToCartsComponent } from './carts/carts.component';
 import { OrderSpentReportComponent } from './order-spent-report/order-spent-report.component';
 import { PurchaseHistoryComponent } from './purchase-history/purchase-history.component';
 import { ReportsComponent } from './reports/reports.component';
-import { OrderListComponent } from './order-list/order-list.component';
-import { OrderDetailsComponent } from './order-details/order-details.component';
+import { FoodListComponent } from './food-list/food-list.component';
+import { FoodDetailsComponent } from './food-details/food-details.component';
 import { CreateEditFoodModalComponent } from './foods/create-edit-food-modal/create-edit-food-modal.component';
 
 @NgModule({
@@ -49,10 +49,10 @@ import { CreateEditFoodModalComponent } from './foods/create-edit-food-modal/cre
                     { path: 'view-orders', component: ViewOrdersComponent, data: { permission: 'Pages.ViewOrders' },canActivate: [AppRouteGuard] },
                     { path: 'carts', component: AddToCartsComponent, data: { permission: 'Pages.AddToCart' }, canActivate: [AppRouteGuard] },
                     { path: 'order-spent-report', component: OrderSpentReportComponent, data: { permission: 'Pages.OrderSpentReport' }, canActivate: [AppRouteGuard] },
-                    { path: 'order-list', component: OrderListComponent, data: { permission: 'Pages.OrderList' }, canActivate: [AppRouteGuard] },
+                    { path: 'food-list', component: FoodListComponent, data: { permission: 'Pages.Foods.FoodList' }, canActivate: [AppRouteGuard] },
                     { path: 'purchase-history', component: PurchaseHistoryComponent, data: { permission: 'Pages.PurchaseHistory' }, canActivate: [AppRouteGuard] },
                     { path: 'reports', component: ReportsComponent, data: { permission: 'Pages.SalesReports' }, canActivate: [AppRouteGuard] },
-                    { path: 'order-details', component: OrderDetailsComponent, data: { permission: 'Pages.OrderDetails' },canActivate: [AppRouteGuard] },
+                    { path: 'food-details', component: FoodDetailsComponent, data: { permission: 'Pages.Foods.FoodDetails' },canActivate: [AppRouteGuard] },
                 
                 ]
             }
