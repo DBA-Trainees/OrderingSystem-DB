@@ -13,6 +13,7 @@ import { BsModalRef, BsModalService } from "ngx-bootstrap/modal";
 import { finalize } from "rxjs/operators";
 import { CreateEditFoodModalComponent } from "./create-edit-food-modal/create-edit-food-modal.component";
 import { CurrencyPipeComponent } from "../../shared/pipes/currency.pipe"
+import { Router } from "@angular/router";
 
 class PagedFoodsRequestDto extends PagedRequestDto {
   keyword: string;
@@ -34,7 +35,8 @@ export class FoodsComponent extends PagedListingComponentBase<FoodDto> {
   constructor(
     injector: Injector,
     private _foodService: FoodServiceProxy,
-    private _modalService: BsModalService
+    private _modalService: BsModalService,
+    private _router: Router,
   ) {
     super(injector);
   }

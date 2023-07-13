@@ -1,33 +1,73 @@
-<div class="row" *ngFor="let food of foods">
-    <div class="col-4" *ngIf="foods">
-        <img class="card-img-top img-thumbnail" />
+<abp-modal-header [title]="'FoodDetails' | localize" (onCloseClick)="bsModalRef.hide()">
+</abp-modal-header>
+<div class="modal-body-lg">
+    <div class="row" *ngIf="food">
+        <div class="col-4">
+            <img 
+            *ngIf="food.imageFileType && food.image"
+            [src]="'data:image/png;base64,' + food.image" 
+            class="card-img-top img-thumbnail" />
+        </div>
         <div class="card-body">
-            <div>
+            <div class="card-body">
                 <strong>Name</strong>
-                <p>{{food.name}}</p>
-            </div>
-            <div>
-                <strong>Category</strong>
-                <p></p>
-            </div>
-            <div>
+                <h6>{{food.name}}</h6>
+                <!-- <div class="card-footer">
+                        <div class="btn-group">
+                            <button class="btn btn-primary btn-block">Add to Cart</button>
+                            <button class="btn btn-success">Buy Now</button>
+                        </div>
+                    </div> -->
                 <strong>Type</strong>
-                <p></p>
+                <h6>{{food.type?.name}}</h6>
+                <strong>Category</strong>
+                <p>{{food.category?.name}}</p>
             </div>
         </div>
-        <div class="card-footer">
-            <div class="btn-group d-flex">
-                <button class="btn btn-primary">Add to Cart</button>
-                <button class="btn btn-success">Buy Now</button>
+        <div class="card-body">
+            <p class="food-avail" *ngIf="food.availability==true; else NotAvailable ">
+                <i class="fa fa-check-circle"></i> <strong> AVAILABLE</strong>
+            </p>
+            <ng-template #NotAvailable>
+                <p class="size-null"><strong>NOT AVAILABLE</strong></p>
+            </ng-template>
+            <h6>
+                <strong>Size</strong>
+            </h6>
+            <p *ngIf="food.size != null; else NotApplicable">{{food.size}}</p>
+            <ng-template #NotApplicable>
+                <p class="size-null">
+                    <strong>Not Applicable</strong>
+                </p>
+            </ng-template>
+            <h6>
+                <strong>Price</strong>
+            </h6>
+            <p>₱ {{food.price}}</p>
+            <h6>
+                <strong>Quantity</strong>
+            </h6>
+            <p>{{food.quantity}}</p>
+            <div class="input-group">
+                <span class="input-group-prepend">
+                    <button type="button" class="btn btn-outline-secondary btn-number" 
+                    [disabled]="food.availability==false || food.quantity == 0"
+                    data-type="minus" 
+                    data-field="quant[1]">
+                        <span class="fa fa-minus"></span>
+                    </button>
+                </span>
+                <input 
+                type="text" 
+                name="quant[1]" 
+                class="form-control input-number" 
+                value="1" min="1" [max]="food.quantity">
+                <span class="input-group-append">
+                    <button type="button" class="btn btn-outline-secondary btn-number" data-type="plus" data-field="quant[1]">
+                        <span class="fa fa-plus"></span>
+                    </button>
+                </span>
             </div>
         </div>
     </div>
-    <div class="col-8">
-        <tabset class="member-tabs">
-            <tab heading="Food Details">
-                <h4>Availability</h4>
-                <p></p>
-            </tab>
-        </tabset>
-    </div>
-</div>
+    <!-- <abp-modal-footer (onCancelClick)="bsModalRef.hide()"></abp-modal-footer> -->

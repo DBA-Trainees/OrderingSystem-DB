@@ -44,10 +44,23 @@ namespace OrderingSystem.Foods
                 .Include(x => x.Category)
                 .Include(x => x.Type)
                 .OrderByDescending(x => x.Id)
-                .Select(x => ObjectMapper.Map<FoodDto>(x))
+                .Select(x => ObjectMapper.Map<FoodDto>(x))                
                 .ToListAsync();
 
             return new PagedResultDto<FoodDto> (food.Count(), food);
+        }
+
+        public async Task<PagedResultDto<FoodDto>> GetAllAvailableFoods(PagedFoodResultRequestDto input)
+        {
+            var food = await _repository.GetAll()
+                .Include(x => x.Category)
+                .Include(x => x.Type)
+                .OrderByDescending(x => x.Id)
+                .Where(x => x.Availability)
+                .Select(x => ObjectMapper.Map<FoodDto>(x))                
+                .ToListAsync();
+
+            return new PagedResultDto<FoodDto>(food.Count(), food);
         }
 
         public async Task<List<FoodDto>> GetAllFoods()

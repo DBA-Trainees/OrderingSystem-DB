@@ -1,6 +1,6 @@
-.btn {
+/* .btn {
     border-radius: 2em;
-}
+} */
 .create-button{
     position: fixed;
     bottom: 120px;
@@ -26,8 +26,21 @@ img{
     height: 150px;
     display: block;
     margin: auto;
+    max-width: 100%;
+    transform-origin: center;
+    transform: scale(var(--img-scale));
+    transition: transform 0.4s ease-in-out;
 }
 
 th,td,img{
     text-align: center;
 }
+
+.food-avail{
+    color: green
+  }
+
+.food-unavail{
+    color:rgb(224, 27, 54)
+}
+

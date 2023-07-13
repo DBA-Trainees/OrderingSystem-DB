@@ -47,3 +47,11 @@
   .nav-tabs {
       --bs-nav-tabs-border-width: 0px;
   }
+
+  .food-avail{
+    color: green
+  }
+
+  .size-null{
+    color:rgb(224, 27, 54)
+  }

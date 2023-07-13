@@ -1,7 +1,9 @@
-import { Component, Injector } from '@angular/core';
+import { Component, EventEmitter, Injector, Output } from '@angular/core';
+import { FoodDetailsComponent } from '@app/food-details/food-details.component';
 import { appModuleAnimation } from '@shared/animations/routerTransition';
 import { PagedListingComponentBase, PagedRequestDto } from '@shared/paged-listing-component-base';
 import { FoodDto, FoodDtoPagedResultDto, FoodServiceProxy, OrderDto, OrderDtoPagedResultDto, OrderServiceProxy } from '@shared/service-proxies/service-proxies';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { finalize } from 'rxjs/operators';
 
 class PagedFoodsRequestDto extends PagedRequestDto {
@@ -22,10 +24,13 @@ export class FoodListComponent extends PagedListingComponentBase<FoodDto> {
     keyword = "";
     isActive: boolean | null;
 
+    
+
     constructor(
         injector: Injector,
         private _foodService : FoodServiceProxy,
-        private _orderService: OrderServiceProxy
+        private _orderService: OrderServiceProxy,
+        private _modalService: BsModalService
     ){
         super(injector)
     }
@@ -59,4 +64,24 @@ export class FoodListComponent extends PagedListingComponentBase<FoodDto> {
       addToCart(){
         
       }
+
+      displayFoodDetails(id): void{
+        this.showFoodDetailsModal(id);
+      }
+
+      private showFoodDetailsModal(id?: number): void{
+        let foodDetailsModal: BsModalRef;
+        /* if(!id){ */
+          foodDetailsModal = this._modalService.show(FoodDetailsComponent,{
+            class: 'modal-lg',
+            initialState: {
+            id: id,
+          },
+          })
+        }
+        /* foodDetailsModal.content.onSave.subscribe(() =>{
+          this.refresh();
+        }) *//* 
+      } */
+      
 }
