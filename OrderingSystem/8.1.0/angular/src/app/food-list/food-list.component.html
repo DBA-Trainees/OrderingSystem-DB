@@ -5,7 +5,7 @@
                 <div class="col-lg-6 col-6">
                     <div class="small-box bg-success">
                         <div class="inner">
-                            <h1><strong>{{ "OrderList" | localize }}</strong></h1>
+                            <h1><strong>{{ "FoodList" | localize }}</strong></h1>
                             <p>Dashboard</p>
                             <div class="icon">
                                 <i class="fa fa-university"></i>
@@ -72,18 +72,44 @@
                                 <strong>₱ {{food.price}}</strong>
                             </h5>
                         </div>
-                        <ul class="list-inline animate text-center" [ariaDisabled]="food.availability==0">
-                            <li class="list-inline-item ">
+                        <!-- <ul class="list-inline animate text-center" [ariaDisabled]="food.availability==0">
+                            <li class="list-inline-item">
                                 <button class="btn text-center inline bg-blue"
+                                (click)="addToCart(food.id)"
                                 [disabled]="food.availability==0">
-                                    <i class="fa fa-shopping-basket"></i>
-                                    Cart</button>
+                                    Add to Cart</button>
                             </li>
-                            <!-- <li class="list-inline-item">
+                            <li class="list-inline-item">
                                 <button class="btn text-center inline" (click)="displayFoodDetails(food.id)">
                                     See more</button>
-                            </li> -->
-                        </ul>
+                            </li>
+                        </ul> -->
+                        <!-- <div class="form-group text-center">
+                            <div class="col-md-6 text-center">
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <button 
+                                        class="btn btn-outline-secondary" 
+                                        type="button" 
+                                        (click)="decrementQty()" 
+                                        [disabled]="foodQty<=1">-</button>
+                                    </div>
+                                    <input 
+                                    type="number" 
+                                    class="form-control"
+                                    name="foodQuantity" 
+                                    id="foodQuantity" 
+                                    [(ngModel)]="foodQty" 
+                                    readonly>
+                                    <div class="input-group-prepend">
+                                        <button 
+                                        class="btn btn-outline-secondary" 
+                                        type="button" 
+                                        (click)="incrementQty(foodQty)">+</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> -->
                     </div>
                 </div>
             </div>

@@ -75,7 +75,7 @@ export class SidebarMenuComponent extends AppComponentBase implements OnInit {
                 ),
             new MenuItem(
                 this.l('ViewOrder'), 
-                '/app/view-orders', 
+                '/app/view-order', 
                 'fa fa-shopping-cart',
                 'Pages.ViewOrders'
                 ),

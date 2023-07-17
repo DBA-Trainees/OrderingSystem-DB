@@ -49,13 +49,13 @@ import { TypesComponent } from './types/types.component'
 import { CreateEditTypeModalComponent } from './types/create-edit-type-modal/create-edit-type-modal.component'
 import { FoodsComponent } from './foods/foods.component'
 import { CreateEditFoodModalComponent } from './foods/create-edit-food-modal/create-edit-food-modal.component'
-import { ViewOrdersComponent } from './view-orders/view-orders.component'
 import { ReportsComponent } from './reports/reports.component'
 import { AddToCartsComponent } from './carts/carts.component'
 import { FoodListComponent } from './food-list/food-list.component'
 import { PurchaseHistoryComponent } from './purchase-history/purchase-history.component'
 import { OrderSpentReportComponent } from './order-spent-report/order-spent-report.component'
 import { FoodDetailsComponent } from './food-details/food-details.component'
+import { ViewOrdersComponent } from './view-order/view-order.component'
 
 
 @NgModule({
@@ -97,13 +97,13 @@ import { FoodDetailsComponent } from './food-details/food-details.component'
         CreateEditTypeModalComponent,
         FoodsComponent,
         CreateEditFoodModalComponent,
-        ViewOrdersComponent,
         AddToCartsComponent,
         OrderSpentReportComponent,
         FoodListComponent,
         PurchaseHistoryComponent,
         ReportsComponent,
-        FoodDetailsComponent
+        FoodDetailsComponent,
+        ViewOrdersComponent
     ],
     imports: [
         CommonModule,

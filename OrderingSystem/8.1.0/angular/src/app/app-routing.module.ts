@@ -13,7 +13,6 @@ import { CustomersComponent } from './customers/customers.component';
 import { CategoriesComponent } from './categories/categories.component';
 import { TypesComponent } from './types/types.component';
 import { FoodsComponent } from './foods/foods.component';
-import { ViewOrdersComponent } from './view-orders/view-orders.component';
 import { AddToCartsComponent } from './carts/carts.component';
 import { OrderSpentReportComponent } from './order-spent-report/order-spent-report.component';
 import { PurchaseHistoryComponent } from './purchase-history/purchase-history.component';
@@ -21,6 +20,7 @@ import { ReportsComponent } from './reports/reports.component';
 import { FoodListComponent } from './food-list/food-list.component';
 import { FoodDetailsComponent } from './food-details/food-details.component';
 import { CreateEditFoodModalComponent } from './foods/create-edit-food-modal/create-edit-food-modal.component';
+import { ViewOrdersComponent } from './view-order/view-order.component';
 
 @NgModule({
     imports: [
@@ -46,8 +46,8 @@ import { CreateEditFoodModalComponent } from './foods/create-edit-food-modal/cre
                     },                    
                     /* { path: 'foods', component: FoodsComponent, children data: { permission: 'Vendor.Foods' },canActivate: [AppRouteGuard] },
                     { path: 'foods/create-edit-food-modal', component: CreateEditFoodModalComponent, data: { permission: 'Vendor.Foods.Create.Update' },canActivate: [AppRouteGuard] }, */
-                    { path: 'view-orders', component: ViewOrdersComponent, data: { permission: 'Pages.ViewOrders' },canActivate: [AppRouteGuard] },
                     { path: 'carts', component: AddToCartsComponent, data: { permission: 'Pages.AddToCart' }, canActivate: [AppRouteGuard] },
+                    { path: 'view-order', component: ViewOrdersComponent, data: { permission: 'Pages.ViewOrders' }, canActivate: [AppRouteGuard] },
                     { path: 'order-spent-report', component: OrderSpentReportComponent, data: { permission: 'Pages.OrderSpentReport' }, canActivate: [AppRouteGuard] },
                     { path: 'food-list', component: FoodListComponent, data: { permission: 'Pages.Foods.FoodList' }, canActivate: [AppRouteGuard] },
                     { path: 'purchase-history', component: PurchaseHistoryComponent, data: { permission: 'Pages.PurchaseHistory' }, canActivate: [AppRouteGuard] },

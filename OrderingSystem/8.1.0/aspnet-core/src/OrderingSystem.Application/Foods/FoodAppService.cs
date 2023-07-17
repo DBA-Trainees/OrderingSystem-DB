@@ -56,7 +56,7 @@ namespace OrderingSystem.Foods
                 .Include(x => x.Category)
                 .Include(x => x.Type)
                 .OrderByDescending(x => x.Id)
-                .Where(x => x.Availability)
+                .Where(x => x.Quantity >0)
                 .Select(x => ObjectMapper.Map<FoodDto>(x))                
                 .ToListAsync();
 
@@ -79,5 +79,14 @@ namespace OrderingSystem.Foods
         {
             return base.UpdateAsync(input);
         }
+
+        //public async Task<List<FoodDto>> GetAllFoodSize()
+        //{
+        //    var foodSize = await _repository.GetAll()
+        //        .Where(x => x.Size)
+        //        .Select(x => ObjectMapper.Map<FoodDto>(x));
+
+        //    return foodSize;
+        //}
     }
 }

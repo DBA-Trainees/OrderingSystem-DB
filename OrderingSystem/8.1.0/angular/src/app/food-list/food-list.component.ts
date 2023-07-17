@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Injector, Output } from '@angular/core';
+import { Component, EventEmitter, Injector, OnInit, Output } from '@angular/core';
 import { FoodDetailsComponent } from '@app/food-details/food-details.component';
 import { appModuleAnimation } from '@shared/animations/routerTransition';
 import { PagedListingComponentBase, PagedRequestDto } from '@shared/paged-listing-component-base';
@@ -18,23 +18,39 @@ class PagedFoodsRequestDto extends PagedRequestDto {
     animations: [appModuleAnimation()],
 })
 
-export class FoodListComponent extends PagedListingComponentBase<FoodDto> {
+export class FoodListComponent extends PagedListingComponentBase<FoodDto> 
+implements OnInit{
     orders: OrderDto[] = [];
     foods: FoodDto[] = [];
+    order = new OrderDto();
+    food = new FoodDto();
     keyword = "";
     isActive: boolean | null;
+    foodQty: number;
+    id: number = 0;    
+    saving = false;
 
-    
+    @Output() onSave = new EventEmitter<any>();
 
     constructor(
         injector: Injector,
         private _foodService : FoodServiceProxy,
         private _orderService: OrderServiceProxy,
-        private _modalService: BsModalService
+        private _modalService: BsModalService,
+        public bsModalRef: BsModalRef,
     ){
         super(injector)
     }
 
+    /* ngOnInit(): void {
+      if(this.id != 0){
+        this._foodService.get(this.id).subscribe((res) =>{
+          this.food = res;
+          this.food.type = res.type;
+          this.food.category = res.category;
+        })
+      }
+    } */
     protected list(
         request: PagedFoodsRequestDto,
         pageNumber: number,
@@ -44,7 +60,7 @@ export class FoodListComponent extends PagedListingComponentBase<FoodDto> {
         request.isActive = this.isActive;
     
         this._foodService
-          .getAll(
+          .getAllAvailableFoods(
             request.keyword,
             request.isActive,
             request.skipCount,
@@ -61,9 +77,24 @@ export class FoodListComponent extends PagedListingComponentBase<FoodDto> {
           });
       }
 
-      addToCart(){
-        
+      decrementQty(): void{
+        if(this.food.quantity >1){
+          this.foodQty--;      
+        }
       }
+    
+      incrementQty(maxQty: number): void{
+        if(this.foodQty < this.food.quantity){
+          this.foodQty++;
+        }
+      }
+
+      /* addToCart(id){
+        this.showFoodDetailsModal(id);
+
+        this.food.quantity = this.foodQty;
+
+      } */
 
       displayFoodDetails(id): void{
         this.showFoodDetailsModal(id);
@@ -79,9 +110,21 @@ export class FoodListComponent extends PagedListingComponentBase<FoodDto> {
           },
           })
         }
-        /* foodDetailsModal.content.onSave.subscribe(() =>{
-          this.refresh();
-        }) *//* 
+
+      /* save(): void{
+        this.saving = true;
+
+        this._orderService.create(this.order).subscribe(
+          () => {
+            this.notify.info(this.l('SavedSuccessfully'));
+            this.bsModalRef.hide();
+            this.onSave.emit();
+          },
+          () => {
+            this.saving = false;
+          }
+        );
+
       } */
       
 }

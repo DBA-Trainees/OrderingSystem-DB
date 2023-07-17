@@ -61,6 +61,7 @@ export class AddToCartsComponent extends PagedListingComponentBase<OrderDto> {
         this.showPaging(result, pageNumber);
       });
   }
+  
   protected delete(order: OrderDto): void {
     abp.message.confirm(
       this.l("OrderDeleteWarningMessage", order.food.name),
