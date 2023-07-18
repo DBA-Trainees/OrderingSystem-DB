@@ -53,7 +53,6 @@ export class CreateEditFoodModalComponent extends AppComponentBase implements On
         this.selectedCategory = res.categoryId;
         this.selectedType = res.typeId;
         this.selectedSize = res.size ? res.size.split(", ") : [];
-        /* this.food.price = parseFloat(res.price); */
       });
     }
 

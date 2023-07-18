@@ -60,7 +60,7 @@ implements OnInit{
         request.isActive = this.isActive;
     
         this._foodService
-          .getAllAvailableFoods(
+          .getAll(
             request.keyword,
             request.isActive,
             request.skipCount,

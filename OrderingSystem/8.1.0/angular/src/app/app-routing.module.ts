@@ -19,7 +19,6 @@ import { PurchaseHistoryComponent } from './purchase-history/purchase-history.co
 import { ReportsComponent } from './reports/reports.component';
 import { FoodListComponent } from './food-list/food-list.component';
 import { FoodDetailsComponent } from './food-details/food-details.component';
-import { CreateEditFoodModalComponent } from './foods/create-edit-food-modal/create-edit-food-modal.component';
 import { ViewOrdersComponent } from './view-order/view-order.component';
 
 @NgModule({

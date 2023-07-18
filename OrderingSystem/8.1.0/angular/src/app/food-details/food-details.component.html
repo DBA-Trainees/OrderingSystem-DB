@@ -4,10 +4,8 @@
     <div class="modal-body-lg">
         <div class="row" *ngIf="food">
             <div class="col-4">
-                <img 
-                *ngIf="food.imageFileType && food.image" 
-                [src]="'data:image/png;base64,' + food.image"                    
-                class="card-img-top img-thumbnail" />
+                <img *ngIf="food.imageFileType && food.image" [src]="'data:image/png;base64,' + food.image"
+                    class="card-img-top img-thumbnail" />
             </div>
             <div class="card-body">
                 <div class="card-body">
@@ -39,17 +37,23 @@
                 <h6>
                     <strong>Size</strong>
                 </h6>
-                <select
-                class="form-control"
-                name="typeName"
-                id="typeName"
-                required
-                [ngModel]="selectedFoodSize"
-                (ngModelChange)="selectedFoodSize = $event"
-                >
-                <option *ngFor="let size of selectedFoodSize" [ngValue]="size.id">
-                    {{ size.name }}
-                </option>
+                <select 
+                    class="form-control" 
+                    name="typeName" 
+                    id="typeName" 
+                    required 
+                    [(ngModel)]="selectedFoodSize"
+                    >
+                    <!-- <option 
+                    class="dropdown-item" 
+                    selected 
+                    [ngValue]="selectedFoodSize"
+                    >
+                        {{selectedFoodSize}}
+                    </option> -->
+                    <ng-container *ngIf="food.size">
+                        <option *ngFor="let size of food.size.split(',')">{{ size }}</option>
+                    </ng-container>
                 </select>
                 <!-- <p *ngIf="food.size != null || food.size == ''; else NotApplicable">{{food.size}}</p>
                 <ng-template #NotApplicable>
