@@ -58,7 +58,7 @@ export class FoodsComponent extends PagedListingComponentBase<FoodDto> {
     request.isActive = this.isActive;
 
     this._foodService
-      .getAll(
+      .getAllAvailableFoods(
         request.keyword,
         request.isActive,
         request.skipCount,

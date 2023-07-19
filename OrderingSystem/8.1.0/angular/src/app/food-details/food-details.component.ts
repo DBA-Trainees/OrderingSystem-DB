@@ -7,14 +7,12 @@ import {
 } from "@angular/core";
 import { AppComponentBase } from "@shared/app-component-base";
 import {
-  PagedListingComponentBase,
   PagedRequestDto,
 } from "@shared/paged-listing-component-base";
 import {
   CategoryDto,
   CustomerDto,
   FoodDto,
-  FoodDtoPagedResultDto,
   FoodServiceProxy,
   OrderDto,
   OrderServiceProxy,
@@ -125,30 +123,4 @@ export class FoodDetailsComponent extends AppComponentBase implements OnInit {
       }
     );
   }
-
-  /* protected list(
-    request: PagedFoodsRequestDto,
-    pageNumber: number,
-    finishedCallback: Function
-  ): void {
-    request.keyword = this.keyword;
-    request.isActive = this.isActive;
-
-    this._foodService
-      .getAll(
-        request.keyword,
-        request.isActive,
-        request.skipCount,
-        request.maxResultCount
-      )
-      .pipe(
-        finalize(() => {
-          finishedCallback();
-        })
-      )
-      .subscribe((result: FoodDtoPagedResultDto) => {
-        this.foods = result.items;
-        this.showPaging(result, pageNumber);
-      });
-  } */
 }

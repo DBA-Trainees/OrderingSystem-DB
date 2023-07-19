@@ -1,9 +1,27 @@
-import { Component, EventEmitter, Injector, OnInit, Output } from '@angular/core';
+import { 
+  Component, 
+  EventEmitter, 
+  Injector, 
+  OnInit, 
+  Output 
+} from '@angular/core';
 import { FoodDetailsComponent } from '@app/food-details/food-details.component';
 import { appModuleAnimation } from '@shared/animations/routerTransition';
-import { PagedListingComponentBase, PagedRequestDto } from '@shared/paged-listing-component-base';
-import { FoodDto, FoodDtoPagedResultDto, FoodServiceProxy, OrderDto, OrderDtoPagedResultDto, OrderServiceProxy } from '@shared/service-proxies/service-proxies';
-import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { 
+  PagedListingComponentBase, 
+  PagedRequestDto
+ } from '@shared/paged-listing-component-base';
+import { 
+  FoodDto, 
+  FoodDtoPagedResultDto, 
+  FoodServiceProxy, 
+  OrderDto, 
+  OrderServiceProxy 
+} from '@shared/service-proxies/service-proxies';
+import { 
+  BsModalRef, 
+  BsModalService 
+} from 'ngx-bootstrap/modal';
 import { finalize } from 'rxjs/operators';
 
 class PagedFoodsRequestDto extends PagedRequestDto {
