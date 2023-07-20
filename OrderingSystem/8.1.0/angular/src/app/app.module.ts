@@ -39,7 +39,7 @@ import { SidebarLogoComponent } from './layout/sidebar-logo.component';
 import { SidebarUserPanelComponent } from './layout/sidebar-user-panel.component';
 import { SidebarMenuComponent } from './layout/sidebar-menu.component';
 import { DivisionsComponent } from './divisions/divisions.component'
-import { CategoryServiceProxy, CustomerServiceProxy, DivisionServiceProxy, FoodServiceProxy, OrderServiceProxy, TypeServiceProxy } from '@shared/service-proxies/service-proxies';
+import { CategoryServiceProxy, CustomerServiceProxy, DivisionServiceProxy, FoodServiceProxy, OrderServiceProxy, OrderStatusServiceProxy, TypeServiceProxy } from '@shared/service-proxies/service-proxies';
 import { CreateEditDivisionModalComponent } from './divisions/create-edit-division-modal/create-edit-division-modal.component'
 import { CustomersComponent } from './customers/customers.component'
 import { CreateEditCustomerModalComponent } from './customers/create-edit-customer-modal/create-edit-customer-modal.component'
@@ -56,6 +56,8 @@ import { PurchaseHistoryComponent } from './purchase-history/purchase-history.co
 import { OrderSpentReportComponent } from './order-spent-report/order-spent-report.component'
 import { FoodDetailsComponent } from './food-details/food-details.component'
 import { ViewOrdersComponent } from './view-order/view-order.component'
+import { OrderStatusesComponent} from './order-status/order-status.component'
+import { CreateEditOrderStatusModalComponent } from './order-status/create-edit-order-status-modal/create-edit-order-status-modal.component'
 
 
 @NgModule({
@@ -103,7 +105,9 @@ import { ViewOrdersComponent } from './view-order/view-order.component'
         PurchaseHistoryComponent,
         ReportsComponent,
         FoodDetailsComponent,
-        ViewOrdersComponent
+        ViewOrdersComponent,
+        OrderStatusesComponent,
+        CreateEditOrderStatusModalComponent
     ],
     imports: [
         CommonModule,
@@ -126,7 +130,8 @@ import { ViewOrdersComponent } from './view-order/view-order.component'
         CategoryServiceProxy,
         TypeServiceProxy,
         FoodServiceProxy,
-        OrderServiceProxy
+        OrderServiceProxy,
+        OrderStatusServiceProxy
     ]
 })
 export class AppModule {}

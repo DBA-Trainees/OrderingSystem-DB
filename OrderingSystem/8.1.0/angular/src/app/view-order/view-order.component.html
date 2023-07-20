@@ -75,7 +75,8 @@
                                     <td>{{ order.quantity }}</td>
                                     <td>{{ order.size }}</td>
                                     <td>{{ order.notes }}</td>
-                                    <td>{{ order.dateTimeOrdered }}</td>
+                                    <td>{{ order.dateTimeOrdered | date: 'MM/dd/yyyy'}}</td>
+                                    <td>{{ order.dateTimeOrdered | date: 'hh:mm a'}}</td>
                                 </tr>
                             </tbody>
                         </table>

@@ -29,7 +29,6 @@ export class DivisionsComponent extends PagedListingComponentBase<DivisionDto> {
   id: number;
   keyword = "";
   isActive: boolean | null;
-  advancedFiltersVisible = false;
 
   constructor(
     injector: Injector,

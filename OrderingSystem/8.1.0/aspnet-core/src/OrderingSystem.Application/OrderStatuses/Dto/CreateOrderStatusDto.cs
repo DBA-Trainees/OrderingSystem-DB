@@ -4,12 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace OrderingSystem.Enums
+namespace OrderingSystem.OrderStatuses.Dto
 {
-    public enum SizeEnum
+    public class CreateOrderStatusDto
     {
-        Regular =1,
-        Medium = 2,
-        Large = 3
+
     }
 }
