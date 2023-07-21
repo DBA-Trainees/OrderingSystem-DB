@@ -11,12 +11,14 @@ import {
 } from "@shared/paged-listing-component-base";
 import {
   CategoryDto,
+  CategoryServiceProxy,
   CustomerDto,
   FoodDto,
   FoodServiceProxy,
   OrderDto,
   OrderServiceProxy,
   TypeDto,
+  TypeServiceProxy,
 } from "@shared/service-proxies/service-proxies";
 import * as moment from "moment";
 import { BsModalRef } from "ngx-bootstrap/modal";
@@ -29,7 +31,7 @@ class PagedFoodsRequestDto extends PagedRequestDto {
 @Component({
   selector: "food-details",
   templateUrl: "food-details.component.html",
-  styleUrls: ["./food-details.component.css", "../../shared/styles/styles.css"],
+  styleUrls: ["./food-details.component.css", "../../../shared/styles/styles.css"],
 })
 export class FoodDetailsComponent extends AppComponentBase implements OnInit {
   foods: FoodDto[] = [];
@@ -55,7 +57,10 @@ export class FoodDetailsComponent extends AppComponentBase implements OnInit {
     injector: Injector,
     public bsModalRef: BsModalRef,
     private _foodService: FoodServiceProxy,
-    private _orderService: OrderServiceProxy
+    private _orderService: OrderServiceProxy,
+    private _categoryService: CategoryServiceProxy,
+    private _typeService: TypeServiceProxy
+
   ) {
     super(injector);
   }
@@ -101,15 +106,16 @@ export class FoodDetailsComponent extends AppComponentBase implements OnInit {
 
   save(): void {
     this.saving = true;
+    this.food.typeId;
 
     const order = new OrderDto();
 
     order.customerId = this.customer.id;
-    order.customerName = this.customer.name;
+/*     order.customerName = this.customer.name; */
     order.foodId = this.food.id;
-    order.foodName = this.food.name;
+/*     order.foodName = this.food.name;
     order.quantity = this.food.quantity;
-    order.size = this.selectedFoodSize;
+    order.size = this.selectedFoodSize; */
     order.dateTimeOrdered = moment.utc(this.today);
 
     this._orderService.create(this.order).subscribe(

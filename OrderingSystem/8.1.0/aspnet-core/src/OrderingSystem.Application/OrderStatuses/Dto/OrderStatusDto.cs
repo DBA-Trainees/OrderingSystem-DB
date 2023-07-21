@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 namespace OrderingSystem.OrderStatuses.Dto
 {
     [AutoMapTo(typeof(OrderStatus))]
+    [AutoMapFrom(typeof(OrderStatus))]
     public class OrderStatusDto: EntityDto<int>
     {
         public string Name { get; set; }

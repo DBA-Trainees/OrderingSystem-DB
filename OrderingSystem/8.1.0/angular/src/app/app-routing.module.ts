@@ -18,8 +18,9 @@ import { OrderSpentReportComponent } from './order-spent-report/order-spent-repo
 import { PurchaseHistoryComponent } from './purchase-history/purchase-history.component';
 import { ReportsComponent } from './reports/reports.component';
 import { FoodListComponent } from './food-list/food-list.component';
-import { FoodDetailsComponent } from './food-details/food-details.component';
+import { FoodDetailsComponent } from './food-list/food-details/food-details.component';
 import { ViewOrdersComponent } from './view-order/view-order.component';
+import { OrderStatusesComponent } from './order-status/order-status.component';
 
 @NgModule({
     imports: [
@@ -52,7 +53,7 @@ import { ViewOrdersComponent } from './view-order/view-order.component';
                     { path: 'purchase-history', component: PurchaseHistoryComponent, data: { permission: 'Pages.PurchaseHistory' }, canActivate: [AppRouteGuard] },
                     { path: 'reports', component: ReportsComponent, data: { permission: 'Pages.SalesReports' }, canActivate: [AppRouteGuard] },
                     { path: 'food-details', component: FoodDetailsComponent, data: { permission: 'Pages.Foods.FoodDetails' },canActivate: [AppRouteGuard] },
-                
+                    { path: 'order-status', component: OrderStatusesComponent ,canActivate: [AppRouteGuard] },
                 ]
             }
         ])

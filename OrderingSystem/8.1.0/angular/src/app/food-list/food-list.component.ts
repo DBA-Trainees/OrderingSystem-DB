@@ -5,7 +5,7 @@ import {
   OnInit, 
   Output 
 } from '@angular/core';
-import { FoodDetailsComponent } from '@app/food-details/food-details.component';
+import { FoodDetailsComponent } from '@app/food-list/food-details/food-details.component';
 import { appModuleAnimation } from '@shared/animations/routerTransition';
 import { 
   PagedListingComponentBase, 

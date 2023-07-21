@@ -12,13 +12,10 @@ namespace OrderingSystem.Orders.Dto
     public class CreateOrderDto
     {
         public int CustomerId { get; set; }
-        public string CustomerName { get; set; }
         public int FoodId { get; set; }
-        public string FoodName { get; set; }
-        public int Quantity { get; set; }
-        public string Size { get; set; }
         public string? Notes { get; set; }
         public DateTime DateTimeOrdered { get; set; }
-        public bool OrderStatus { get; set; }
+        public int? OrderStatusId { get; set; }
+        public double? Amount { get; set; }
     }
 }

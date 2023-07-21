@@ -22,6 +22,7 @@ class PagedOrderStatusesRequestDto extends PagedRequestDto {
 @Component({
   selector: "order-status-component",
   templateUrl: "./order-status.component.html",
+  styleUrls: ["../../shared/styles/main.css"],
   animations: [appModuleAnimation()],
 })
 export class OrderStatusesComponent extends PagedListingComponentBase<OrderStatusDto> {
@@ -64,9 +65,13 @@ export class OrderStatusesComponent extends PagedListingComponentBase<OrderStatu
       });
   }
 
-  createOrderStatus(): void {}
+  createOrderStatus(): void {
+    this.showCreateOrEditOrderStatusModal();
+  }
 
-  editOrderStatus(): void {}
+  editOrderStatus(id): void {
+    this.showCreateOrEditOrderStatusModal(id);
+  }
 
   protected delete(orderStatus: OrderStatusDto): void {
     abp.message.confirm(
@@ -83,7 +88,7 @@ export class OrderStatusesComponent extends PagedListingComponentBase<OrderStatu
     );
   }
 
-  private showCreateOrEditDivisionModal(id?: number): void {
+  private showCreateOrEditOrderStatusModal(id?: number): void {
     let createOrEditOrderStatusModal: BsModalRef;
 
     if (!id) {
@@ -94,15 +99,19 @@ export class OrderStatusesComponent extends PagedListingComponentBase<OrderStatu
         }
       );
     } else {
-        createOrEditOrderStatusModal = this._modalService.show(
-            CreateEditOrderStatusModalComponent,
-            {
-              class: "modal-lg",
-              initialState:{
-                id:id,
-              },
-            }
-          );
+      createOrEditOrderStatusModal = this._modalService.show(
+        CreateEditOrderStatusModalComponent,
+        {
+          class: "modal-lg",
+          initialState: {
+            id: id,
+          },
+        }
+      );
     }
+
+    createOrEditOrderStatusModal.content.onSave.subscribe(() =>{
+      this.refresh();
+    })
   }
 }
