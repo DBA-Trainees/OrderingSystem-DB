@@ -9,7 +9,7 @@ import { BsModalRef } from "ngx-bootstrap/modal";
 @Component({
   selector: "create-edit-division-modal",
   templateUrl: "create-edit-division-modal.component.html",
-  styleUrls : ['../../../shared/styles/main.css']
+  styleUrls : ['../../../../shared/styles/main.css']
 })
 export class CreateEditDivisionModalComponent
   extends AppComponentBase

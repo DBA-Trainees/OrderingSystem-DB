@@ -2,6 +2,7 @@
 using Abp.Application.Services.Dto;
 using Abp.Domain.Repositories;
 using Microsoft.EntityFrameworkCore;
+using OrderingSystem.Authorization.Roles;
 using OrderingSystem.Entities;
 using OrderingSystem.Foods.Dto;
 using OrderingSystem.Orders.Dto;
@@ -17,14 +18,33 @@ namespace OrderingSystem.Orders
     public class OrderAppService : AsyncCrudAppService<Order, OrderDto, int, PagedOrderResultRequestDto, CreateOrderDto, OrderDto>, IOrderAppService
     {
         private readonly IRepository<Order, int> _repository;
-        public OrderAppService(IRepository<Order, int> repository) : base(repository)
+        private readonly IRepository<Food, int> _foodRepository;
+        private readonly IRepository<Role> _roleRepository;
+        public OrderAppService(IRepository<Order, int> repository, IRepository<Food, int> foodRepository, IRepository<Role> roleRepository) : base(repository)
         {
             _repository = repository;
+            _foodRepository = foodRepository;
+            _roleRepository = roleRepository;
+            _roleRepository = roleRepository;
         }
 
-        public override Task<OrderDto> CreateAsync(CreateOrderDto input)
+        public override async Task<OrderDto> CreateAsync(CreateOrderDto input)
         {
-            return base.CreateAsync(input);
+            var order = ObjectMapper.Map<Order>(input);
+            await _repository.InsertAsync(order);
+
+            var role = await _roleRepository.GetAsync(input.CustomerId);
+            if(role.Id == 3)
+            {
+                var food = await _foodRepository.GetAsync(input.FoodId);
+                if (food != null)
+                {
+                    input.FoodId = food.Id;
+                }
+                await _foodRepository.UpdateAsync(food);
+            }
+
+            return base.MapToEntityDto(order);
         }
 
         public override Task DeleteAsync(EntityDto<int> input)

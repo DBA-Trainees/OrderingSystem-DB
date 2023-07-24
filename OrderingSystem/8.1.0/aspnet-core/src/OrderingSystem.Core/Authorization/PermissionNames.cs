@@ -9,14 +9,23 @@
 
         public const string Pages_Roles = "Pages.Roles";
 
+        public const string Pages_Admin = "Pages.Admin";
+        public const string Pages_Admin_Divisions = "Pages.Admin.Divisions";
+        public const string Pages_Admin_Divisions_Create = "Pages.Admin.Divisions.Create";
+        public const string Pages_Admin_Divisions_Update = "Pages.Admin.Divisions.Update";
+        public const string Pages_Admin_Division_Delete = "Pages.Admin.Divisions.Delete";
+
+        public const string Pages_Admin_Customers = "Pages.Admin.Customers";
+        public const string Pages_Admin_Customers_Create = "Pages.Admin.Customers.Create";
+        public const string Pages_Admin_Customers_Update = "Pages.Admin.Customers.Update";
+        public const string Pages_Admin_Customers_Delete = "Pages.Admin.Customers.Edit";
+
         public const string Vendor_View = "Pages.Vendor";
         public const string Pages_Foods = "Pages.Foods";
         public const string Pages_Foods_Create_Update = "Pages.Foods.Create.Update";
         public const string Pages_Foods_FoodList = "Pages.Foods.FoodList";
         public const string Pages_Foods_FoodDetails = "Pages.Foods.FoodDetails";
 
-        public const string Pages_Divisions = "Pages.Divisions";
-        public const string Pages_Customers = "Pages.Customers";
         public const string Pages_Categories = "Pages.Categories";
         public const string Pages_Types = "Pages.Types";
 

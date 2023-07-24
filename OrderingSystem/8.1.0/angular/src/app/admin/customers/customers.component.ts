@@ -21,7 +21,7 @@ class PagedCustomersRequestDto extends PagedRequestDto {
 @Component({
   selector: "customers-component",
   templateUrl: "customers.component.html",
-  styleUrls : ['../../shared/styles/main.css'],
+  styleUrls : ['../../../shared/styles/main.css'],
   animations: [appModuleAnimation()],
 })
 export class CustomersComponent extends PagedListingComponentBase<CustomerDto> {

@@ -23,15 +23,15 @@ import {
 import * as moment from "moment";
 import { BsModalRef } from "ngx-bootstrap/modal";
 
-class PagedFoodsRequestDto extends PagedRequestDto {
+/* class PagedFoodsRequestDto extends PagedRequestDto {
   keyword: string;
   isActive: boolean | null;
-}
+} */
 
 @Component({
   selector: "food-details",
   templateUrl: "food-details.component.html",
-  styleUrls: ["./food-details.component.css", "../../../shared/styles/styles.css"],
+  styleUrls: ["../../../shared/styles/styles.css"],
 })
 export class FoodDetailsComponent extends AppComponentBase implements OnInit {
   foods: FoodDto[] = [];
@@ -111,11 +111,7 @@ export class FoodDetailsComponent extends AppComponentBase implements OnInit {
     const order = new OrderDto();
 
     order.customerId = this.customer.id;
-/*     order.customerName = this.customer.name; */
     order.foodId = this.food.id;
-/*     order.foodName = this.food.name;
-    order.quantity = this.food.quantity;
-    order.size = this.selectedFoodSize; */
     order.dateTimeOrdered = moment.utc(this.today);
 
     this._orderService.create(this.order).subscribe(

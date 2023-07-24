@@ -140,5 +140,11 @@
 	<text name="SalesReport">Sales Report</text>
 	<text name="FoodDetails">Food Details</text>
 	<text name="FoodCreateEdit">Food_Create_Edit</text>
+	<text name="CreateDivision">Create Division</text>
+	<text name="UpdateDivision">Update Division</text>
+	<text name="DeleteDivision">Delete Division</text>	
+	<text name="CreateCustomer">Create Customer</text>
+	<text name="UpdateCustomer">Update Customer</text>
+	<text name="DeleteCustomer">Delete Customer</text>
   </texts>
 </localizationDictionary>
