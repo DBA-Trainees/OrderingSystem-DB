@@ -5,7 +5,7 @@ import {
   OnInit, 
   Output 
 } from '@angular/core';
-import { FoodDetailsComponent } from '@app/food-list/food-details/food-details.component';
+import { FoodDetailsComponent } from '@app/customer/food-list/food-details/food-details.component';
 import { appModuleAnimation } from '@shared/animations/routerTransition';
 import { 
   PagedListingComponentBase, 
@@ -32,7 +32,7 @@ class PagedFoodsRequestDto extends PagedRequestDto {
 @Component({
     selector: 'food-list',
     templateUrl: 'food-list.component.html',
-    styleUrls: ["../../shared/styles/main.css"],
+    styleUrls: ["../../../shared/styles/main.css"],
     animations: [appModuleAnimation()],
 })
 

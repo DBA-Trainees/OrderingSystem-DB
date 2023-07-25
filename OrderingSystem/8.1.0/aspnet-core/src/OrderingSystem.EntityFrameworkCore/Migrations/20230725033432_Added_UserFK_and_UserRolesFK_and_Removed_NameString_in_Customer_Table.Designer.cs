@@ -12,8 +12,8 @@ using OrderingSystem.EntityFrameworkCore;
 namespace OrderingSystem.Migrations
 {
     [DbContext(typeof(OrderingSystemDbContext))]
-    [Migration("20230629015219_Set_Size_in_OrderTbl_as_Nullable")]
-    partial class Set_Size_in_OrderTbl_as_Nullable
+    [Migration("20230725033432_Added_UserFK_and_UserRolesFK_and_Removed_NameString_in_Customer_Table")]
+    partial class Added_UserFK_and_UserRolesFK_and_Removed_NameString_in_Customer_Table
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -1645,12 +1645,19 @@ namespace OrderingSystem.Migrations
                     b.Property<long?>("LastModifierUserId")
                         .HasColumnType("bigint");
 
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<long?>("RoleId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("UserId")
+                        .HasColumnType("bigint");
 
                     b.HasKey("Id");
 
                     b.HasIndex("DivisionId");
+
+                    b.HasIndex("RoleId");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Customers");
                 });
@@ -1721,7 +1728,10 @@ namespace OrderingSystem.Migrations
                     b.Property<byte[]>("Image")
                         .HasColumnType("varbinary(max)");
 
-                    b.Property<string>("ImageType")
+                    b.Property<string>("ImageFileType")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ImageName")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("IsDeleted")
@@ -1774,9 +1784,6 @@ namespace OrderingSystem.Migrations
                     b.Property<int?>("CustomerId")
                         .HasColumnType("int");
 
-                    b.Property<string>("CustomerName")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<DateTime>("DateTimeOrdered")
                         .HasColumnType("datetime2");
 
@@ -1788,9 +1795,6 @@ namespace OrderingSystem.Migrations
 
                     b.Property<int?>("FoodId")
                         .HasColumnType("int");
-
-                    b.Property<string>("FoodName")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
@@ -1804,20 +1808,24 @@ namespace OrderingSystem.Migrations
                     b.Property<string>("Notes")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("OrderStatus")
-                        .HasColumnType("bit");
+                    b.Property<long?>("RoleId")
+                        .HasColumnType("bigint");
 
-                    b.Property<int>("Quantity")
-                        .HasColumnType("int");
+                    b.Property<double?>("TotalAmount")
+                        .HasColumnType("float");
 
-                    b.Property<string>("Size")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<long?>("UserId")
+                        .HasColumnType("bigint");
 
                     b.HasKey("Id");
 
                     b.HasIndex("CustomerId");
 
                     b.HasIndex("FoodId");
+
+                    b.HasIndex("RoleId");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Orders");
                 });
@@ -2147,7 +2155,19 @@ namespace OrderingSystem.Migrations
                         .WithMany()
                         .HasForeignKey("DivisionId");
 
+                    b.HasOne("Abp.Authorization.Users.UserRole", "Role")
+                        .WithMany()
+                        .HasForeignKey("RoleId");
+
+                    b.HasOne("OrderingSystem.Authorization.Users.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+
                     b.Navigation("Division");
+
+                    b.Navigation("Role");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("OrderingSystem.Entities.Food", b =>
@@ -2175,9 +2195,21 @@ namespace OrderingSystem.Migrations
                         .WithMany()
                         .HasForeignKey("FoodId");
 
+                    b.HasOne("Abp.Authorization.Users.UserRole", "Role")
+                        .WithMany()
+                        .HasForeignKey("RoleId");
+
+                    b.HasOne("OrderingSystem.Authorization.Users.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+
                     b.Navigation("Customer");
 
                     b.Navigation("Food");
+
+                    b.Navigation("Role");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("OrderingSystem.MultiTenancy.Tenant", b =>

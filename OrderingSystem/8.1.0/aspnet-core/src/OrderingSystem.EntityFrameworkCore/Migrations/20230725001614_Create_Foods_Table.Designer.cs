@@ -12,7 +12,7 @@ using OrderingSystem.EntityFrameworkCore;
 namespace OrderingSystem.Migrations
 {
     [DbContext(typeof(OrderingSystemDbContext))]
-    [Migration("20230626082602_Create_Foods_Table")]
+    [Migration("20230725001614_Create_Foods_Table")]
     partial class Create_Foods_Table
     {
         /// <inheritdoc />
@@ -1721,7 +1721,10 @@ namespace OrderingSystem.Migrations
                     b.Property<byte[]>("Image")
                         .HasColumnType("varbinary(max)");
 
-                    b.Property<string>("ImageType")
+                    b.Property<string>("ImageFileType")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ImageName")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("IsDeleted")

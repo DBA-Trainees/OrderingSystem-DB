@@ -43,145 +43,33 @@ export class SidebarMenuComponent extends AppComponentBase implements OnInit {
 
   getMenuItems(): MenuItem[] {
     return [
-      new MenuItem(this.l("Admin"), "", "fa fa-lock", "Pages.Admin", [
-        new MenuItem(
-          this.l("Divisions"),
-          "/app/admin/divisions",
-          "fas fa-user-friends",
-          "Pages.Admin.Divisions"
-        ),
-        new MenuItem(
-          this.l("Customers"),
-          "/app/admin/customers",
-          "fas fa-restroom",
-          "Pages.Admin.Customers"
-        ),
-        new MenuItem(
-          this.l("Roles"),
-          "/app/roles",
-          "fas fa-theater-masks",
-          "Pages.Roles"
-        ),
-        new MenuItem(
-          this.l("Users"),
-          "/app/users",
-          "fas fa-users",
-          "Pages.Users"
-        ),
+      new MenuItem(this.l("Admin"), "", "", "Pages.Admin", [
+        new MenuItem(this.l("Divisions"),"/app/admin/divisions","fas fa-user-friends","Pages.Admin.Divisions"),
+        new MenuItem(this.l("Customers"),"/app/admin/customers","fas fa-restroom","Pages.Admin.Customers"),
+        new MenuItem(this.l("Roles"),"/app/roles","fas fa-theater-masks","Pages.Roles"),
+        new MenuItem(this.l("Users"),"/app/users","fas fa-users","Pages.Users"),
       ]),
-      new MenuItem(
-        this.l("Food Categories"),
-        "/app/categories",
-        "fas fa-hamburger",
-        "Pages.Categories"
-      ),
-      new MenuItem(
-        this.l("Food Types"),
-        "/app/types",
-        "fas fa-drumstick-bite",
-        "Pages.Types"
-      ),
-      new MenuItem(
-        this.l("Foods"),
-        "/app/foods",
-        "fa fa-cutlery",
-        "Pages.Foods"
-      ),
-      new MenuItem(
-        this.l("ViewOrder"),
-        "/app/view-order",
-        "fa fa-shopping-cart",
-        "Pages.ViewOrders"
-      ),
-      new MenuItem(
-        this.l("AddToCart"),
-        "/app/carts",
-        "fa fa-cart-plus",
-        "Pages.AddToCart"
-      ),
-      new MenuItem(
-        this.l("OrderSpentReport"),
-        "/app/order-spent-report",
-        "fa fa-calendar",
-        "Pages.OrderSpentReport"
-      ),
-      new MenuItem(
-        this.l("OrderList"),
-        "/app/food-list",
-        "fas fa-th-list",
-        "Pages.Foods.FoodList"
-      ),
-      new MenuItem(
-        this.l("PurchaseHistory"),
-        "/app/purchase-history",
-        "fa fa-history",
-        "Pages.PurchaseHistory"
-      ),
-      new MenuItem(
-        this.l("Reports"),
-        "/app/reports",
-        "fa fa-pie-chart",
-        "Pages.SalesReports"
-      ),
-      new MenuItem(this.l("About"), "/app/about", "fas fa-info-circle"),
-      new MenuItem(this.l("HomePage"), "/app/home", "fas fa-home"),
+      new MenuItem(this.l("Vendor"), "", "", "Pages.Vendor", [
+        new MenuItem(this.l("Food Categories"),"/app/vendor/categories","fas fa-hamburger","Pages.Vendor.Categories"),
+        new MenuItem(this.l("Food Types"),"/app/vendor/types","fas fa-drumstick-bite","Pages.Vendor.Types"),
+        new MenuItem(this.l("Food"),"/app/vendor/foods","fa fa-cutlery","Pages.Vendor.Foods"),
+        new MenuItem(this.l("ViewOrder"),"/app/vendor/view-order","fa fa-shopping-cart","Pages.Vendor.ViewOrders"),
+        new MenuItem(this.l("Reports"),"/app/vendor/reports","fa fa-pie-chart","Pages.Vendor.SalesReports"),
+      ]),  
+      new MenuItem(this.l("Customer"), "", "", "Pages.Customer", [
+        new MenuItem(this.l("Food List"),"/app/customer/food-list","fas fa-th-list","Pages.Customer.FoodList"),
+        new MenuItem(this.l("AddToCart"),"/app/customer/carts","fa fa-cart-plus","Pages.Customer.Carts"),
+        new MenuItem(this.l("PurchaseHistory"),"/app/customer/purchase-history","fa fa-history","Pages.Customer.PurchaseHistory"),
+        new MenuItem(this.l("OrderSpentReport"),"/app/customer/order-spent-report","fa fa-calendar","Pages.Customer.OrderSpentReport"),
+      ]),          
+      /* new MenuItem(this.l("About"), "/app/about", "fas fa-info-circle"),
+      new MenuItem(this.l("HomePage"), "/app/home", "fas fa-home"), */
       new MenuItem(
         this.l("Tenants"),
         "/app/tenants",
         "fas fa-building",
         "Pages.Tenants"
-      ),      
-      new MenuItem(this.l("MultiLevelMenu"), "", "fas fa-circle", "", [
-        new MenuItem("ASP.NET Boilerplate", "", "fas fa-dot-circle", "", [
-          new MenuItem(
-            "Home",
-            "https://aspnetboilerplate.com?ref=abptmpl",
-            "far fa-circle"
-          ),
-          new MenuItem(
-            "Templates",
-            "https://aspnetboilerplate.com/Templates?ref=abptmpl",
-            "far fa-circle"
-          ),
-          new MenuItem(
-            "Samples",
-            "https://aspnetboilerplate.com/Samples?ref=abptmpl",
-            "far fa-circle"
-          ),
-          new MenuItem(
-            "Documents",
-            "https://aspnetboilerplate.com/Pages/Documents?ref=abptmpl",
-            "far fa-circle"
-          ),
-        ]),
-        new MenuItem("ASP.NET Zero", "", "fas fa-dot-circle", "", [
-          new MenuItem(
-            "Home",
-            "https://aspnetzero.com?ref=abptmpl",
-            "far fa-circle"
-          ),
-          new MenuItem(
-            "Features",
-            "https://aspnetzero.com/Features?ref=abptmpl",
-            "far fa-circle"
-          ),
-          new MenuItem(
-            "Pricing",
-            "https://aspnetzero.com/Pricing?ref=abptmpl#pricing",
-            "far fa-circle"
-          ),
-          new MenuItem(
-            "Faq",
-            "https://aspnetzero.com/Faq?ref=abptmpl",
-            "far fa-circle"
-          ),
-          new MenuItem(
-            "Documents",
-            "https://aspnetzero.com/Documents?ref=abptmpl",
-            "far fa-circle"
-          ),
-        ]),
-      ]),
+      )
     ];
   }
 

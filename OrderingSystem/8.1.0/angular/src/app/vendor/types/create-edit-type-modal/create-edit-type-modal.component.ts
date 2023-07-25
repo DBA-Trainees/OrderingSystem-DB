@@ -6,7 +6,7 @@ import { BsModalRef } from "ngx-bootstrap/modal";
 @Component({
     selector: "create-edit-type-modal",
     templateUrl: "create-edit-type-modal.component.html",
-    styleUrls : ['../../../shared/styles/main.css']
+    styleUrls : ['../../../../shared/styles/main.css']
   })
 
   export class CreateEditTypeModalComponent

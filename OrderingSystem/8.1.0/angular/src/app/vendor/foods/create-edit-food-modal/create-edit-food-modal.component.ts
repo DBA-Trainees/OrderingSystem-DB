@@ -13,7 +13,7 @@ import { BsModalRef } from "ngx-bootstrap/modal";
 @Component({
   selector: "create-edit-food-modal",
   templateUrl: "create-edit-food-modal.component.html",
-  styleUrls: ['../../../shared/styles/main.css']
+  styleUrls: ['../../../../shared/styles/main.css']
 })
 export class CreateEditFoodModalComponent extends AppComponentBase implements OnInit {
 

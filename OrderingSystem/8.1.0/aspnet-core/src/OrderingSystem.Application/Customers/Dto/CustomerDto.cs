@@ -2,6 +2,8 @@
 using Abp.AutoMapper;
 using OrderingSystem.Divisions.Dto;
 using OrderingSystem.Entities;
+using OrderingSystem.Roles.Dto;
+using OrderingSystem.Users.Dto;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,8 +16,11 @@ namespace OrderingSystem.Customers.Dto
     [AutoMapFrom(typeof(Customer))]
     public class CustomerDto : EntityDto<int>
     {
-        public string Name { get; set; }
         public int DivisionId { get; set; }
         public DivisionDto Division { get; set; }
+        public int UserId { get; set; }
+        public UserDto User { get; set; }
+        public int RoleId { get; set; }
+        public RoleDto Role { get; set; }
     }
 }

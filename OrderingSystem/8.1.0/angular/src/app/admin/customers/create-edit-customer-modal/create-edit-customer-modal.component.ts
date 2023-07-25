@@ -5,6 +5,8 @@ import {
   CustomerServiceProxy,
   DivisionDto,
   DivisionServiceProxy,
+  UserDto,
+  UserServiceProxy,
 } from "@shared/service-proxies/service-proxies";
 import { BsModalRef } from "ngx-bootstrap/modal";
 
@@ -20,7 +22,9 @@ export class CreateEditCustomerModalComponent
   customer: CustomerDto = new CustomerDto();
   id: number = 0;
   divisions: DivisionDto[] =[];
+  users: UserDto[] =[];
   selectedDivision: number = null;
+  selectedUs: number = null;
 
   @Output() onSave = new EventEmitter<any>();
 
@@ -28,7 +32,8 @@ export class CreateEditCustomerModalComponent
     injector: Injector,
     public bsModalRef: BsModalRef,
     private _customerService: CustomerServiceProxy,
-    private _divisionService : DivisionServiceProxy
+    private _divisionService : DivisionServiceProxy,
+    private _userService: UserServiceProxy
   ) {
     super(injector);
   }
@@ -42,6 +47,9 @@ export class CreateEditCustomerModalComponent
     }
     this._divisionService.getAllDivisions().subscribe((res) =>{
         this.divisions = res;
+    })
+    this._customerService.getAllCustomerUserRole().subscribe((res) =>{
+      this.users = res;
     })
   }
 

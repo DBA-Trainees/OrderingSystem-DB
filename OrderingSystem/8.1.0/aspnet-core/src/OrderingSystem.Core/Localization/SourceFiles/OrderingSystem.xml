@@ -140,11 +140,14 @@
 	<text name="SalesReport">Sales Report</text>
 	<text name="FoodDetails">Food Details</text>
 	<text name="FoodCreateEdit">Food_Create_Edit</text>
-	<text name="CreateDivision">Create Division</text>
-	<text name="UpdateDivision">Update Division</text>
-	<text name="DeleteDivision">Delete Division</text>	
-	<text name="CreateCustomer">Create Customer</text>
-	<text name="UpdateCustomer">Update Customer</text>
-	<text name="DeleteCustomer">Delete Customer</text>
+	<text name="CreateDivision">Division - Create</text>
+	<text name="UpdateDivision">Division - Update</text>
+	<text name="DeleteDivision">Division - Edit</text>	
+	<text name="CreateCustomer">Customer - Create</text>
+	<text name="UpdateCustomer">Customer - Update</text>
+	<text name="DeleteCustomer">Customer - Delete</text>
+	<text name="VendorView">Vendor View</text>
+	<text name="CustomerView">Customer View</text>
+	<text name="AdminView">Admin View</text>
   </texts>
 </localizationDictionary>

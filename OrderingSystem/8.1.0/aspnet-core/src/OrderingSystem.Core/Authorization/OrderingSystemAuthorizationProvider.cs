@@ -9,8 +9,6 @@ namespace OrderingSystem.Authorization
     {
         public override void SetPermissions(IPermissionDefinitionContext context)
         {
-            //var pages = context.GetPermissionOrNull(PermissionNames.Pages) ?? context.CreatePermission(PermissionNames.Pages);
-
             context.CreatePermission(PermissionNames.Pages_Users, L("Users"));
             context.CreatePermission(PermissionNames.Pages_Users_Activation, L("UsersActivation"));
             context.CreatePermission(PermissionNames.Pages_Roles, L("Roles"));
@@ -20,32 +18,35 @@ namespace OrderingSystem.Authorization
             //var foodPage = context.CreatePermission(PermissionNames.Pages_Foods, L("Food"));
             //foodPage.CreateChildPermission(PermissionNames.Pages_Foods_Create_Update, L("FoodCreateEdit"));
             //foodPage.CreateChildPermission(PermissionNames.Pages_Foods_FoodList, L("FoodList"));
-            //foodPage.CreateChildPermission(PermissionNames.Pages_Foods_FoodDetails, L("FoodDetails"));
+            //foodPage.CreateChildPermission(PermissionNames.Pages_Foods_FoodDetails, L("FoodDetails"));                                  
 
-            context.CreatePermission(PermissionNames.Pages_Foods, L("Food"));
-            context.CreatePermission(PermissionNames.Pages_Foods_Create_Update, L("FoodCreateEdit"));
-            context.CreatePermission(PermissionNames.Pages_Foods_FoodList, L("FoodList"));
-            context.CreatePermission(PermissionNames.Pages_Foods_FoodDetails, L("FoodDetails"));
-
-            context.CreatePermission(PermissionNames.Pages_Categories, L("Category"));
-            context.CreatePermission(PermissionNames.Pages_Types, L("Type"));
-            context.CreatePermission(PermissionNames.Pages_ViewOrders, L("ViewOrder"));
-            context.CreatePermission(PermissionNames.Pages_SalesReports, L("SalesReport"));
-            context.CreatePermission(PermissionNames.Pages_PurchaseHistory, L("PurchaseHistory"));
-            context.CreatePermission(PermissionNames.Pages_OrderSpentReport, L("OrderSpentReport"));
-            context.CreatePermission(PermissionNames.Pages_AddToCart, L("AddToCart"));
-
-            var admin = context.GetPermissionOrNull(PermissionNames.Pages_Admin) ?? context.CreatePermission(PermissionNames.Pages_Admin);
+            var admin = context.GetPermissionOrNull(PermissionNames.Pages_Admin) ?? context.CreatePermission(PermissionNames.Pages_Admin, L("AdminView"));
 
             var division = admin.CreateChildPermission(PermissionNames.Pages_Admin_Divisions, L("Division"));
-            division.CreateChildPermission(PermissionNames.Pages_Admin_Divisions_Create, L("CreateDivision"));
-            division.CreateChildPermission(PermissionNames.Pages_Admin_Divisions_Update, L("UpdateDivision"));
-            division.CreateChildPermission(PermissionNames.Pages_Admin_Division_Delete, L("DeleteDivision"));
+            //division.CreateChildPermission(PermissionNames.Pages_Admin_Divisions_Create, L("CreateDivision"));
+            //division.CreateChildPermission(PermissionNames.Pages_Admin_Divisions_Update, L("UpdateDivision"));
+            //division.CreateChildPermission(PermissionNames.Pages_Admin_Division_Delete, L("DeleteDivision"));
 
             var customer = admin.CreateChildPermission(PermissionNames.Pages_Admin_Customers, L("Customer"));
-            customer.CreateChildPermission(PermissionNames.Pages_Admin_Customers_Create, L("CreateCustomer"));
-            customer.CreateChildPermission(PermissionNames.Pages_Admin_Customers_Update, L("UpdateCustomer"));
-            customer.CreateChildPermission(PermissionNames.Pages_Admin_Customers_Delete, L("DeleteCustomer"));
+            //customer.CreateChildPermission(PermissionNames.Pages_Admin_Customers_Create, L("CreateCustomer"));
+            //customer.CreateChildPermission(PermissionNames.Pages_Admin_Customers_Update, L("UpdateCustomer"));
+            //customer.CreateChildPermission(PermissionNames.Pages_Admin_Customers_Delete, L("DeleteCustomer"));
+
+            var vendor = context.GetPermissionOrNull(PermissionNames.Pages_Vendor) ?? context.CreatePermission(PermissionNames.Pages_Vendor, L("VendorView"));
+
+            vendor.CreateChildPermission(PermissionNames.Pages_Vendor_Categories, L("Category"));
+            vendor.CreateChildPermission(PermissionNames.Pages_Vendor_Types, L("Type"));
+            vendor.CreateChildPermission(PermissionNames.Pages_Vendor_Foods, L("Food"));
+            vendor.CreateChildPermission(PermissionNames.Pages_Vendor_ViewOrders, L("ViewOrder"));
+            vendor.CreateChildPermission(PermissionNames.Pages_Vendor_SalesReports, L("SalesReport"));
+
+            var customerView = context.GetPermissionOrNull(PermissionNames.Pages_Customer) ?? context.CreatePermission(PermissionNames.Pages_Customer, L("CustomerView"));
+
+            customerView.CreateChildPermission(PermissionNames.Pages_Customer_FoodList, L("FoodList"));
+            customerView.CreateChildPermission(PermissionNames.Pages_Customer_FoodDetails, L("FoodDetails"));
+            customerView.CreateChildPermission(PermissionNames.Pages_Customer_AddToCart, L("AddToCart"));
+            customerView.CreateChildPermission(PermissionNames.Pages_Customer_PurchaseHistory, L("PurchaseHistory"));
+            customerView.CreateChildPermission(PermissionNames.Pages_Customer_OrderSpentReport, L("OrderSpentReport"));
         }
 
         private static ILocalizableString L(string name)

@@ -20,23 +20,22 @@
         public const string Pages_Admin_Customers_Update = "Pages.Admin.Customers.Update";
         public const string Pages_Admin_Customers_Delete = "Pages.Admin.Customers.Edit";
 
-        public const string Vendor_View = "Pages.Vendor";
-        public const string Pages_Foods = "Pages.Foods";
-        public const string Pages_Foods_Create_Update = "Pages.Foods.Create.Update";
-        public const string Pages_Foods_FoodList = "Pages.Foods.FoodList";
-        public const string Pages_Foods_FoodDetails = "Pages.Foods.FoodDetails";
+        public const string Pages_Vendor = "Pages.Vendor";
+        public const string Pages_Vendor_Categories = "Pages.Vendor.Categories";
+        public const string Pages_Vendor_Types = "Pages.Vendor.Types";
+        public const string Pages_Vendor_Foods = "Pages.Vendor.Foods";
+        public const string Pages_Vendor_ViewOrders = "Pages.Vendor.ViewOrders";
+        public const string Pages_Vendor_SalesReports = "Pages.Vendor.SalesReports";
 
-        public const string Pages_Categories = "Pages.Categories";
-        public const string Pages_Types = "Pages.Types";
-
-
-
-        public const string Pages_ViewOrders = "Pages.ViewOrders";
-        public const string Pages_SalesReports = "Pages.SalesReports";
-        public const string Pages_PurchaseHistory = "Pages.PurchaseHistory";
-        public const string Pages_AddToCart = "Pages.Carts";
+        public const string Pages_Customer = "Pages.Customer";
+        public const string Pages_Customer_FoodList = "Pages.Customer.FoodList";
+        public const string Pages_Customer_FoodDetails = "Pages.Customer.FoodDetails";
+        public const string Pages_Customer_AddToCart = "Pages.Customer.Carts";
+        public const string Pages_Customer_PurchaseHistory = "Pages.Customer.PurchaseHistory";
+        public const string Pages_Customer_OrderSpentReport = "Pages.Customer.OrderSpentReport";
         
-        public const string Pages_OrderSpentReport = "Pages.OrderSpentReport";
         
+
+
     }
 }

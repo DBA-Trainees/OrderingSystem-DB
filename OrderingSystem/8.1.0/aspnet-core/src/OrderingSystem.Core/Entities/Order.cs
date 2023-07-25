@@ -1,4 +1,7 @@
-﻿using Abp.Domain.Entities.Auditing;
+﻿using Abp.Authorization.Users;
+using Abp.Domain.Entities.Auditing;
+using OrderingSystem.Authorization.Roles;
+using OrderingSystem.Authorization.Users;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,14 +12,12 @@ namespace OrderingSystem.Entities
 {
     public class Order : FullAuditedEntity<int>
     {
-        public int? CustomerId { get; set; }
         public Customer Customer { get; set; }
-        public int? FoodId { get; set; }
         public Food Food { get; set; }
         public string? Notes { get; set; }
         public DateTime DateTimeOrdered { get; set; }
-        public int? OrderStatusId { get; set; }
-        public OrderStatus OrderStatus { get; set; }
-        public double? Amount { get; set; }
+        public double? TotalAmount { get; set; }
+        public User User { get; set; }
+        public UserRole Role { get; set; }
     }
 }

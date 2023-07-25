@@ -12,7 +12,6 @@ import {
 import { BsModalRef, BsModalService } from "ngx-bootstrap/modal";
 import { finalize } from "rxjs/operators";
 import { CreateEditFoodModalComponent } from "./create-edit-food-modal/create-edit-food-modal.component";
-import { CurrencyPipeComponent } from "../../shared/pipes/currency.pipe"
 import { Router } from "@angular/router";
 
 class PagedFoodsRequestDto extends PagedRequestDto {
@@ -23,7 +22,7 @@ class PagedFoodsRequestDto extends PagedRequestDto {
 @Component({
   selector: "foods-component",
   templateUrl: "foods.component.html",
-  styleUrls: ["../../shared/styles/main.css"],
+  styleUrls: ["../../../shared/styles/main.css"],
   animations: [appModuleAnimation()],
 })
 export class FoodsComponent extends PagedListingComponentBase<FoodDto> {
