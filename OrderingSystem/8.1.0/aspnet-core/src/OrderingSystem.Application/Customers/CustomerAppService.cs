@@ -44,7 +44,6 @@ namespace OrderingSystem.Customers
                 .Include(x => x.Role)
                 .Include(x => x.User)
                 .OrderByDescending(x => x.Id)
-                .Where(x => x.Role.Id == 4)
                 .Select(x => ObjectMapper.Map<CustomerDto>(x))
                 .ToListAsync();
 
@@ -66,15 +65,15 @@ namespace OrderingSystem.Customers
             return base.GetEntityByIdAsync(id);
         }
 
-        public async Task<List<UserDto>> GetAllCustomerUserRole()
-        {
-            var user = await _userRepository.GetAll()
-                .Include(x =>x.FullName)
-                .Include(x =>x.Roles)
-                .ToListAsync();
+        //public async Task<List<UserDto>> GetAllCustomerUserRole()
+        //{
+        //    var user = await _userRepository.GetAll()
+        //        .Include(x =>x.FullName)
+        //        .Include(x =>x.Roles)
+        //        .ToListAsync();
 
-            return ObjectMapper.Map<List<UserDto>>(user);
-        }
+        //    return ObjectMapper.Map<List<UserDto>>(user);
+        //}
 
         public async Task<PagedResultDto<UserDto>> GetAllCustomerFromUser(PagedCustomerResultRequestDto input)
         {

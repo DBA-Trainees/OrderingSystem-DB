@@ -76,7 +76,7 @@
                                 totalItems: totalItems
                                 } | search: keyword : ['name', 'division.name']">
                                     <td>{{ customer.id }}</td>
-                                    <td>{{ customer.user.fullName }}</td>
+                                    <td>{{ customer.user?.fullName }}</td>
                                     <td>{{ customer.division?.name}}</td>
                                     <td>
                                         <button 

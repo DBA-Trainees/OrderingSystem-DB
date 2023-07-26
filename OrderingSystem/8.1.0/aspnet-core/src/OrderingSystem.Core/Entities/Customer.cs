@@ -13,7 +13,9 @@ namespace OrderingSystem.Entities
     {
         public int? DivisionId { get; set; }
         public Division Division { get; set; }
+        public long? UserId { get; set; }
         public User User { get; set; }
+        public long? RoleId { get; set; }
         public UserRole Role { get; set; }
     }
 }

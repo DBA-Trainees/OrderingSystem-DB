@@ -246,6 +246,30 @@ namespace OrderingSystem.Users
 
             return true;
         }
+
+        //public async Task<List<UserDto>> GetAllUsers()
+        //{
+        //    var user = await Repository.GetAll()
+        //        .Include(x => x.Roles)
+        //        .ToListAsync();
+
+        //    return ObjectMapper.Map<List<UserDto>>(user);
+        //}
+
+        public async Task<List<UserDto>> GetAllUsers()
+        {
+            var user = await Repository.GetAll()
+                .Include(x => x.Roles)
+                .Select(x => ObjectMapper.Map<UserDto>(x))
+                .ToListAsync();
+
+            return user;
+        }
+
+        //public async Task<List<UserRoleDto>> GetAllUserRoles()
+        //{
+        //    var user = await _userManager.GetRolesAsync()
+        //}
     }
 }
 

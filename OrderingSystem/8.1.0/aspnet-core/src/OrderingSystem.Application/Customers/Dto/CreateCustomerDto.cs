@@ -13,7 +13,7 @@ namespace OrderingSystem.Customers.Dto
     public class CreateCustomerDto
     {
         public int DivisionId { get; set; }
-        public int UserId { get; set; }
-        public int RoleId { get; set; }
+        public long UserId { get; set; }
+        public long? RoleId { get; set; }
     }
 }

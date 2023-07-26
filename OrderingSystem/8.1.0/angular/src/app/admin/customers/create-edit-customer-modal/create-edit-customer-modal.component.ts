@@ -5,6 +5,7 @@ import {
   CustomerServiceProxy,
   DivisionDto,
   DivisionServiceProxy,
+  RoleDto,
   UserDto,
   UserServiceProxy,
 } from "@shared/service-proxies/service-proxies";
@@ -23,8 +24,14 @@ export class CreateEditCustomerModalComponent
   id: number = 0;
   divisions: DivisionDto[] =[];
   users: UserDto[] =[];
+  role: RoleDto[] =[];
   selectedDivision: number = null;
-  selectedUs: number = null;
+  selectedUser: number = null;
+  selectedRole: number = null;
+  keyword = "";
+  isActive: boolean | null;
+  skipCount: number;
+  maxResultCount: number;
 
   @Output() onSave = new EventEmitter<any>();
 
@@ -42,13 +49,17 @@ export class CreateEditCustomerModalComponent
     if (this.id) {
       this._customerService.get(this.id).subscribe((res) => {
         this.customer = res;
-        this.selectedDivision = this.customer.divisionId;
+        this.selectedDivision = res.divisionId;
+        this.selectedUser = res.userId;
       });
     }
     this._divisionService.getAllDivisions().subscribe((res) =>{
         this.divisions = res;
     })
-    this._customerService.getAllCustomerUserRole().subscribe((res) =>{
+    /* this._userService.getAll(this.keyword, this.isActive,this.skipCount,this.maxResultCount).subscribe((res) =>{
+      this.users = res.items;
+    }) */
+    this._userService.getAllUsers().subscribe((res) =>{
       this.users = res;
     })
   }
@@ -56,6 +67,7 @@ export class CreateEditCustomerModalComponent
   save(): void {
     this.saving = true;
     this.customer.divisionId = this.selectedDivision;
+    this.customer.userId = this.selectedUser;
     if (this.id !== 0) {
       this._customerService.update(this.customer).subscribe(
         () => {

@@ -12,6 +12,6 @@ namespace OrderingSystem.Customers
 {
     public interface ICustomerAppService : IAsyncCrudAppService <CustomerDto, int, PagedCustomerResultRequestDto, CreateCustomerDto, CustomerDto>
     {
-        Task<List<UserDto>> GetAllCustomerUserRole();
+        //Task<List<UserDto>> GetAllCustomerUserRole();
     }
 }
