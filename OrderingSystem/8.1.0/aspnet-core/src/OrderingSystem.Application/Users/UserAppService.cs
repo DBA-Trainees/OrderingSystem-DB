@@ -22,6 +22,7 @@ using OrderingSystem.Roles.Dto;
 using OrderingSystem.Users.Dto;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using OrderingSystem.Entities;
 
 namespace OrderingSystem.Users
 {
@@ -34,6 +35,7 @@ namespace OrderingSystem.Users
         private readonly IPasswordHasher<User> _passwordHasher;
         private readonly IAbpSession _abpSession;
         private readonly LogInManager _logInManager;
+        private readonly IRepository<Customer, int> _customerRepository;
 
         public UserAppService(
             IRepository<User, long> repository,
@@ -42,7 +44,8 @@ namespace OrderingSystem.Users
             IRepository<Role> roleRepository,
             IPasswordHasher<User> passwordHasher,
             IAbpSession abpSession,
-            LogInManager logInManager)
+            LogInManager logInManager,
+            IRepository<Customer, int> customerRepository)
             : base(repository)
         {
             _userManager = userManager;
@@ -51,6 +54,7 @@ namespace OrderingSystem.Users
             _passwordHasher = passwordHasher;
             _abpSession = abpSession;
             _logInManager = logInManager;
+            _customerRepository = customerRepository;
         }
 
         public override async Task<UserDto> CreateAsync(CreateUserDto input)
@@ -246,30 +250,38 @@ namespace OrderingSystem.Users
 
             return true;
         }
-
         //public async Task<List<UserDto>> GetAllUsers()
         //{
         //    var user = await Repository.GetAll()
         //        .Include(x => x.Roles)
+        //        .Select(x => ObjectMapper.Map<UserDto>(x))
         //        .ToListAsync();
 
-        //    return ObjectMapper.Map<List<UserDto>>(user);
+        //    return user;
         //}
 
-        public async Task<List<UserDto>> GetAllUsers()
+
+
+        public async Task<List<UserDto>> GetUsersWithCustomerRole()
         {
-            var user = await Repository.GetAll()
-                .Include(x => x.Roles)
-                .Select(x => ObjectMapper.Map<UserDto>(x))
+            var customerRoleId = 3;
+            var userRole = await _userManager.Users
+                .Where(x => x.Roles.Any(role => role.RoleId == customerRoleId))
                 .ToListAsync();
 
-            return user;
-        }
+            var customer = await _customerRepository.GetAll()
+                .Select(x => x.UserId)
+                .ToListAsync();
 
-        //public async Task<List<UserRoleDto>> GetAllUserRoles()
-        //{
-        //    var user = await _userManager.GetRolesAsync()
-        //}
+            var usersNotAddedInCustomer = userRole
+                .Where(x => !customer
+                .Contains(x.Id))
+                .ToList();
+
+            var user = ObjectMapper.Map<List<UserDto>>(usersNotAddedInCustomer);
+            return new List<UserDto>(user);
+        }
+        
     }
 }
 

@@ -15,6 +15,8 @@ namespace OrderingSystem.Users
         Task ChangeLanguage(ChangeUserLanguageDto input);
 
         Task<bool> ChangePassword(ChangePasswordDto input);
-        Task<List<UserDto>> GetAllUsers();
+        //Task<List<UserDto>> GetAllUsers();
+        Task<List<UserDto>> GetUsersWithCustomerRole();
+
     }
 }

@@ -14,6 +14,5 @@ namespace OrderingSystem.Customers.Dto
     {
         public int DivisionId { get; set; }
         public long UserId { get; set; }
-        public long? RoleId { get; set; }
     }
 }

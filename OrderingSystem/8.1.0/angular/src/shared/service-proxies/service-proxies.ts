@@ -4266,8 +4266,8 @@ export class UserServiceProxy {
     /**
      * @return Success
      */
-    getAllUsers(): Observable<UserDto[]> {
-        let url_ = this.baseUrl + "/api/services/app/User/GetAllUsers";
+    getUsersWithCustomerRole(): Observable<UserDto[]> {
+        let url_ = this.baseUrl + "/api/services/app/User/GetUsersWithCustomerRole";
         url_ = url_.replace(/[?&]$/, "");
 
         let options_ : any = {
@@ -4279,11 +4279,11 @@ export class UserServiceProxy {
         };
 
         return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processGetAllUsers(response_);
+            return this.processGetUsersWithCustomerRole(response_);
         })).pipe(_observableCatch((response_: any) => {
             if (response_ instanceof HttpResponseBase) {
                 try {
-                    return this.processGetAllUsers(response_ as any);
+                    return this.processGetUsersWithCustomerRole(response_ as any);
                 } catch (e) {
                     return _observableThrow(e) as any as Observable<UserDto[]>;
                 }
@@ -4292,7 +4292,7 @@ export class UserServiceProxy {
         }));
     }
 
-    protected processGetAllUsers(response: HttpResponseBase): Observable<UserDto[]> {
+    protected processGetUsersWithCustomerRole(response: HttpResponseBase): Observable<UserDto[]> {
         const status = response.status;
         const responseBlob =
             response instanceof HttpResponse ? response.body :

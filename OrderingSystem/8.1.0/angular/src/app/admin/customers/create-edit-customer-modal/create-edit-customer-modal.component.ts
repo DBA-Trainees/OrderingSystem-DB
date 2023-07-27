@@ -50,18 +50,19 @@ export class CreateEditCustomerModalComponent
       this._customerService.get(this.id).subscribe((res) => {
         this.customer = res;
         this.selectedDivision = res.divisionId;
-        this.selectedUser = res.userId;
+        this.selectedUser = res.userId;        
       });
-    }
+          }
     this._divisionService.getAllDivisions().subscribe((res) =>{
         this.divisions = res;
+    });
+    this._userService.getUsersWithCustomerRole().subscribe((res:UserDto) =>{
+      this.users.push(res);
     })
     /* this._userService.getAll(this.keyword, this.isActive,this.skipCount,this.maxResultCount).subscribe((res) =>{
       this.users = res.items;
     }) */
-    this._userService.getAllUsers().subscribe((res) =>{
-      this.users = res;
-    })
+    
   }
 
   save(): void {

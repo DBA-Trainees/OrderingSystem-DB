@@ -41,7 +41,6 @@ namespace OrderingSystem.Customers
         {
             var customer = await _repository.GetAll()
                 .Include(x => x.Division)
-                .Include(x => x.Role)
                 .Include(x => x.User)
                 .OrderByDescending(x => x.Id)
                 .Select(x => ObjectMapper.Map<CustomerDto>(x))
@@ -78,10 +77,8 @@ namespace OrderingSystem.Customers
         public async Task<PagedResultDto<UserDto>> GetAllCustomerFromUser(PagedCustomerResultRequestDto input)
         {
             var customer = await _repository.GetAll()
-                .Include(x => x.Role)
                 .Include(x => x.User)
                 .OrderByDescending(x => x.Id)
-                .Where(x => x.Role.Id == 4)
                 .Select(x => ObjectMapper.Map<UserDto>(x))
                 .ToListAsync();
 
