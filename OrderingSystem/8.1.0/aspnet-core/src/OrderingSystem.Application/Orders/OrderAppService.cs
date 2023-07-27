@@ -28,23 +28,9 @@ namespace OrderingSystem.Orders
             _roleRepository = roleRepository;
         }
 
-        public override async Task<OrderDto> CreateAsync(CreateOrderDto input)
+        public override Task<OrderDto> CreateAsync(CreateOrderDto input)
         {
-            var order = ObjectMapper.Map<Order>(input);
-            await _repository.InsertAsync(order);
-
-            var role = await _roleRepository.GetAsync(input.CustomerId);
-            if(role.Id == 3)
-            {
-                var food = await _foodRepository.GetAsync(input.FoodId);
-                if (food != null)
-                {
-                    input.FoodId = food.Id;
-                }
-                await _foodRepository.UpdateAsync(food);
-            }
-
-            return base.MapToEntityDto(order);
+            return base.CreateAsync(input);
         }
 
         public override Task DeleteAsync(EntityDto<int> input)

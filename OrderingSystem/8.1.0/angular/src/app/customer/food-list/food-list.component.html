@@ -69,7 +69,7 @@
                                     <i class="fa fa-ban" ></i> <strong></strong></p>
                             </ng-template>
                             <h5 class="card-text text-muted text-center info">
-                                <strong>₱ {{food.price}}</strong>
+                                <strong> {{food.price | currency:'PHP'}}</strong>
                             </h5>
                         </div>
                         <!-- <ul class="list-inline animate text-center" [ariaDisabled]="food.availability==0">

@@ -1,7 +1,13 @@
-import { Component, EventEmitter, Injector, OnInit, Output } from "@angular/core";
+import {
+  Component,
+  EventEmitter,
+  Injector,
+  OnInit,
+  Output,
+} from "@angular/core";
 import { AppComponentBase } from "@shared/app-component-base";
 import {
-    CustomerDto,
+  CustomerDto,
   CustomerServiceProxy,
   DivisionDto,
   DivisionServiceProxy,
@@ -22,12 +28,10 @@ export class CreateEditCustomerModalComponent
   saving = false;
   customer: CustomerDto = new CustomerDto();
   id: number = 0;
-  divisions: DivisionDto[] =[];
-  users: UserDto[] =[];
-  role: RoleDto[] =[];
+  divisions: DivisionDto[] = [];
+  users: UserDto[] = [];
   selectedDivision: number = null;
   selectedUser: number = null;
-  selectedRole: number = null;
   keyword = "";
   isActive: boolean | null;
   skipCount: number;
@@ -39,7 +43,7 @@ export class CreateEditCustomerModalComponent
     injector: Injector,
     public bsModalRef: BsModalRef,
     private _customerService: CustomerServiceProxy,
-    private _divisionService : DivisionServiceProxy,
+    private _divisionService: DivisionServiceProxy,
     private _userService: UserServiceProxy
   ) {
     super(injector);
@@ -50,19 +54,18 @@ export class CreateEditCustomerModalComponent
       this._customerService.get(this.id).subscribe((res) => {
         this.customer = res;
         this.selectedDivision = res.divisionId;
-        this.selectedUser = res.userId;        
+        this.selectedUser = res.userId;
       });
-          }
-    this._divisionService.getAllDivisions().subscribe((res) =>{
-        this.divisions = res;
+    }
+    this._divisionService.getAllDivisions().subscribe((res) => {
+      this.divisions = res;
     });
-    this._userService.getUsersWithCustomerRole().subscribe((res:UserDto) =>{
-      this.users.push(res);
-    })
+    this._userService.getUsersWithCustomerRole().subscribe((res) => {
+      this.users = res;
+    });
     /* this._userService.getAll(this.keyword, this.isActive,this.skipCount,this.maxResultCount).subscribe((res) =>{
       this.users = res.items;
     }) */
-    
   }
 
   save(): void {

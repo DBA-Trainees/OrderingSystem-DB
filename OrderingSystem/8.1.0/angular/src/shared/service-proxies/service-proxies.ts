@@ -4899,7 +4899,6 @@ export interface ICreateCategoryDto {
 export class CreateCustomerDto implements ICreateCustomerDto {
     divisionId: number;
     userId: number;
-    roleId: number | undefined;
 
     constructor(data?: ICreateCustomerDto) {
         if (data) {
@@ -4914,7 +4913,6 @@ export class CreateCustomerDto implements ICreateCustomerDto {
         if (_data) {
             this.divisionId = _data["divisionId"];
             this.userId = _data["userId"];
-            this.roleId = _data["roleId"];
         }
     }
 
@@ -4929,7 +4927,6 @@ export class CreateCustomerDto implements ICreateCustomerDto {
         data = typeof data === 'object' ? data : {};
         data["divisionId"] = this.divisionId;
         data["userId"] = this.userId;
-        data["roleId"] = this.roleId;
         return data;
     }
 
@@ -4944,7 +4941,6 @@ export class CreateCustomerDto implements ICreateCustomerDto {
 export interface ICreateCustomerDto {
     divisionId: number;
     userId: number;
-    roleId: number | undefined;
 }
 
 export class CreateDivisionDto implements ICreateDivisionDto {
@@ -5076,6 +5072,8 @@ export class CreateOrderDto implements ICreateOrderDto {
     dateTimeOrdered: moment.Moment;
     orderStatusId: number | undefined;
     amount: number | undefined;
+    userId: number;
+    roleId: number | undefined;
 
     constructor(data?: ICreateOrderDto) {
         if (data) {
@@ -5094,6 +5092,8 @@ export class CreateOrderDto implements ICreateOrderDto {
             this.dateTimeOrdered = _data["dateTimeOrdered"] ? moment(_data["dateTimeOrdered"].toString()) : <any>undefined;
             this.orderStatusId = _data["orderStatusId"];
             this.amount = _data["amount"];
+            this.userId = _data["userId"];
+            this.roleId = _data["roleId"];
         }
     }
 
@@ -5112,6 +5112,8 @@ export class CreateOrderDto implements ICreateOrderDto {
         data["dateTimeOrdered"] = this.dateTimeOrdered ? this.dateTimeOrdered.toISOString() : <any>undefined;
         data["orderStatusId"] = this.orderStatusId;
         data["amount"] = this.amount;
+        data["userId"] = this.userId;
+        data["roleId"] = this.roleId;
         return data;
     }
 
@@ -5130,6 +5132,8 @@ export interface ICreateOrderDto {
     dateTimeOrdered: moment.Moment;
     orderStatusId: number | undefined;
     amount: number | undefined;
+    userId: number;
+    roleId: number | undefined;
 }
 
 export class CreateOrderStatusDto implements ICreateOrderStatusDto {
@@ -5429,8 +5433,6 @@ export class CustomerDto implements ICustomerDto {
     division: DivisionDto;
     userId: number;
     user: UserDto;
-    roleId: number | undefined;
-    role: RoleDto;
 
     constructor(data?: ICustomerDto) {
         if (data) {
@@ -5448,8 +5450,6 @@ export class CustomerDto implements ICustomerDto {
             this.division = _data["division"] ? DivisionDto.fromJS(_data["division"]) : <any>undefined;
             this.userId = _data["userId"];
             this.user = _data["user"] ? UserDto.fromJS(_data["user"]) : <any>undefined;
-            this.roleId = _data["roleId"];
-            this.role = _data["role"] ? RoleDto.fromJS(_data["role"]) : <any>undefined;
         }
     }
 
@@ -5467,8 +5467,6 @@ export class CustomerDto implements ICustomerDto {
         data["division"] = this.division ? this.division.toJSON() : <any>undefined;
         data["userId"] = this.userId;
         data["user"] = this.user ? this.user.toJSON() : <any>undefined;
-        data["roleId"] = this.roleId;
-        data["role"] = this.role ? this.role.toJSON() : <any>undefined;
         return data;
     }
 
@@ -5486,8 +5484,6 @@ export interface ICustomerDto {
     division: DivisionDto;
     userId: number;
     user: UserDto;
-    roleId: number | undefined;
-    role: RoleDto;
 }
 
 export class CustomerDtoPagedResultDto implements ICustomerDtoPagedResultDto {
@@ -6259,6 +6255,10 @@ export class OrderDto implements IOrderDto {
     orderStatusId: number | undefined;
     orderStatus: OrderStatusDto;
     amount: number | undefined;
+    userId: number;
+    user: UserDto;
+    roleId: number | undefined;
+    role: RoleDto;
 
     constructor(data?: IOrderDto) {
         if (data) {
@@ -6281,6 +6281,10 @@ export class OrderDto implements IOrderDto {
             this.orderStatusId = _data["orderStatusId"];
             this.orderStatus = _data["orderStatus"] ? OrderStatusDto.fromJS(_data["orderStatus"]) : <any>undefined;
             this.amount = _data["amount"];
+            this.userId = _data["userId"];
+            this.user = _data["user"] ? UserDto.fromJS(_data["user"]) : <any>undefined;
+            this.roleId = _data["roleId"];
+            this.role = _data["role"] ? RoleDto.fromJS(_data["role"]) : <any>undefined;
         }
     }
 
@@ -6303,6 +6307,10 @@ export class OrderDto implements IOrderDto {
         data["orderStatusId"] = this.orderStatusId;
         data["orderStatus"] = this.orderStatus ? this.orderStatus.toJSON() : <any>undefined;
         data["amount"] = this.amount;
+        data["userId"] = this.userId;
+        data["user"] = this.user ? this.user.toJSON() : <any>undefined;
+        data["roleId"] = this.roleId;
+        data["role"] = this.role ? this.role.toJSON() : <any>undefined;
         return data;
     }
 
@@ -6325,6 +6333,10 @@ export interface IOrderDto {
     orderStatusId: number | undefined;
     orderStatus: OrderStatusDto;
     amount: number | undefined;
+    userId: number;
+    user: UserDto;
+    roleId: number | undefined;
+    role: RoleDto;
 }
 
 export class OrderDtoPagedResultDto implements IOrderDtoPagedResultDto {

@@ -16,9 +16,9 @@
       <div class="col-md-10">
         <div class="col-md-4">
           <img
-            *ngIf="food.imageFileType && food.image"
+            *ngIf="order.food.imageFileType && order.food.image"
             class="center"
-            [src]="'data:image/' + food.imageFileType + ';base64,' + food.image"
+            [src]="'data:image/' + order.food.imageFileType + ';base64,' + order.food.image"
           />
         </div>
       </div>
@@ -35,7 +35,7 @@
           id="name"
           required
           readonly
-          [(ngModel)]="food.name"
+          [(ngModel)]="order.food.name"
           #nameModel="ngModel"
           #nameEl
         />
@@ -57,7 +57,7 @@
             name="availability"
             id="availability"
             [(ngModel)]="food.availability"
-            [checked]="food.availability"
+            [checked]="order.food.availability"
             readonly
           />
           <label class="form-check-label"> Available</label>
@@ -75,7 +75,7 @@
           name="foodQty"
           id="foodQty"
           required
-          [(ngModel)]="food.quantity"
+          [(ngModel)]="order.food.quantity"
           readonly
           #foodQtyModel="ngModel"
           #foodQtyEl
@@ -161,7 +161,7 @@
             name="foodPrice"
             id="foodPrice"
             required
-            [(ngModel)]="food.price"
+            [(ngModel)]="order.food.price"
             #foodPriceModel="ngModel"
             #foodPriceEl
             readonly

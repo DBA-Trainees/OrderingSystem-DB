@@ -17,5 +17,7 @@ namespace OrderingSystem.Orders.Dto
         public DateTime DateTimeOrdered { get; set; }
         public int? OrderStatusId { get; set; }
         public double? Amount { get; set; }
+        public long UserId { get; set; }
+        public long? RoleId { get; set; }
     }
 }
