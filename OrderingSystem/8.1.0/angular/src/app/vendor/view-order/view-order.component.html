@@ -70,8 +70,8 @@
                                 currentPage: pageNumber,
                                 totalItems: totalItems
                                 }">
-                                    <td>{{ order.customerName }}</td>
-                                    <td>{{ order.foodName }}</td>
+                                    <td>{{ order.user?.fullName }}</td>
+                                    <td>{{ order.food?.name }}</td>
                                     <td>{{ order.quantity }}</td>
                                     <td>{{ order.size }}</td>
                                     <td>{{ order.notes }}</td>

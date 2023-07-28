@@ -1,8 +1,10 @@
 ﻿using Abp.Application.Services;
 using Abp.Application.Services.Dto;
 using Abp.Domain.Repositories;
+using Abp.Runtime.Session;
 using Microsoft.EntityFrameworkCore;
 using OrderingSystem.Authorization.Roles;
+using OrderingSystem.Authorization.Users;
 using OrderingSystem.Entities;
 using OrderingSystem.Foods.Dto;
 using OrderingSystem.Orders.Dto;
@@ -19,18 +21,33 @@ namespace OrderingSystem.Orders
     {
         private readonly IRepository<Order, int> _repository;
         private readonly IRepository<Food, int> _foodRepository;
-        private readonly IRepository<Role> _roleRepository;
-        public OrderAppService(IRepository<Order, int> repository, IRepository<Food, int> foodRepository, IRepository<Role> roleRepository) : base(repository)
+        private readonly IRepository<User, long> _userRepository;
+        public OrderAppService(IRepository<Order, int> repository, IRepository<Food, int> foodRepository, IRepository<User, long> userRepository) : base(repository)
         {
             _repository = repository;
             _foodRepository = foodRepository;
-            _roleRepository = roleRepository;
-            _roleRepository = roleRepository;
+            _userRepository = userRepository;
         }
 
-        public override Task<OrderDto> CreateAsync(CreateOrderDto input)
+        public override async Task<OrderDto> CreateAsync(CreateOrderDto input)
         {
-            return base.CreateAsync(input);
+            //var order = ObjectMapper.Map<Order>(input);
+            //order = await _repository.InsertAsync(order);
+            //var food = await _foodRepository.GetAsync(input.FoodId);
+            //var user = await _userRepository.GetAsync(AbpSession.UserId.Value);
+
+            //order.Food = food;
+            //order.User = user;            
+
+            var userId = AbpSession.GetUserId();
+            var order = ObjectMapper.Map<Order>(input);
+
+            order.FoodId = input.FoodId;
+            order.UserId = userId;
+
+            order = await _repository.InsertAsync(order);
+
+            return ObjectMapper.Map<OrderDto>(order);
         }
 
         public override Task DeleteAsync(EntityDto<int> input)
@@ -42,7 +59,7 @@ namespace OrderingSystem.Orders
         {
             var order = await _repository.GetAll()
                 .Include(x => x.Food)
-                .Include(x => x.Customer)
+                .Include(x => x.User)
                 .Select( x => ObjectMapper.Map<OrderDto>(x))
                 .ToListAsync();
 

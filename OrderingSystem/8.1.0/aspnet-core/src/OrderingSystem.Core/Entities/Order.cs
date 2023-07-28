@@ -13,11 +13,12 @@ namespace OrderingSystem.Entities
     public class Order : FullAuditedEntity<int>
     {
         public Customer Customer { get; set; }
+        public int FoodId { get; set; }
         public Food Food { get; set; }
         public string? Notes { get; set; }
         public DateTime DateTimeOrdered { get; set; }
         public double? TotalAmount { get; set; }
+        public long? UserId { get; set; }
         public User User { get; set; }
-        public UserRole Role { get; set; }
     }
 }
