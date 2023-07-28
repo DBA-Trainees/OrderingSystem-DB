@@ -20,13 +20,15 @@
           name="image"
           id="image"
           required
+          multiple
+          accept="image/*"
           (change)="displayImage($event)"
         /><br />
         <div class="col-md-10">
           <img
             *ngIf="food.imageFileType && food.image"
             class="center"
-            [src]="'data:image/' + food.imageFileType + ';base64,' + food.image"
+            [src]="'data:' + food.imageFileType + ';base64,' + food.image"
           />
           <br />
           <input
@@ -35,7 +37,7 @@
             class="form-control"
             name="image"
             id="image"
-            [(ngModel)]="food.imageName + food.imageFileType"
+            [(ngModel)]="food.imageName"
             required
           />
         </div>

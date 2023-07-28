@@ -5,7 +5,7 @@
                 <div class="col-lg-6 col-6">
                     <div class="small-box bg-success">
                         <div class="inner">
-                            <h1><strong>{{ "Orders" | localize }}</strong></h1>
+                            <h1><strong>{{ "Add-to-Cart" | localize }}</strong></h1>
                             <p>Dashboard</p>
                             <div class="icon">
                                 <i class="fa fa-university"></i>
@@ -64,9 +64,9 @@
                                     <th>{{ "Food Name" | localize }}</th>
                                     <th>{{ "Qty" | localize }}</th>
                                     <th>{{ "Size" | localize }}</th>
-                                    <th>{{ "Date and Time Ordered" | localize }}</th>
-                                    <th>{{ "Order Status" | localize }}</th>
-                                    <th class="action-th">{{ "Actions" | localize }}</th>
+                                    <th>{{ "Total Amount" | localize }}</th>
+                                    <th>{{ "Date Ordered" | localize }}</th>
+                                    <th>{{ "Time Ordered" | localize }}</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -79,9 +79,11 @@
                                         } ">
                                     <td>{{ order.id }}</td>
                                     <td>{{ order.food.name }}</td>
-                                    <td>{{ order.food.qty }}</td>
-                                    <td>{{ order.food.size }}</td>
-                                    <td>{{ order.datetimeordered }}</td>
+                                    <td>{{ order.quantity }}</td>
+                                    <td>{{ order.size }}</td>
+                                    <td>{{ order.totalAmount | currency:'PHP'}}</td>
+                                    <td>{{ order.dateTimeOrdered | date: 'MM/dd/yyyy'}}</td>
+                                    <td>{{ order.dateTimeOrdered | date: 'hh:mm a'}}</td>
                                     <!-- <td>
                                                 <button 
                                                 type="button" 

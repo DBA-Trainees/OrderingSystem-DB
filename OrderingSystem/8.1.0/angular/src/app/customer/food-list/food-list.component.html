@@ -53,7 +53,7 @@
             </div>
             <div class="row">
                 <div class="col-2" *ngFor="let food of foods">
-                    <div class="card">
+                    <div class="card" *ngIf="food.availability==1">
                         <div class="card-body p-1">
                             <div class="card-body p-1" (click)="displayFoodDetails(food.id)">
                                 <img [src]="'data:image/png;base64,' + food.image" class="center card-img-top"/>
@@ -72,44 +72,6 @@
                                 <strong> {{food.price | currency:'PHP'}}</strong>
                             </h5>
                         </div>
-                        <!-- <ul class="list-inline animate text-center" [ariaDisabled]="food.availability==0">
-                            <li class="list-inline-item">
-                                <button class="btn text-center inline bg-blue"
-                                (click)="addToCart(food.id)"
-                                [disabled]="food.availability==0">
-                                    Add to Cart</button>
-                            </li>
-                            <li class="list-inline-item">
-                                <button class="btn text-center inline" (click)="displayFoodDetails(food.id)">
-                                    See more</button>
-                            </li>
-                        </ul> -->
-                        <!-- <div class="form-group text-center">
-                            <div class="col-md-6 text-center">
-                                <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <button 
-                                        class="btn btn-outline-secondary" 
-                                        type="button" 
-                                        (click)="decrementQty()" 
-                                        [disabled]="foodQty<=1">-</button>
-                                    </div>
-                                    <input 
-                                    type="number" 
-                                    class="form-control"
-                                    name="foodQuantity" 
-                                    id="foodQuantity" 
-                                    [(ngModel)]="foodQty" 
-                                    readonly>
-                                    <div class="input-group-prepend">
-                                        <button 
-                                        class="btn btn-outline-secondary" 
-                                        type="button" 
-                                        (click)="incrementQty(foodQty)">+</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div> -->
                     </div>
                 </div>
             </div>

@@ -66,7 +66,7 @@ export class CreateEditFoodModalComponent extends AppComponentBase implements On
   }
 
   displayImage(event: any): void{
-    const foodFile = event.target.files[0];
+/*     var foodFile = event.target.files[0];
     const foodFileName = foodFile.name;
   
     const fileNameWithoutExtension = foodFileName.split('.').slice(0, -1).join('.');
@@ -79,7 +79,21 @@ export class CreateEditFoodModalComponent extends AppComponentBase implements On
       this.food.imageFileType = fileTypeOnly;
       this.food.imageName = fileNameWithoutExtension;
     };
-    reader.readAsDataURL(foodFile);
+    reader.readAsDataURL(foodFile); */
+
+    var foodFile = event.target.files[0];
+
+    const reader = new FileReader();
+
+    if(foodFile){
+      reader.onload = (e:any) =>{
+        this.food.image = e.target.result.split(',')[1];        
+        this.food.imageName = foodFile.name;
+        const fileTypeOnly = this.food.imageName.split('.').pop();
+        this.food.imageFileType = fileTypeOnly;
+      };
+      reader.readAsDataURL(foodFile);
+    }
   }
 
   isFoodAvailable(event: any): void{

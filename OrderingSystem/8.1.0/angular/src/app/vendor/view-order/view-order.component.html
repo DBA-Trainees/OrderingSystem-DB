@@ -57,6 +57,7 @@
                                     <th>{{ "Food Name" | localize }}</th>
                                     <th>{{ "Qty" | localize }}</th>
                                     <th>{{ "Size" | localize }}</th>
+                                    <th>{{ "Total Amount" | localize }}</th>
                                     <th>{{ "Notes" | localize }}</th>
                                     <th>{{ "Date Ordered" | localize }}</th>
                                     <th>{{ "Time Ordered" | localize }}</th>
@@ -74,6 +75,7 @@
                                     <td>{{ order.food?.name }}</td>
                                     <td>{{ order.quantity }}</td>
                                     <td>{{ order.size }}</td>
+                                    <td>{{ order.totalAmount | currency:'PHP'}}</td>
                                     <td>{{ order.notes }}</td>
                                     <td>{{ order.dateTimeOrdered | date: 'MM/dd/yyyy'}}</td>
                                     <td>{{ order.dateTimeOrdered | date: 'hh:mm a'}}</td>

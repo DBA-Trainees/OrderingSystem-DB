@@ -5,6 +5,7 @@ import {
   OnInit,
   Output,
 } from "@angular/core";
+import { Router } from "@angular/router";
 import { AppComponentBase } from "@shared/app-component-base";
 import {
   PagedRequestDto,
@@ -25,10 +26,6 @@ import {
 import * as moment from "moment";
 import { BsModalRef } from "ngx-bootstrap/modal";
 
-/* class PagedFoodsRequestDto extends PagedRequestDto {
-  keyword: string;
-  isActive: boolean | null;
-} */
 
 @Component({
   selector: "food-details",
@@ -57,9 +54,7 @@ export class FoodDetailsComponent extends AppComponentBase implements OnInit {
     public bsModalRef: BsModalRef,
     private _foodService: FoodServiceProxy,
     private _orderService: OrderServiceProxy,
-    private _categoryService: CategoryServiceProxy,
-    private _typeService: TypeServiceProxy
-
+    private router: Router
   ) {
     super(injector);
   }
@@ -70,7 +65,6 @@ export class FoodDetailsComponent extends AppComponentBase implements OnInit {
  */
    this.order.food = this.food;
    this.order.user = this.user;
-   this.order.customer = this.customer;
     if (this.food.size) {
       this.selectedFoodSize = this.food.size.split(",")[0];
     }
@@ -108,22 +102,20 @@ export class FoodDetailsComponent extends AppComponentBase implements OnInit {
 
   save(): void {
     this.saving = true;
-    /* this.food.typeId;
-    this.order.food = this.food;
-    this.order.user = this.user;
-    this.order.customer = this.customer; */
 
-    const orderDto = new CreateOrderDto();
-
-    
+    const orderDto = new CreateOrderDto();   
     orderDto.foodId = this.food.id;
+    orderDto.quantity = this.foodQty;
+    orderDto.totalAmount = this.foodQty * this.food.price;
     orderDto.dateTimeOrdered = moment.utc(this.today);
 
     this._orderService.create(orderDto).subscribe(
-      () => {
+      (res) => {
         this.notify.info(this.l("SavedSuccessfully"));
         this.bsModalRef.hide();
-        this.onSave.emit();
+        this.onSave.emit(res);
+
+        this.router.navigate(["./app/customer/carts"]);
       },
       () => {
         this.saving = false;

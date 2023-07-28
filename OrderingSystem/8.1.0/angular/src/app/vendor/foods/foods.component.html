@@ -63,7 +63,6 @@
                                 <tr>
                                     <th>{{ "Food Id" | localize }}</th>
                                     <th>{{ "Image" | localize }}</th>
-                                    <th>{{ "File Name" | localize }}</th>
                                     <th>{{ "Food" | localize }}</th>
                                     <th>{{ "Availability" | localize }}</th>
                                     <th>{{ "Qty" | localize }}</th>
@@ -95,7 +94,6 @@
                                         [src]="'data:image/' + food.imageType + ';base64,' + food.image" 
                                         />
                                     </td>
-                                    <td>{{ food.imageName }}</td>
                                     <td>{{ food.name }}</td>
                                     <td *ngIf="food.availability==1; else NotAvailable "><strong>Available</strong></td>
                                     <ng-template #NotAvailable>

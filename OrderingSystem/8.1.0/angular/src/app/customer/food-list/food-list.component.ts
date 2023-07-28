@@ -93,18 +93,6 @@ export class FoodListComponent
       });
   }
 
-  decrementQty(): void {
-    if (this.food.quantity > 1) {
-      this.foodQty--;
-    }
-  }
-
-  incrementQty(maxQty: number): void {
-    if (this.foodQty < this.food.quantity) {
-      this.foodQty++;
-    }
-  }
-
   displayFoodDetails(id): void {
     this.showFoodDetailsModal(id);
   }

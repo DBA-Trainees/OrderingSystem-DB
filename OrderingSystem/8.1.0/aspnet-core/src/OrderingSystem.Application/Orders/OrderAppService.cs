@@ -60,7 +60,23 @@ namespace OrderingSystem.Orders
             var order = await _repository.GetAll()
                 .Include(x => x.Food)
                 .Include(x => x.User)
-                .Select( x => ObjectMapper.Map<OrderDto>(x))
+                .OrderByDescending(x => x.Id)
+                .Select( x => ObjectMapper.Map<OrderDto>(x))                
+                .ToListAsync();
+
+            return new PagedResultDto<OrderDto>(order.Count(), order);
+        }
+
+        public async Task<PagedResultDto<OrderDto>> GetAllOrderInCart(PagedOrderResultRequestDto input)
+        {
+            var userId = AbpSession.GetUserId();
+
+            var order = await _repository.GetAll()
+                .Include(x => x.Food)
+                .Include(x => x.User)
+                .Where(x => x.UserId == userId)
+                .OrderByDescending(x => x.Id)
+                .Select(x => ObjectMapper.Map<OrderDto>(x))
                 .ToListAsync();
 
             return new PagedResultDto<OrderDto>(order.Count(), order);

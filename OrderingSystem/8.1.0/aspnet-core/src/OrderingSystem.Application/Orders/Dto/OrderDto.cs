@@ -18,18 +18,16 @@ namespace OrderingSystem.Orders.Dto
     [AutoMapFrom(typeof(Order))]
     public class OrderDto : EntityDto<int>
     {
-        public int? CustomerId { get; set; }
-        public CustomerDto Customer { get; set; }
         public int? FoodId { get; set; }
+        public int Quantity { get; set; }
+        public string? Size { get; set; }
         public FoodDto Food { get; set; }
         public string? Notes { get; set; }
         public DateTime DateTimeOrdered { get; set; }
-        public int? OrderStatusId { get; set; }
-        public OrderStatusDto OrderStatus { get; set; }
-        public double? Amount { get; set; }
+        //public int? OrderStatusId { get; set; }
+        //public OrderStatusDto OrderStatus { get; set; }
+        public double? TotalAmount { get; set; }
         public long UserId { get; set; }
         public UserDto User { get; set; }
-        public long? RoleId { get; set; }
-        public RoleDto Role { get; set; }
     }
 }
