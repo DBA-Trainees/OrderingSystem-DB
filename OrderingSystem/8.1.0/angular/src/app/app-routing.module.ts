@@ -21,6 +21,7 @@ import { FoodListComponent } from './customer/food-list/food-list.component';
 import { FoodDetailsComponent } from './customer/food-list/food-details/food-details.component';
 import { ViewOrdersComponent } from './vendor/view-order/view-order.component';
 import { OrderStatusesComponent } from './order-status/order-status.component';
+import { OrdersComponent } from './customer/orders/order.component';
 
 @NgModule({
     imports: [
@@ -48,6 +49,7 @@ import { OrderStatusesComponent } from './order-status/order-status.component';
                     { path: 'vendor/reports', component: ReportsComponent, data: { permission: 'Pages.Vendor.SalesReports' }, canActivate: [AppRouteGuard] },
                     { path: 'vendor/food-list/food-details', component: FoodDetailsComponent, data: { permission: 'Pages.Vendor.FoodDetails' },canActivate: [AppRouteGuard] },
                     { path: 'order-status', component: OrderStatusesComponent ,canActivate: [AppRouteGuard] },
+                    { path: 'customer/orders', component: OrdersComponent ,canActivate: [AppRouteGuard] },
                 ]
             }
         ])

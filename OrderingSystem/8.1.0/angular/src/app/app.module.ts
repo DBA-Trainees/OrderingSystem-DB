@@ -58,6 +58,9 @@ import { FoodDetailsComponent } from './customer/food-list/food-details/food-det
 import { ViewOrdersComponent } from './vendor/view-order/view-order.component'
 import { OrderStatusesComponent} from './order-status/order-status.component'
 import { CreateEditOrderStatusModalComponent } from './order-status/create-edit-order-status-modal/create-edit-order-status-modal.component'
+import { OrdersComponent } from './customer/orders/order.component'
+import { FoodOrderCartModalFooterComponent} from './customer/orders/food-order-cart-modal/food-order-cart-modal'
+import { FoodOrderProceedModalFooterComponent} from './customer/orders/food-order-proceed-modal/food-order-proceed-modal'
 
 
 @NgModule({
@@ -107,7 +110,10 @@ import { CreateEditOrderStatusModalComponent } from './order-status/create-edit-
         FoodDetailsComponent,
         ViewOrdersComponent,
         OrderStatusesComponent,
-        CreateEditOrderStatusModalComponent
+        CreateEditOrderStatusModalComponent,
+        OrdersComponent,
+        FoodOrderCartModalFooterComponent,
+        FoodOrderProceedModalFooterComponent
     ],
     imports: [
         CommonModule,

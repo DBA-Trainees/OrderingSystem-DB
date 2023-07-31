@@ -1,11 +1,11 @@
 <form
   class="form-horizontal"
   autocomplete="off"
-  #createFoodModal="ngForm"
+  #foodDetails="ngForm"
   (ngSubmit)="save()"
 >
   <abp-modal-header
-    [title]="'CreateNewFood' | localize"
+    [title]="'Food Details' | localize"
     (onCloseClick)="bsModalRef.hide()"
   ></abp-modal-header>
   <div class="modal-body">
@@ -22,15 +22,15 @@
           />
         </div>
       </div>
-    </div>
+    </div>    
     <div class="form-group row required">
       <label class="col-md-2 col-form-label" for="name">
         {{ "Food Name" | localize }}
       </label>
-      <div class="col-md-5">
+      <div class="col-md-3">
         <input
           type="text"
-          class="form-control"
+          class="form-control validate"
           name="name"
           id="name"
           required
@@ -44,101 +44,26 @@
           [controlEl]="nameEl"
         ></abp-validation-summary>
       </div>
-    </div>
-    <div class="form-group row required">
-      <label class="col-md-2 col-form-label" for="availability">
-        {{ "Is Available?" | localize }}
-      </label>
-      <ng-container >
-        <div class="form-check form-check-inline">
-          <input
-            type="checkbox"
-            class="form-check-input"
-            name="availability"
-            id="availability"
-            [(ngModel)]="food.availability"
-            [checked]="food.availability"
-            readonly
-          />
-          <label class="form-check-label"> Available</label>
-        </div>
-      </ng-container>
-    </div>
-    <div class="form-group row required">
-      <label class="col-md-2 col-form-label" for="foodQty">
-        {{ "Qty" | localize }}
-      </label>
-      <div class="col-md-5">
-        <input
-          type="number"
-          class="form-control"
-          name="foodQty"
-          id="foodQty"
-          required
-          [(ngModel)]="food.quantity"
-          readonly
-          #foodQtyModel="ngModel"
-          #foodQtyEl
-        />
-        <abp-validation-summary
-          [control]="foodQtyModel"
-          [controlEl]="foodQtyEl"
-        ></abp-validation-summary>
-      </div>
-    </div>
-    <!-- <div class="form-group row required">
-      <label class="col-md-2 col-form-label" for="categoryName">
-        {{ "Food Category" | localize }}
-      </label>
-      <div class="col-md-5">
-        <input
-          type="number"
-          class="form-control"
-          name="categoryName"
-          id="categoryName"
-          required
-          [(ngModel)]="food.category.name"
-          readonly
-          #categoryNameModel="ngModel"
-          #categoryNameQtyEl
-        />
-        <abp-validation-summary
-          [control]="categoryNameModel"
-          [controlEl]="categoryNameQtyEl"
-        ></abp-validation-summary>
-      </div>
-    </div> -->
-    <!-- <div class="form-group row required">
-      <label class="col-md-2 col-form-label" for="typeName">
-        {{ "Food Type" | localize }}
-      </label>
-      <div class="col-md-10">
-        <select
-          class="form-control"
-          name="typeName"
-          id="typeName"
-          required
-          [ngModel]="food.type?.name"
-        >
-          <option *ngFor="let type of types" [ngValue]="type.id">
-            {{ type.name }}
-          </option>
-        </select>
-      </div>
-    </div> -->
+    </div>    
     <div class="form-group row required">
         <label 
         for="foodQuantity" 
         class="col-md-2 col-form-label">
             {{"Quantity" | localize}}</label>
-        <div class="col-md-3">
+        <div class="col-md-2">
             <div class="input-group">
                 <div class="input-group-prepend">
-                    <button class="btn btn-outline-secondary" type="button" (click)="decrementQty()"
-                        [disabled]="foodQty<=1">-</button>
+                    <button 
+                    class="btn btn-outline-secondary" 
+                    type="button" (click)="decrementQty()"
+                    [disabled]="foodQty<=1">-</button>
                 </div>
-                <input type="number" class="form-control" name="foodQuantity" id="foodQuantity"
-                    [(ngModel)]="foodQty" readonly>
+                <input type="number" 
+                class="form-control" 
+                name="foodQuantity" 
+                id="foodQuantity"                    
+                [(ngModel)]="foodQty" 
+                readonly>
                 <div class="input-group-prepend">
                     <button class="btn btn-outline-secondary" type="button"
                         (click)="incrementQty(foodQty)">+</button>
@@ -150,10 +75,10 @@
       <label class="col-md-2 col-form-label" for="foodPrice">
         {{ "Price" | localize }}
       </label>
-      <div class="col-md-3  ">
+      <div class="col-md-2">
         <div class="input-group">
           <div class="input-group-prepend">
-            <span class="input-group-text"></span>
+            <span class="input-group-text">&#8369;</span>
           </div>
           <input
             type="number"
@@ -174,9 +99,9 @@
       </div>
     </div>
   </div>
-  <abp-modal-footer
+  <food-order-cart-footer
     [cancelDisabled]="saving"
-    [saveDisabled]="!createFoodModal.form.valid || saving"
+    [saveDisabled]="!foodDetails.form.valid || saving"
     (onCancelClick)="bsModalRef.hide()"
-  ></abp-modal-footer>
+  ></food-order-cart-footer>
 </form>

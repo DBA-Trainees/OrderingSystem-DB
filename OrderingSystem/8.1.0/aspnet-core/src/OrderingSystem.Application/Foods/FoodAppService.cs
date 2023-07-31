@@ -51,7 +51,7 @@ namespace OrderingSystem.Foods
                 .Include(x => x.Category)
                 .Include(x => x.Type)
                 .OrderByDescending(x => x.Id)
-                .Where(x => x.Quantity >0)
+                .Where(x => x.Availability)
                 .Select(x => ObjectMapper.Map<FoodDto>(x))                
                 .ToListAsync();
 

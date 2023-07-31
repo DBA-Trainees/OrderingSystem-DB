@@ -39,15 +39,18 @@ namespace OrderingSystem.Orders
             //order.Food = food;
             //order.User = user;            
 
-            var userId = AbpSession.GetUserId();
-            var order = ObjectMapper.Map<Order>(input);
+           
+                var userId = AbpSession.GetUserId();
+                var order = ObjectMapper.Map<Order>(input);
+                order.DateTimeOrdered = input.DateTimeOrdered.ToLocalTime();
 
-            order.FoodId = input.FoodId;
-            order.UserId = userId;
+                order.FoodId = input.FoodId;
+                order.UserId = userId;
 
-            order = await _repository.InsertAsync(order);
+                order = await _repository.InsertAsync(order);
 
-            return ObjectMapper.Map<OrderDto>(order);
+                return ObjectMapper.Map<OrderDto>(order);
+            
         }
 
         public override Task DeleteAsync(EntityDto<int> input)

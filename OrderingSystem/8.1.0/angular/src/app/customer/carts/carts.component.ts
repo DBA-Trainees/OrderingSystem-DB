@@ -6,6 +6,7 @@ import {
   PagedRequestDto,
 } from "@shared/paged-listing-component-base";
 import {
+  FoodDto,
   OrderDto,
   OrderDtoPagedResultDto,
   OrderServiceProxy,
@@ -22,6 +23,7 @@ class PagedOrdersRequestDto extends PagedRequestDto {
 @Component({
   selector: "add-to-cart",
   templateUrl: "carts.component.html",
+  styleUrls: ["./carts.component.css"],
   animations: [appModuleAnimation()],
 })
 export class AddToCartsComponent extends PagedListingComponentBase<OrderDto> {
@@ -29,6 +31,9 @@ export class AddToCartsComponent extends PagedListingComponentBase<OrderDto> {
   keyword = "";
   isActive: boolean | null;
   advancedFiltersVisible = false;
+  foodQty: number = 1;
+  order: OrderDto = new OrderDto();
+  selectedFoodOrder: number;
 
   constructor(
     injector: Injector,
@@ -63,6 +68,33 @@ export class AddToCartsComponent extends PagedListingComponentBase<OrderDto> {
         this.showPaging(result, pageNumber);
       });
   }
+
+  decrementQty(): void {
+    if (this.order.quantity > 1) {
+      this.foodQty--;
+    }
+  }
+
+  incrementQty(maxQty: number): void {
+    if (this.foodQty < this.order.quantity) {
+      this.foodQty++;
+    }
+  }
+
+  /* isFoodOrderChecked(checked: boolean): void{
+    if (checked) {
+      if (!this.selectedFoodOrder.includes(size)) {
+        this.selectedSize.push(size);
+      }
+    } else {
+      const index = this.selectedSize.indexOf(size);
+      if (index !== -1) {
+        this.selectedSize.splice(index, 1);
+      }
+    }
+  } */
+
+
   
   protected delete(order: OrderDto): void {
     abp.message.confirm(
