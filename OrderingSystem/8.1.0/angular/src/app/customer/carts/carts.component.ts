@@ -33,6 +33,7 @@ export class AddToCartsComponent extends PagedListingComponentBase<OrderDto> {
   foodQty: number = 1;
   order: OrderDto = new OrderDto();
   selectedFoodOrder: number;
+  availableSizesDict: { [key: number]: string[] } = {};
 
   constructor(
     injector: Injector,
@@ -78,6 +79,21 @@ export class AddToCartsComponent extends PagedListingComponentBase<OrderDto> {
     if (this.foodQty < this.order.quantity) {
       this.foodQty++;
     }
+  }
+
+  updateOrder(order: OrderDto): void {
+    this._orderService.update(order).subscribe(() => {
+      this.notify.info(this.l('OrderUpdatedSuccessfully'));
+    });
+  }
+
+  private setDefaultAvailableSizes(): void {
+    this.orders.forEach((order) => {
+      if (order.food && order.food.size) {
+        const sizeArray = order.food.size.split(',').map((size) => size.trim());
+        this.availableSizesDict[order.food.id] = sizeArray;
+      }
+    });
   }
 
   /* isFoodOrderChecked(checked: boolean): void{

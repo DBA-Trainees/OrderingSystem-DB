@@ -112,6 +112,7 @@
                                     <th>{{ "Food Name" | localize }}</th>
                                     <th>{{ "Qty" | localize }}</th>
                                     <th>{{ "Size" | localize }}</th>
+                                    <th>{{ "Category" | localize }}</th>
                                     <th>{{ "Total Amount" | localize }}</th>
                                     <th>{{ "Date Ordered" | localize }}</th>
                                     <th>{{ "Time Ordered" | localize }}</th>
@@ -132,10 +133,30 @@
                                         [name]="order.food.name"
                                         ></td>
                                     <td>{{ order.id }}</td>
-                                    <td>{{ order.id }}</td>
                                     <td>{{ order.food.name }}</td>
-                                    <td>{{ order.quantity }}</td>
-                                    <td>{{ order.size }}</td>
+                                    <td>
+                                        <input
+                                          type="number"
+                                          class="form-control"
+                                          [(ngModel)]="order.quantity"
+                                          (change)="updateOrder(order)"
+                                        />
+                                    </td>
+                                    <td>
+                                        <select
+                                          class="form-control"
+                                          [(ngModel)]="order.size"
+                                          (change)="updateOrder(order)"
+                                        >
+                                          <option
+                                            *ngFor="let size of availableSizesDict[order.food?.id]"
+                                            [value]="size"
+                                          >
+                                            {{ size }}
+                                          </option>
+                                        </select>
+                                      </td>
+                                    <td>{{ order.food?.category?.name }}</td>
                                     <td>{{ order.totalAmount | currency:'PHP'}}</td>
                                     <td>{{ order.dateTimeOrdered | date: 'MM/dd/yyyy'}}</td>
                                     <td>{{ order.dateTimeOrdered | date: 'hh:mm a'}}</td>

@@ -12,12 +12,12 @@ import { FoodDetailsComponent } from "@app/customer/food-list/food-details/food-
 import { appModuleAnimation } from "@shared/animations/routerTransition";
 import { AppComponentBase } from "@shared/app-component-base";
 import {
-  CreateOrderDto,
   FoodDto,
   FoodServiceProxy,
-  OrderDto,
   OrderServiceProxy,
   UserDto,
+  OrderDto,
+  CreateOrderDto,
 } from "@shared/service-proxies/service-proxies";
 import * as moment from "moment";
 import { BsModalRef, BsModalService } from "ngx-bootstrap/modal";
@@ -44,6 +44,7 @@ export class FoodListComponent extends AppComponentBase implements OnInit {
   sizes: string[];
   user: UserDto = new UserDto();
   availableSizesDict: { [key: number]: string[] } = {};
+  createOrder = new CreateOrderDto();
 
   @Output() onSave = new EventEmitter<any>();
   @Input() saveLabel = this.l('Add To Cart');
@@ -84,24 +85,37 @@ export class FoodListComponent extends AppComponentBase implements OnInit {
 
   addTocart(selectedFood: FoodDto): void {
     this.saving = true;
-    const orderDto = new CreateOrderDto();
-    orderDto.foodId = selectedFood.id;
-    orderDto.quantity = this.foodQty;
-    orderDto.totalAmount = selectedFood.price * this.foodQty;
-    orderDto.dateTimeOrdered = moment.utc(this.today);
-    orderDto.size = selectedFood.size;
+    this.order.foodId = selectedFood.id;
+    this.order.quantity = this.foodQty;
+    this.order.totalAmount = selectedFood.price * this.foodQty;
+    this.order.dateTimeOrdered = moment.utc(this.today);
+    this.order.size = selectedFood.size;
 
-    this._orderService.create(orderDto).subscribe(
-      (res) => {
-        this.notify.info(this.l("SavedSuccessfully"));
-        this.bsModalRef.hide();
-        this.onSave.emit(res);
-
-        this.foods = this.foods.filter(food => food.id !== selectedFood.id);
-
-        this.router.navigate(["./app/customer/carts"]);
-      },
-    );
+    if(this.id >0){
+      this._orderService.update(this.order).subscribe(
+        (res) => {
+          this.notify.info(this.l("SavedSuccessfully"));
+          this.bsModalRef.hide();
+          this.onSave.emit(res);
+  
+          /* this.foods = this.foods.filter(food => food.id !== this.food.id); */
+  
+          this.router.navigate(["./app/customer/carts"]);
+        },
+      );
+    }else{
+      this._orderService.create(this.order).subscribe(
+        (res) => {
+          this.notify.info(this.l("SavedSuccessfully"));
+          this.bsModalRef.hide();
+          this.onSave.emit(res);
+  
+          this.foods = this.foods.filter(food => food.id !== this.food.id);
+  
+          this.router.navigate(["./app/customer/carts"]);
+        },
+      );
+    }
   }
 
   formatLastModificationDate(lastModificationDate: Date): string {
