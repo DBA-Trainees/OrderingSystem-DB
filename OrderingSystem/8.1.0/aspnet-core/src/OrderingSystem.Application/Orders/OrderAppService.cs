@@ -31,26 +31,22 @@ namespace OrderingSystem.Orders
 
         public override async Task<OrderDto> CreateAsync(CreateOrderDto input)
         {
-            //var order = ObjectMapper.Map<Order>(input);
-            //order = await _repository.InsertAsync(order);
-            //var food = await _foodRepository.GetAsync(input.FoodId);
-            //var user = await _userRepository.GetAsync(AbpSession.UserId.Value);
+            var userId = AbpSession.GetUserId();
+            var order = ObjectMapper.Map<Order>(input);
+            order.DateTimeOrdered = input.DateTimeOrdered.ToLocalTime();
 
-            //order.Food = food;
-            //order.User = user;            
+            order.FoodId = input.FoodId;
+            order.UserId = userId;
 
-           
-                var userId = AbpSession.GetUserId();
-                var order = ObjectMapper.Map<Order>(input);
-                order.DateTimeOrdered = input.DateTimeOrdered.ToLocalTime();
+            if(input.FoodId == order.FoodId)
+            {
+                order.Quantity = order.Quantity + input.Quantity;
+            }
 
-                order.FoodId = input.FoodId;
-                order.UserId = userId;
+            order = await _repository.InsertAsync(order);
 
-                order = await _repository.InsertAsync(order);
+            return ObjectMapper.Map<OrderDto>(order);
 
-                return ObjectMapper.Map<OrderDto>(order);
-            
         }
 
         public override Task DeleteAsync(EntityDto<int> input)
@@ -64,7 +60,7 @@ namespace OrderingSystem.Orders
                 .Include(x => x.Food)
                 .Include(x => x.User)
                 .OrderByDescending(x => x.Id)
-                .Select( x => ObjectMapper.Map<OrderDto>(x))                
+                .Select(x => ObjectMapper.Map<OrderDto>(x))
                 .ToListAsync();
 
             return new PagedResultDto<OrderDto>(order.Count(), order);

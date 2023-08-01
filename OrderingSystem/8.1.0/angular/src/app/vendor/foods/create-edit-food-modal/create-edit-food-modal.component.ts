@@ -1,4 +1,10 @@
-import { Component, EventEmitter, Injector, OnInit, Output } from "@angular/core";
+import {
+  Component,
+  EventEmitter,
+  Injector,
+  OnInit,
+  Output,
+} from "@angular/core";
 import { AppComponentBase } from "@shared/app-component-base";
 import {
   CategoryDto,
@@ -6,31 +12,33 @@ import {
   FoodDto,
   FoodServiceProxy,
   TypeDto,
-  TypeServiceProxy
+  TypeServiceProxy,
 } from "@shared/service-proxies/service-proxies";
 import { BsModalRef } from "ngx-bootstrap/modal";
 
 @Component({
   selector: "create-edit-food-modal",
   templateUrl: "create-edit-food-modal.component.html",
-  styleUrls: ['../../../../shared/styles/main.css']
+  styleUrls: ["../../../../shared/styles/main.css"],
 })
-export class CreateEditFoodModalComponent extends AppComponentBase implements OnInit {
-
-  foodSizes=[
-    {id: 1, value:"Regular"},
-    {id: 2, value:"Medium"},
-    {id: 3, value:"Large"}
+export class CreateEditFoodModalComponent
+  extends AppComponentBase
+  implements OnInit
+{
+  foodSizes = [
+    { id: 1, value: "Regular" },
+    { id: 2, value: "Medium" },
+    { id: 3, value: "Large" },
   ];
   saving = false;
   food = new FoodDto();
   types: TypeDto[] = [];
-  categories: CategoryDto[] = []; 
+  categories: CategoryDto[] = [];
   id: number = 0;
   selectedCategory: number = null;
   selectedType: number = null;
-  selectedSize: string[] =[];
-  isAvailable: boolean= true;
+  selectedSize: string[] = [];
+  isAvailable: boolean = true;
 
   @Output() onSave = new EventEmitter<any>();
   base64ImagePath: string;
@@ -46,7 +54,6 @@ export class CreateEditFoodModalComponent extends AppComponentBase implements On
   }
 
   ngOnInit() {
-
     if (this.id) {
       this._foodService.get(this.id).subscribe((res) => {
         this.food = res;
@@ -65,38 +72,23 @@ export class CreateEditFoodModalComponent extends AppComponentBase implements On
     });
   }
 
-  displayImage(event: any): void{
-/*     var foodFile = event.target.files[0];
-    const foodFileName = foodFile.name;
-  
-    const fileNameWithoutExtension = foodFileName.split('.').slice(0, -1).join('.');
-    const fileTypeOnly = foodFileName.split('.').pop();
-  
-    const reader = new FileReader();
-    reader.onload = (e: any) => {
-      const base64String = e.target.result.split(',')[1];
-      this.food.image = base64String;
-      this.food.imageFileType = fileTypeOnly;
-      this.food.imageName = fileNameWithoutExtension;
-    };
-    reader.readAsDataURL(foodFile); */
-
+  displayImage(event: any): void {
     var foodFile = event.target.files[0];
 
     const reader = new FileReader();
 
-    if(foodFile){
-      reader.onload = (e:any) =>{
-        this.food.image = e.target.result.split(',')[1];        
+    if (foodFile) {
+      reader.onload = (e: any) => {
+        this.food.image = e.target.result.split(",")[1];
         this.food.imageName = foodFile.name;
-        const fileTypeOnly = this.food.imageName.split('.').pop();
+        const fileTypeOnly = this.food.imageName.split(".").pop();
         this.food.imageFileType = fileTypeOnly;
       };
       reader.readAsDataURL(foodFile);
     }
   }
 
-  isFoodAvailable(event: any): void{
+  isFoodAvailable(event: any): void {
     this.isAvailable = event.target.checked;
   }
 
@@ -126,7 +118,7 @@ export class CreateEditFoodModalComponent extends AppComponentBase implements On
     if (this.id !== 0) {
       this._foodService.update(this.food).subscribe(
         () => {
-          this.notify.info(this.l('SavedSuccessfully'));
+          this.notify.info(this.l("SavedSuccessfully"));
           this.bsModalRef.hide();
           this.onSave.emit();
         },
@@ -137,7 +129,7 @@ export class CreateEditFoodModalComponent extends AppComponentBase implements On
     } else {
       this._foodService.create(this.food).subscribe(
         () => {
-          this.notify.info(this.l('SavedSuccessfully'));
+          this.notify.info(this.l("SavedSuccessfully"));
           this.bsModalRef.hide();
           this.onSave.emit();
         },

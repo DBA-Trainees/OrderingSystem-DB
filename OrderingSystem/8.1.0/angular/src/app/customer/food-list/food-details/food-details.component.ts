@@ -2,6 +2,7 @@ import {
   Component,
   EventEmitter,
   Injector,
+  Input,
   OnInit,
   Output,
 } from "@angular/core";
@@ -44,10 +45,11 @@ export class FoodDetailsComponent extends AppComponentBase implements OnInit {
   foodQty: number = 1;
   typeName: string;
   saving: boolean;
-  selectedFoodSize: string = "Regular";
   today = new Date();
+  selectedFoodSize: string;
 
   @Output() onSave = new EventEmitter<any>();
+  @Input() formDisabled: boolean;
 
   constructor(
     injector: Injector,
@@ -60,21 +62,17 @@ export class FoodDetailsComponent extends AppComponentBase implements OnInit {
   }
 
   ngOnInit(): void {
-    /*    order.dateTimeOrdered = this.formatDate(this.today);
-   order.food.type.id = this.type.id;
- */
    this.order.food = this.food;
    this.order.user = this.user;
-    if (this.food.size) {
-      this.selectedFoodSize = this.food.size.split(",")[0];
-    }
     if (this.id != 0) {
       this._foodService.get(this.id).subscribe((res) => {
         this.food = res;
         this.food.type = res.type;
         this.food.category = res.category;
+        /* this.selectedFoodSize = res.size.split(','); */
       });
     }
+    
   }
 
   decrementQty(): void {
@@ -108,7 +106,7 @@ export class FoodDetailsComponent extends AppComponentBase implements OnInit {
     orderDto.quantity = this.foodQty;
     orderDto.totalAmount = this.foodQty * this.food.price;
     orderDto.dateTimeOrdered = moment(this.today);
-
+    orderDto.size = this.selectedFoodSize;
     this._orderService.create(orderDto).subscribe(
       (res) => {
         this.notify.info(this.l("SavedSuccessfully"));

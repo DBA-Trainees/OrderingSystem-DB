@@ -30,7 +30,6 @@ export class AddToCartsComponent extends PagedListingComponentBase<OrderDto> {
   orders: OrderDto[] = [];
   keyword = "";
   isActive: boolean | null;
-  advancedFiltersVisible = false;
   foodQty: number = 1;
   order: OrderDto = new OrderDto();
   selectedFoodOrder: number;

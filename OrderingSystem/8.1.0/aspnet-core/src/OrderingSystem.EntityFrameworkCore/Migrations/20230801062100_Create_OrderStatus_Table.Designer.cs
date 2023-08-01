@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using OrderingSystem.EntityFrameworkCore;
 
@@ -11,9 +12,11 @@ using OrderingSystem.EntityFrameworkCore;
 namespace OrderingSystem.Migrations
 {
     [DbContext(typeof(OrderingSystemDbContext))]
-    partial class OrderingSystemDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230801062100_Create_OrderStatus_Table")]
+    partial class Create_OrderStatus_Table
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1797,12 +1800,6 @@ namespace OrderingSystem.Migrations
                     b.Property<string>("Notes")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid?>("OrderNumber")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<int?>("OrderStatusId")
-                        .HasColumnType("int");
-
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
 
@@ -1818,8 +1815,6 @@ namespace OrderingSystem.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("FoodId");
-
-                    b.HasIndex("OrderStatusId");
 
                     b.HasIndex("UserId");
 
@@ -2218,17 +2213,11 @@ namespace OrderingSystem.Migrations
                         .WithMany()
                         .HasForeignKey("FoodId");
 
-                    b.HasOne("OrderingSystem.Entities.OrderStatus", "OrderStatus")
-                        .WithMany()
-                        .HasForeignKey("OrderStatusId");
-
                     b.HasOne("OrderingSystem.Authorization.Users.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId");
 
                     b.Navigation("Food");
-
-                    b.Navigation("OrderStatus");
 
                     b.Navigation("User");
                 });

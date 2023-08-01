@@ -16,7 +16,7 @@
     }
 
     .card-image img {
-        max-height: 100%;
+        max-height: 50%;
         max-width: 100%;
         border-radius: 8px 8px 0px 0;
     }
@@ -27,9 +27,9 @@
         margin-top: -25px;
         margin-right: 20px;
         z-index: 2;
-        color: #E26D5C;
+        color: #0f72b3;
         background: #fff;
-        border-radius: 100%;
+        border-radius: 200%;
         padding: 15px;
         font-size: 15px;
         box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.2), 0 1px 2px 0 rgba(0, 0, 0, 0.19);
@@ -37,7 +37,7 @@
 
     .card-action:hover {
         color: #fff;
-        background: #E26D5C;
+        background: #006e96;
         -webkit-animation: pulse 1.5s infinite;
     }
 
@@ -60,14 +60,14 @@
         justify-content: center;
         padding: 10px 0;
         width: 100%;
-        background-color: #1F487E;
+        background-color: #0f72b3;
         color: #fff;
         border-radius: 0 0 8px 8px;
     }
 
     .card-button:hover {
         text-decoration: none;
-        background-color: #1D3461;
+        background-color: #094c79;
         color: #fff;
 
     }

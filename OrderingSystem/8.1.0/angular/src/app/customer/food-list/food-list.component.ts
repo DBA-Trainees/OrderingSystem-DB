@@ -12,13 +12,8 @@ import { FoodDetailsComponent } from "@app/customer/food-list/food-details/food-
 import { appModuleAnimation } from "@shared/animations/routerTransition";
 import { AppComponentBase } from "@shared/app-component-base";
 import {
-  PagedListingComponentBase,
-  PagedRequestDto,
-} from "@shared/paged-listing-component-base";
-import {
   CreateOrderDto,
   FoodDto,
-  FoodDtoPagedResultDto,
   FoodServiceProxy,
   OrderDto,
   OrderServiceProxy,
@@ -26,17 +21,11 @@ import {
 } from "@shared/service-proxies/service-proxies";
 import * as moment from "moment";
 import { BsModalRef, BsModalService } from "ngx-bootstrap/modal";
-import { finalize } from "rxjs/operators";
-
-class PagedFoodsRequestDto extends PagedRequestDto {
-  keyword: string;
-  isActive: boolean | null;
-}
 
 @Component({
   selector: "food-list",
   templateUrl: "food-list.component.html",
-  styleUrls: ["../../../shared/styles/main.css", "./food-list.component.css"],
+  styleUrls: ["./food-list.component.css"],
   animations: [appModuleAnimation()],
 })
 export class FoodListComponent extends AppComponentBase implements OnInit {
@@ -48,12 +37,13 @@ export class FoodListComponent extends AppComponentBase implements OnInit {
   isActive: boolean | null;
   skipCount: number;
   maxResultCount: number;
-  foodQty: number;
+  foodQty: number = 1;
   id: number = 0;
   saving = false;
   today = new Date();
-  selectedFoodSize: string;
+  sizes: string[];
   user: UserDto = new UserDto();
+  availableSizesDict: { [key: number]: string[] } = {};
 
   @Output() onSave = new EventEmitter<any>();
   @Input() saveLabel = this.l('Add To Cart');
@@ -83,52 +73,31 @@ export class FoodListComponent extends AppComponentBase implements OnInit {
       .subscribe((result) =>
       {
       this.foods = result.items;
+      this.setDefaultFoodSizes();
+      this.foods.forEach((food) => (this.foodQty = 1));
     })
   }
-
-  /* protected list(
-    request: PagedFoodsRequestDto,
-    pageNumber: number,
-    finishedCallback: Function
-  ): void {
-    request.keyword = this.keyword;
-    request.isActive = this.isActive;
-
-    this._foodService
-      .getAll(
-        request.keyword,
-        request.isActive,
-        request.skipCount,
-        request.maxResultCount
-      )
-      .pipe(
-        finalize(() => {
-          finishedCallback();
-        })
-      )
-      .subscribe((result: FoodDtoPagedResultDto) => {
-        this.foods = result.items;
-        this.showPaging(result, pageNumber);
-      });
-  } */
 
   displayFoodDetails(id): void {
     this.showFoodDetailsModal(id);
   }
 
-  addTocart(): void {
+  addTocart(selectedFood: FoodDto): void {
     this.saving = true;
     const orderDto = new CreateOrderDto();
-    orderDto.foodId = this.food.id;
+    orderDto.foodId = selectedFood.id;
     orderDto.quantity = this.foodQty;
-    orderDto.totalAmount = this.foodQty * this.food.price;
+    orderDto.totalAmount = selectedFood.price * this.foodQty;
     orderDto.dateTimeOrdered = moment.utc(this.today);
+    orderDto.size = selectedFood.size;
 
     this._orderService.create(orderDto).subscribe(
       (res) => {
         this.notify.info(this.l("SavedSuccessfully"));
         this.bsModalRef.hide();
         this.onSave.emit(res);
+
+        this.foods = this.foods.filter(food => food.id !== selectedFood.id);
 
         this.router.navigate(["./app/customer/carts"]);
       },
@@ -137,8 +106,7 @@ export class FoodListComponent extends AppComponentBase implements OnInit {
 
   formatLastModificationDate(lastModificationDate: Date): string {
     const currentTime = new Date();
-    const difference = Math.round((currentTime.getTime() - new Date(lastModificationDate).getTime()) / 60000); // Difference in minutes
-
+    const difference = Math.round((currentTime.getTime() - new Date(lastModificationDate).getTime()) / 60000);
     if (difference < 1) {
       return 'just now';
     } else if (difference === 1) {
@@ -148,9 +116,30 @@ export class FoodListComponent extends AppComponentBase implements OnInit {
     }
   }
 
+  private setDefaultFoodSizes(): void {
+    this.foods.forEach((food) => {
+      if (food.size) {
+        const sizeArray = food.size.split(',').map((size) => size.trim());
+        food.size = sizeArray[0];
+        this.availableSizesDict[food.id] = sizeArray;
+      }
+    });
+  }
+
+  decrementQty(): void {
+    if (this.food.quantity > 1) {
+      this.foodQty--;
+    }
+  }
+
+  incrementQty(): void {
+    if (this.foodQty < this.food.quantity) {
+      this.foodQty++;
+    }
+  } 
+
   private showFoodDetailsModal(id?: number): void {
     let foodDetailsModal: BsModalRef;
-    /* if(!id){ */
     foodDetailsModal = this._modalService.show(FoodDetailsComponent, {
       class: "modal-lg",
       initialState: {

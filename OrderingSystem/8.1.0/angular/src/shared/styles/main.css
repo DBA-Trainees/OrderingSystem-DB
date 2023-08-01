@@ -23,7 +23,7 @@
 
 img{
     width:  auto;
-    height: 150px;
+    height: 100px;
     display: block;
     margin: auto;
     max-width: 100%;
@@ -43,4 +43,7 @@ th,td,img{
 .food-unavail{
     color:rgb(224, 27, 54)
 }
+/* .main-sidebar.elevation-4{
+    background-color: #0f72b3;
+} */
 

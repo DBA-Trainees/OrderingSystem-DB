@@ -16,8 +16,9 @@ namespace OrderingSystem.Orders.Dto
         public string? Size { get; set; }
         public string? Notes { get; set; }
         public DateTime DateTimeOrdered { get; set; }
-        //public int? OrderStatusId { get; set; }
+        public int? OrderStatusId { get; set; }
         public double? TotalAmount { get; set; }
         public long UserId { get; set; }
+        public Guid? OrderNumber { get; set; }
     }
 }

@@ -24,10 +24,11 @@ namespace OrderingSystem.Orders.Dto
         public FoodDto Food { get; set; }
         public string? Notes { get; set; }
         public DateTime DateTimeOrdered { get; set; }
-        //public int? OrderStatusId { get; set; }
-        //public OrderStatusDto OrderStatus { get; set; }
+        public int? OrderStatusId { get; set; }
+        public OrderStatusDto OrderStatus { get; set; }
         public double? TotalAmount { get; set; }
         public long UserId { get; set; }
         public UserDto User { get; set; }
+        public Guid? OrderNumber { get; set; }
     }
 }
