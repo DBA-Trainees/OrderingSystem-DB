@@ -115,7 +115,7 @@ export class FoodDetailsComponent extends AppComponentBase implements OnInit {
     orderDto.dateTimeOrdered = moment(this.today);
     orderDto.size = this.selectedFoodSize;
 
-    this._orderService.update(orderDto).subscribe(
+    this._orderService.updateAddToCart(orderDto).subscribe(
       (res) => {
         this.notify.info(this.l("SavedSuccessfully"));
         this.bsModalRef.hide();

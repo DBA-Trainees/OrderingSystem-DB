@@ -8,8 +8,10 @@
               <div class="card-sl" [ariaDisabled]="food.quantity==0">
                 <div class="card-content">
                   <div class="card-image">
-                    <img [src]="'data:image/png;base64,' + food.image" (click)="displayFoodDetails(food.id)"
-                      class="center card-img-top" />
+                    <img 
+                    [src]="'data:image/png;base64,' + food.image" 
+                    (click)="displayFoodDetails(food.id)"
+                    class="center card-img-top" />
                   </div>
                   <a class="card-action" [hidden]="food.quantity==0" (click)="addTocart(food)">
                     <i class="fa fa-shopping-cart"></i>

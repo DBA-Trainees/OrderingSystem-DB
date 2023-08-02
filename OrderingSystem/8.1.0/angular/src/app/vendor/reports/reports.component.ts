@@ -11,7 +11,8 @@ class PagedOrdersRequestDto extends PagedRequestDto{
 
 @Component({
     selector: 'sales-report',
-    templateUrl: 'reports.component.html'
+    templateUrl: 'reports.component.html',
+    styleUrls: ["./reports.component.css"]
 })
 
  export class ReportsComponent extends PagedListingComponentBase<OrderDto>{

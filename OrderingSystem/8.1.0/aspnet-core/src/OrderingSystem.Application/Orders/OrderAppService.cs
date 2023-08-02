@@ -12,6 +12,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -37,6 +38,8 @@ namespace OrderingSystem.Orders
 
             order.FoodId = input.FoodId;
             order.UserId = userId;
+
+            order.OrderStatusId = 1;
 
             order = await _repository.InsertAsync(order);
 
@@ -89,7 +92,7 @@ namespace OrderingSystem.Orders
             return base.GetAsync(input);
         }
 
-        public override async Task<OrderDto> UpdateAsync(OrderDto input)
+        public async Task<OrderDto> UpdateAddToCart(OrderDto input)
         {
             var userId = AbpSession.GetUserId();
             var existingOrder = await _repository
@@ -102,51 +105,47 @@ namespace OrderingSystem.Orders
                 existingOrder.Quantity += input.Quantity;
                 await _repository.UpdateAsync(existingOrder);
                 return ObjectMapper.Map<OrderDto>(existingOrder);
-            }         
+            }
             else
             {
                 var order = ObjectMapper.Map<Order>(input);
                 order.FoodId = input.FoodId;
                 order.UserId = userId;
+                order.OrderStatusId = 1;
                 await _repository.InsertAsync(order);
                 return ObjectMapper.Map<OrderDto>(order);
             }
         }
 
-        //public async Task<List<OrderDto>> GetAllUsers()
-        //{
-        //    var user = await Repository.GetAll()
-        //        .Include(x => x.Roles)
-        //        .Select(x => ObjectMapper.Map<UserDto>(x))
-        //        .ToListAsync();
+        public async Task<PagedResultDto<OrderDto>> GetAllOrderPurchaseHistory(PagedOrderResultRequestDto input)
+        {
+            var userId = AbpSession.GetUserId();
 
-        //    return user;
-        //}
+            var order = await _repository.GetAll()
+                .Include(x => x.Food)
+                .ThenInclude(x => x.Category)
+                .Include(x => x.User)
+                .Include(x => x.OrderStatus)
+                .Where(x => x.UserId == userId /*&& x.OrderStatusId!=1*/)
+                .OrderByDescending(x => x.Id)
+                .Select(x => ObjectMapper.Map<OrderDto>(x))
+                .ToListAsync();
 
-        //public async Task<decimal> CalculateModifiedPriceAsync(decimal price, string size, string category)
-        //{
-        //    if (category == "group")
-        //    {
-        //        price *= 5;
-        //    }
+            return new PagedResultDto<OrderDto>(order.Count(), order);
+        }
 
-        //    switch (size.ToLower())
-        //    {
-        //        case "regular":
-        //            break; // No change to price for regular size
-        //        case "medium":
-        //            price += 15;
-        //            break;
-        //        case "large":
-        //            price += 25;
-        //            break;
-        //        default:
-        //            // Handle any other sizes if needed
-        //            break;
-        //    }
+        public override async Task<OrderDto> UpdateAsync(OrderDto input)
+        {
+            var userId = AbpSession.GetUserId();
+            var order = ObjectMapper.Map<Order>(input);
 
-        //    return price;
-        //}
+            order.FoodId = input.FoodId;
+            order.UserId = userId;
+
+            await _repository.UpdateAsync(order);
+            return ObjectMapper.Map<OrderDto>(order);
+        }
+
 
     }
 }

@@ -110,6 +110,7 @@
                                     <th><input type="checkbox"></th>
                                     <th>{{ "" | localize }}</th>
                                     <th>{{ "Food Name" | localize }}</th>
+                                    <th>{{ "Price" | localize }}</th>
                                     <th>{{ "Qty" | localize }}</th>
                                     <th>{{ "Size" | localize }}</th>
                                     <th>{{ "Category" | localize }}</th>
@@ -138,6 +139,7 @@
                                         [src]="'data:image/png;base64,' + order.food.image"
                                           alt="profile-sample1" class="background" /></td>
                                     <td>{{ order.food.name }}</td>
+                                    <td>{{ order.food.price | currency: 'PHP' }}</td>
                                     <td>
                                         <input
                                           type="number"
