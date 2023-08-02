@@ -142,3 +142,11 @@ a:hover{
     background-position-x: 95%;
     background-position-y: center;
 } */
+.col-2{
+    width: 10%;
+}
+
+img{
+    width: 100px;
+    height: 50;
+}

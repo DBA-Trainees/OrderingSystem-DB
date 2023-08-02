@@ -11,7 +11,6 @@ import {
   CustomerServiceProxy,
   DivisionDto,
   DivisionServiceProxy,
-  RoleDto,
   UserDto,
   UserServiceProxy,
 } from "@shared/service-proxies/service-proxies";

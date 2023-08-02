@@ -63,6 +63,14 @@ export class FoodListComponent extends AppComponentBase implements OnInit {
 
   ngOnInit(): void {
     this.getAllFoods();
+
+    if (this.id) {
+      this._orderService.get(this.id).subscribe((res) => {
+        this.order.foodId = res.foodId;
+        this.order.food.category = res.food.category;
+        /* this.selectedFoodSize = res.size.split(','); */
+      });
+    }
   }
 
   getAllFoods(): void{
@@ -88,37 +96,21 @@ export class FoodListComponent extends AppComponentBase implements OnInit {
     this.order.foodId = selectedFood.id;
     this.order.quantity = this.foodQty;
     this.order.totalAmount = selectedFood.price * this.foodQty;
-    this.order.dateTimeOrdered = moment.utc(this.today);
+    this.order.dateTimeOrdered = moment(this.today);
     this.order.size = selectedFood.size;
 
-    if(this.id >0){
       this._orderService.update(this.order).subscribe(
         (res) => {
           this.notify.info(this.l("SavedSuccessfully"));
           this.bsModalRef.hide();
           this.onSave.emit(res);
   
-          /* this.foods = this.foods.filter(food => food.id !== this.food.id); */
-  
           this.router.navigate(["./app/customer/carts"]);
         },
       );
-    }else{
-      this._orderService.create(this.order).subscribe(
-        (res) => {
-          this.notify.info(this.l("SavedSuccessfully"));
-          this.bsModalRef.hide();
-          this.onSave.emit(res);
-  
-          this.foods = this.foods.filter(food => food.id !== this.food.id);
-  
-          this.router.navigate(["./app/customer/carts"]);
-        },
-      );
-    }
   }
 
-  formatLastModificationDate(lastModificationDate: Date): string {
+  /* formatLastModificationDate(lastModificationDate: Date): string {
     const currentTime = new Date();
     const difference = Math.round((currentTime.getTime() - new Date(lastModificationDate).getTime()) / 60000);
     if (difference < 1) {
@@ -128,7 +120,7 @@ export class FoodListComponent extends AppComponentBase implements OnInit {
     } else {
       return `${difference} ago`;
     }
-  }
+  } */
 
   private setDefaultFoodSizes(): void {
     this.foods.forEach((food) => {

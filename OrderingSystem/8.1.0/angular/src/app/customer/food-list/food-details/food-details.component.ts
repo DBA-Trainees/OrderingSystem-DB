@@ -72,7 +72,7 @@ export class FoodDetailsComponent extends AppComponentBase implements OnInit {
         /* this.selectedFoodSize = res.size.split(','); */
       });
     }
-    
+    this.setDefaultFoodSize();
   }
 
   decrementQty(): void {
@@ -84,6 +84,13 @@ export class FoodDetailsComponent extends AppComponentBase implements OnInit {
   incrementQty(maxQty: number): void {
     if (this.foodQty < this.food.quantity) {
       this.foodQty++;
+    }
+  }
+
+  private setDefaultFoodSize(): void {
+    if (this.food.size) {
+      const sizeArray = this.food.size.split(',');
+      this.selectedFoodSize = sizeArray[0].trim();
     }
   }
 
@@ -101,13 +108,14 @@ export class FoodDetailsComponent extends AppComponentBase implements OnInit {
   save(): void {
     this.saving = true;
 
-    const orderDto = new CreateOrderDto();   
+    const orderDto = new OrderDto();   
     orderDto.foodId = this.food.id;
     orderDto.quantity = this.foodQty;
     orderDto.totalAmount = this.foodQty * this.food.price;
     orderDto.dateTimeOrdered = moment(this.today);
     orderDto.size = this.selectedFoodSize;
-    this._orderService.create(orderDto).subscribe(
+
+    this._orderService.update(orderDto).subscribe(
       (res) => {
         this.notify.info(this.l("SavedSuccessfully"));
         this.bsModalRef.hide();

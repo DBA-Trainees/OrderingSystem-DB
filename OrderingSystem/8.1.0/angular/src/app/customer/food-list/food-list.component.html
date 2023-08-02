@@ -8,17 +8,12 @@
               <div class="card-sl" [ariaDisabled]="food.quantity==0">
                 <div class="card-content">
                   <div class="card-image">
-                    <img 
-                    [src]="'data:image/png;base64,' + food.image" 
-                    (click)="displayFoodDetails(food.id)"
-                    class="center card-img-top" />
+                    <img [src]="'data:image/png;base64,' + food.image" (click)="displayFoodDetails(food.id)"
+                      class="center card-img-top" />
                   </div>
-                  <a 
-                  class="card-action" 
-                  [hidden]="food.quantity==0" 
-                  (click)="addTocart(food)">
+                  <a class="card-action" [hidden]="food.quantity==0" (click)="addTocart(food)">
                     <i class="fa fa-shopping-cart"></i>
-                </a>
+                  </a>
                   <div class="card-heading">
                     {{food.name}}
                   </div>
@@ -28,27 +23,37 @@
                   <div class="card-text">
                     <h5>{{food.price | currency:'PHP'}}</h5>
                   </div>
-                  <div class="card-text">
+                  <div class="card-text" [ariaDisabled]="food.size !== null">
                     <label for="foodSize">Food Size:</label>
                     <select 
                     class="form-control" 
-                    id="foodSize" 
+                    id="foodSize"
+                    name="foodSize" 
                     [(ngModel)]="food.size">
                       <option 
-                      *ngFor="let size of availableSizesDict[food.id]" 
-                      [value]="size">
+                      *ngIf="this.food.size.length !==0; else NoAvailableSize" 
+                      class="dropdown-item" 
+                      disabled                        
+                      selected 
+                      [value]="null">
+                      <strong>Select a Book</strong></option>
+                      <ng-template #NoAvailableSize>
+                        <option 
+                        class="dropdown-item" 
+                        disabled="true" 
+                        selected 
+                        [ngValue]="null">No Available Books
+                        </option>
+                      </ng-template>
+                      <option *ngFor="let size of availableSizesDict[food.id]" [value]="size">
                         {{ size }}
                       </option>
                     </select>
                   </div>
-                  <button class="card-button" 
-                  (click)="displayFoodDetails(food.id)" 
-                  [hidden]="food.quantity==0">View
+                  <button class="card-button" (click)="displayFoodDetails(food.id)" [hidden]="food.quantity==0">View
                     More</button>
-                  <button 
-                  class="card-button bg-danger" 
-                  disabled 
-                  *ngIf="food.quantity==0"><strong>Sold Out</strong></button>
+                  <button class="card-button bg-danger" disabled *ngIf="food.quantity==0"><strong>Sold
+                      Out</strong></button>
                   <div class="col-2">
                   </div>
                 </div>

@@ -104,11 +104,11 @@
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
-                        <table class="table table-striped table-bordered" [busy]="isTableLoading">
+                        <table class="table table-bordered" [busy]="isTableLoading">
                             <thead class="bg-light">
-                                <tr>
+                                <tr class="bg-info text-center">
                                     <th><input type="checkbox"></th>
-                                    <th>{{ "Id" | localize }}</th>
+                                    <th>{{ "" | localize }}</th>
                                     <th>{{ "Food Name" | localize }}</th>
                                     <th>{{ "Qty" | localize }}</th>
                                     <th>{{ "Size" | localize }}</th>
@@ -127,12 +127,16 @@
                                         currentPage: pageNumber,
                                         totalItems: totalItems
                                         } ">
-                                    <td><input 
+                                    <td><div class="col-2">
+                                        <input 
                                         type="checkbox"
                                         [id]="order.food.id"
                                         [name]="order.food.name"
-                                        ></td>
-                                    <td>{{ order.id }}</td>
+                                        >
+                                    </div></td>
+                                    <td><img
+                                        [src]="'data:image/png;base64,' + order.food.image"
+                                          alt="profile-sample1" class="background" /></td>
                                     <td>{{ order.food.name }}</td>
                                     <td>
                                         <input

@@ -92,21 +92,19 @@ autocomplete="off"
         </div>
       </div>
     </div>
-    <div class="form-group row required">
-      <label for="foodSize" class="col-md-2 col-form-label">{{
-        "Size" | localize}}</label>
+    <div class="form-group row">
+      <label for="foodSize" class="col-md-2 col-form-label">{{ "Size" | localize }}</label>
       <div class="col-md-2">
-        <select
-          class="form-control"
-          name="foodSize"
-          id="foodSize"
-          required
-          [(ngModel)]="selectedFoodSize"
-        >
-            <option 
-            *ngFor="let size of food.size.split(',')"
-            [value]="size"
-            >{{ size }}</option>
+        <select 
+        class="form-control" 
+        name="foodSize" 
+        id="foodSize" 
+        required 
+        [(ngModel)]="selectedFoodSize"
+        (ngModelChange)="selectedFoodSize=$event">
+          <option 
+          *ngFor="let size of food.size?.split(',') || []" 
+          [value]="size.trim()">{{ size }}</option>
         </select>
       </div>
     </div>

@@ -69,6 +69,7 @@ namespace OrderingSystem.Orders
                 .Include(x => x.Food)
                 .ThenInclude(x => x.Category)
                 .Include(x => x.User)
+                .Include(x => x.OrderStatus)
                 .Where(x => x.UserId == userId)
                 .OrderByDescending(x => x.Id)
                 .Select(x => ObjectMapper.Map<OrderDto>(x))
@@ -91,7 +92,8 @@ namespace OrderingSystem.Orders
         public override async Task<OrderDto> UpdateAsync(OrderDto input)
         {
             var userId = AbpSession.GetUserId();
-            var existingOrder = await _repository.FirstOrDefaultAsync(
+            var existingOrder = await _repository
+                .FirstOrDefaultAsync(
                 o => o.FoodId == input.FoodId && o.UserId == userId
             );
 
@@ -100,7 +102,7 @@ namespace OrderingSystem.Orders
                 existingOrder.Quantity += input.Quantity;
                 await _repository.UpdateAsync(existingOrder);
                 return ObjectMapper.Map<OrderDto>(existingOrder);
-            }
+            }         
             else
             {
                 var order = ObjectMapper.Map<Order>(input);
@@ -110,6 +112,16 @@ namespace OrderingSystem.Orders
                 return ObjectMapper.Map<OrderDto>(order);
             }
         }
+
+        //public async Task<List<OrderDto>> GetAllUsers()
+        //{
+        //    var user = await Repository.GetAll()
+        //        .Include(x => x.Roles)
+        //        .Select(x => ObjectMapper.Map<UserDto>(x))
+        //        .ToListAsync();
+
+        //    return user;
+        //}
 
         //public async Task<decimal> CalculateModifiedPriceAsync(decimal price, string size, string category)
         //{
