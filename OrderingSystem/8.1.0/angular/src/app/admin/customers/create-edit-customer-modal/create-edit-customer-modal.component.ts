@@ -54,7 +54,7 @@ export class CreateEditCustomerModalComponent
       this._customerService.get(this.id).subscribe((res) => {
         this.customer = res;
         this.selectedDivision = res.divisionId;
-        this.selectedUser = res.userId;
+        this.selectedUser = res.userId || null;
       });
     }
     this._divisionService.getAllDivisions().subscribe((res) => {

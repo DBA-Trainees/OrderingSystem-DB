@@ -36,7 +36,7 @@ namespace OrderingSystem.Orders
             order.DateTimeOrdered = input.DateTimeOrdered.ToLocalTime();
 
             order.FoodId = input.FoodId;
-            order.UserId = userId;            
+            order.UserId = userId;
 
             order = await _repository.InsertAsync(order);
 
@@ -91,18 +91,50 @@ namespace OrderingSystem.Orders
         public override async Task<OrderDto> UpdateAsync(OrderDto input)
         {
             var userId = AbpSession.GetUserId();
-            var order = ObjectMapper.Map<Order>(input);
+            var existingOrder = await _repository.FirstOrDefaultAsync(
+                o => o.FoodId == input.FoodId && o.UserId == userId
+            );
 
-            order.FoodId = input.FoodId;
-            order.UserId = userId;
-
-            if (input.FoodId == order.FoodId && order.UserId == userId)
+            if (existingOrder != null)
             {
-                order.Quantity = order.Quantity + input.Quantity;
+                existingOrder.Quantity += input.Quantity;
+                await _repository.UpdateAsync(existingOrder);
+                return ObjectMapper.Map<OrderDto>(existingOrder);
             }
-
-            await _repository.UpdateAsync(order);
-            return ObjectMapper.Map<OrderDto>(order);
+            else
+            {
+                var order = ObjectMapper.Map<Order>(input);
+                order.FoodId = input.FoodId;
+                order.UserId = userId;
+                await _repository.InsertAsync(order);
+                return ObjectMapper.Map<OrderDto>(order);
+            }
         }
+
+        //public async Task<decimal> CalculateModifiedPriceAsync(decimal price, string size, string category)
+        //{
+        //    if (category == "group")
+        //    {
+        //        price *= 5;
+        //    }
+
+        //    switch (size.ToLower())
+        //    {
+        //        case "regular":
+        //            break; // No change to price for regular size
+        //        case "medium":
+        //            price += 15;
+        //            break;
+        //        case "large":
+        //            price += 25;
+        //            break;
+        //        default:
+        //            // Handle any other sizes if needed
+        //            break;
+        //    }
+
+        //    return price;
+        //}
+
     }
 }

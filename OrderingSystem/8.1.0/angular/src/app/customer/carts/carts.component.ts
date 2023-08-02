@@ -66,6 +66,7 @@ export class AddToCartsComponent extends PagedListingComponentBase<OrderDto> {
       .subscribe((result: OrderDtoPagedResultDto) => {
         this.orders = result.items;
         this.showPaging(result, pageNumber);
+        this.setDefaultAvailableSizes();
       });
   }
 
