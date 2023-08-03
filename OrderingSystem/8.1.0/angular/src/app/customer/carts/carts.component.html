@@ -115,8 +115,6 @@
                                     <th>{{ "Size" | localize }}</th>
                                     <th>{{ "Category" | localize }}</th>
                                     <th>{{ "Total Amount" | localize }}</th>
-                                    <th>{{ "Date Ordered" | localize }}</th>
-                                    <th>{{ "Time Ordered" | localize }}</th>
                                     <th></th>
                                 </tr>
                             </thead>
@@ -148,7 +146,7 @@
                                           (change)="updateOrder(order)"
                                         />
                                     </td>
-                                    <td>
+                                    <td *ngIf="order.food.size != 0 else NoSizeAvailable">
                                         <select
                                           class="form-control"
                                           [(ngModel)]="order.size"
@@ -162,10 +160,11 @@
                                           </option>
                                         </select>
                                       </td>
+                                      <ng-template #NoSizeAvailable>
+                                        <td><strong>-</strong></td>
+                                    </ng-template>
                                     <td>{{ order.food?.category?.name }}</td>
-                                    <td>{{ order.totalAmount | currency:'PHP'}}</td>
-                                    <td>{{ order.dateTimeOrdered | date: 'MM/dd/yyyy'}}</td>
-                                    <td>{{ order.dateTimeOrdered | date: 'hh:mm a'}}</td>
+                                    <td>{{ order.totalAmount | currency:'PHP'}}</td>                                    
                                     <td>
                                         <button type="button" class="btn btn-md bg-danger mx-2" (click)="delete(order)">
                                             <i class="fas fa-trash"></i>

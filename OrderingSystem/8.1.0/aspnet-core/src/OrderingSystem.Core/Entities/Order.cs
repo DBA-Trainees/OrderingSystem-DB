@@ -15,7 +15,7 @@ namespace OrderingSystem.Entities
         public int? FoodId { get; set; }
         public Food Food { get; set; }
         public string? Notes { get; set; }
-        public DateTime DateTimeOrdered { get; set; }
+        public DateTime? DateTimeOrdered { get; set; }
         public double? TotalAmount { get; set; }
         public long? UserId { get; set; }
         public User User { get; set; }
@@ -24,5 +24,7 @@ namespace OrderingSystem.Entities
         public Guid? OrderNumber { get; set; }
         public int? OrderStatusId { get; set; }
         public OrderStatus OrderStatus { get; set; }
+        public DateTime? LastModificationTime { get; set; }
+        public DateTime? DateTimeAddedInCart { get; set; }
     }
 }

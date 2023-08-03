@@ -61,6 +61,7 @@ import { CreateEditOrderStatusModalComponent } from './order-status/create-edit-
 import { OrdersComponent } from './customer/orders/order.component'
 import { FoodOrderCartModalFooterComponent} from './customer/orders/food-order-cart-modal/food-order-cart-modal'
 import { FoodOrderProceedModalFooterComponent} from './customer/orders/food-order-proceed-modal/food-order-proceed-modal'
+import { DashboardComponent } from './dashboard/dashboard'
 
 
 @NgModule({

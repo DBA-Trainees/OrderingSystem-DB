@@ -34,7 +34,9 @@ namespace OrderingSystem.Orders
         {
             var userId = AbpSession.GetUserId();
             var order = ObjectMapper.Map<Order>(input);
-            order.DateTimeOrdered = input.DateTimeOrdered.ToLocalTime();
+
+            //order.DateTimeOrdered = input.DateTimeOrdered.ToLocalTime();
+            order.DateTimeAddedInCart = input.DateTimeAddedInCart.ToLocalTime();
 
             order.FoodId = input.FoodId;
             order.UserId = userId;
@@ -74,7 +76,7 @@ namespace OrderingSystem.Orders
                 .Include(x => x.User)
                 .Include(x => x.OrderStatus)
                 .Where(x => x.UserId == userId)
-                .OrderByDescending(x => x.Id)
+                .OrderByDescending(x => x.DateTimeAddedInCart)
                 .Select(x => ObjectMapper.Map<OrderDto>(x))
                 .ToListAsync();
 
@@ -146,6 +148,15 @@ namespace OrderingSystem.Orders
             return ObjectMapper.Map<OrderDto>(order);
         }
 
+        public async Task<List<int>> GetAllOrderIdsByOrderNumber(Guid orderNumber)
+        {
 
+            var userId = AbpSession.GetUserId();
+
+            return await _repository.GetAll()
+                .Where(x => x.OrderNumber == orderNumber && x.UserId == userId)
+                .Select(x => x.Id)
+                .ToListAsync();
+        }
     }
 }

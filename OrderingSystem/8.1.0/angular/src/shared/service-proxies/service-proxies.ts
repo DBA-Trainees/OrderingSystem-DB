@@ -2290,6 +2290,69 @@ export class OrderServiceProxy {
         }
         return _observableOf(null as any);
     }
+
+    /**
+     * @param orderNumber (optional) 
+     * @return Success
+     */
+    getAllOrderIdsByOrderNumber(orderNumber: string | undefined): Observable<number[]> {
+        let url_ = this.baseUrl + "/api/services/app/Order/GetAllOrderIdsByOrderNumber?";
+        if (orderNumber === null)
+            throw new Error("The parameter 'orderNumber' cannot be null.");
+        else if (orderNumber !== undefined)
+            url_ += "orderNumber=" + encodeURIComponent("" + orderNumber) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetAllOrderIdsByOrderNumber(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetAllOrderIdsByOrderNumber(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<number[]>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<number[]>;
+        }));
+    }
+
+    protected processGetAllOrderIdsByOrderNumber(response: HttpResponseBase): Observable<number[]> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (Array.isArray(resultData200)) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200.push(item);
+            }
+            else {
+                result200 = <any>null;
+            }
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
 }
 
 @Injectable()
@@ -5268,11 +5331,13 @@ export class CreateOrderDto implements ICreateOrderDto {
     quantity: number;
     size: string | undefined;
     notes: string | undefined;
-    dateTimeOrdered: moment.Moment;
+    dateTimeOrdered: moment.Moment | undefined;
     orderStatusId: number | undefined;
     totalAmount: number | undefined;
     userId: number;
     orderNumber: string | undefined;
+    lastModificationTime: moment.Moment | undefined;
+    dateTimeAddedInCart: moment.Moment;
 
     constructor(data?: ICreateOrderDto) {
         if (data) {
@@ -5294,6 +5359,8 @@ export class CreateOrderDto implements ICreateOrderDto {
             this.totalAmount = _data["totalAmount"];
             this.userId = _data["userId"];
             this.orderNumber = _data["orderNumber"];
+            this.lastModificationTime = _data["lastModificationTime"] ? moment(_data["lastModificationTime"].toString()) : <any>undefined;
+            this.dateTimeAddedInCart = _data["dateTimeAddedInCart"] ? moment(_data["dateTimeAddedInCart"].toString()) : <any>undefined;
         }
     }
 
@@ -5315,6 +5382,8 @@ export class CreateOrderDto implements ICreateOrderDto {
         data["totalAmount"] = this.totalAmount;
         data["userId"] = this.userId;
         data["orderNumber"] = this.orderNumber;
+        data["lastModificationTime"] = this.lastModificationTime ? this.lastModificationTime.toISOString() : <any>undefined;
+        data["dateTimeAddedInCart"] = this.dateTimeAddedInCart ? this.dateTimeAddedInCart.toISOString() : <any>undefined;
         return data;
     }
 
@@ -5331,11 +5400,13 @@ export interface ICreateOrderDto {
     quantity: number;
     size: string | undefined;
     notes: string | undefined;
-    dateTimeOrdered: moment.Moment;
+    dateTimeOrdered: moment.Moment | undefined;
     orderStatusId: number | undefined;
     totalAmount: number | undefined;
     userId: number;
     orderNumber: string | undefined;
+    lastModificationTime: moment.Moment | undefined;
+    dateTimeAddedInCart: moment.Moment;
 }
 
 export class CreateOrderStatusDto implements ICreateOrderStatusDto {
@@ -6453,13 +6524,15 @@ export class OrderDto implements IOrderDto {
     size: string | undefined;
     food: FoodDto;
     notes: string | undefined;
-    dateTimeOrdered: moment.Moment;
+    dateTimeOrdered: moment.Moment | undefined;
     orderStatusId: number | undefined;
     orderStatus: OrderStatusDto;
     totalAmount: number | undefined;
     userId: number;
     user: UserDto;
     orderNumber: string | undefined;
+    lastModificationTime: moment.Moment | undefined;
+    dateTimeAddedInCart: moment.Moment;
 
     constructor(data?: IOrderDto) {
         if (data) {
@@ -6485,6 +6558,8 @@ export class OrderDto implements IOrderDto {
             this.userId = _data["userId"];
             this.user = _data["user"] ? UserDto.fromJS(_data["user"]) : <any>undefined;
             this.orderNumber = _data["orderNumber"];
+            this.lastModificationTime = _data["lastModificationTime"] ? moment(_data["lastModificationTime"].toString()) : <any>undefined;
+            this.dateTimeAddedInCart = _data["dateTimeAddedInCart"] ? moment(_data["dateTimeAddedInCart"].toString()) : <any>undefined;
         }
     }
 
@@ -6510,6 +6585,8 @@ export class OrderDto implements IOrderDto {
         data["userId"] = this.userId;
         data["user"] = this.user ? this.user.toJSON() : <any>undefined;
         data["orderNumber"] = this.orderNumber;
+        data["lastModificationTime"] = this.lastModificationTime ? this.lastModificationTime.toISOString() : <any>undefined;
+        data["dateTimeAddedInCart"] = this.dateTimeAddedInCart ? this.dateTimeAddedInCart.toISOString() : <any>undefined;
         return data;
     }
 
@@ -6528,13 +6605,15 @@ export interface IOrderDto {
     size: string | undefined;
     food: FoodDto;
     notes: string | undefined;
-    dateTimeOrdered: moment.Moment;
+    dateTimeOrdered: moment.Moment | undefined;
     orderStatusId: number | undefined;
     orderStatus: OrderStatusDto;
     totalAmount: number | undefined;
     userId: number;
     user: UserDto;
     orderNumber: string | undefined;
+    lastModificationTime: moment.Moment | undefined;
+    dateTimeAddedInCart: moment.Moment;
 }
 
 export class OrderDtoPagedResultDto implements IOrderDtoPagedResultDto {

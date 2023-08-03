@@ -50,6 +50,7 @@ import { OrdersComponent } from './customer/orders/order.component';
                     { path: 'vendor/food-list/food-details', component: FoodDetailsComponent, data: { permission: 'Pages.Vendor.FoodDetails' },canActivate: [AppRouteGuard] },
                     { path: 'order-status', component: OrderStatusesComponent ,canActivate: [AppRouteGuard] },
                     { path: 'customer/orders', component: OrdersComponent ,canActivate: [AppRouteGuard] },
+                    { path: 'dashboard', component: OrdersComponent ,canActivate: [AppRouteGuard] },
                 ]
             }
         ])
