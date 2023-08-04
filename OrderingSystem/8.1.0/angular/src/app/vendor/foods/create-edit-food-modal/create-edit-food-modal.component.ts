@@ -109,6 +109,10 @@ export class CreateEditFoodModalComponent
     }
   }
 
+  isFoodCategoryGroup(selectedCategory:number): boolean{
+    return this.selectedCategory == 3;
+  }
+
   save(): void {
     this.saving = true;
     this.food.categoryId = this.selectedCategory;

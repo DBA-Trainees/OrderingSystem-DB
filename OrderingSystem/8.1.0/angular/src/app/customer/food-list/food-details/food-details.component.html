@@ -7,9 +7,8 @@ autocomplete="off"
   [title]="'Food Details' | localize" 
   (onCloseClick)="bsModalRef.hide()"></abp-modal-header>
   <div class="modal-body">
-    <div class="form-group row required">
+    <div class="form-group row">
       <label class="col-md-2 col-form-label" for="image">
-        {{ "Food Photo" | localize }}
       </label>
       <div class="col-md-10">
         <div class="col-md-4">
@@ -82,13 +81,9 @@ autocomplete="off"
           name="foodPrice" 
           id="foodPrice" 
           required            
-          [(ngModel)]="food.price" 
-          #foodPriceModel="ngModel" 
-          #foodPriceEl 
+          [(ngModel)]="food.price"
+          (change)="grandTotalPrice(food)"
           readonly />
-          <abp-validation-summary 
-          [control]="foodPriceModel" 
-          [controlEl]="foodPriceEl"></abp-validation-summary>
         </div>
       </div>
     </div>

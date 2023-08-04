@@ -61,7 +61,6 @@
                         [busy]="isTableLoading">
                             <thead class="bg-info text-center">
                                 <tr>
-                                    <th>{{ "Id" | localize }}</th>
                                     <th>{{ "Divisions" | localize }}</th>
                                     <th class="action-th">{{ "Actions" | localize }}</th>
                                 </tr>
@@ -74,7 +73,6 @@
                                 currentPage: pageNumber,
                                 totalItems: totalItems
                                 } | search: keyword: ['name']">
-                                    <td>{{ division.id }}</td>
                                     <td>{{ division.name }}</td>
                                     <td>
                                         <button 

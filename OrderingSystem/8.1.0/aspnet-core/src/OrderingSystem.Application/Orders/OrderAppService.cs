@@ -35,7 +35,6 @@ namespace OrderingSystem.Orders
             var userId = AbpSession.GetUserId();
             var order = ObjectMapper.Map<Order>(input);
 
-            //order.DateTimeOrdered = input.DateTimeOrdered.ToLocalTime();
             order.DateTimeAddedInCart = input.DateTimeAddedInCart.ToLocalTime();
 
             order.FoodId = input.FoodId;
@@ -105,6 +104,7 @@ namespace OrderingSystem.Orders
             if (existingOrder != null)
             {
                 existingOrder.Quantity += input.Quantity;
+                existingOrder.DateTimeAddedInCart = input.DateTimeAddedInCart.ToLocalTime();
                 await _repository.UpdateAsync(existingOrder);
                 return ObjectMapper.Map<OrderDto>(existingOrder);
             }
