@@ -31,7 +31,7 @@ import { BsModalRef } from "ngx-bootstrap/modal";
 @Component({
   selector: "food-details",
   templateUrl: "food-details.component.html",
-  styleUrls: ["../../../../shared/styles/styles.css"],
+  styleUrls: ["../../../../shared/styles/styles.css",'./food-details.component.css'],
 })
 export class FoodDetailsComponent extends AppComponentBase implements OnInit {
   foods: FoodDto[] = [];
@@ -103,6 +103,19 @@ export class FoodDetailsComponent extends AppComponentBase implements OnInit {
     ].join("-");
 
     return date;
+  }
+
+  grandTotalPrice(food:FoodDto): number{
+    let updatedPrice = food.price;
+
+    if(food.size && food.size !=="Regular"){
+      if(food.size =="Medium"){
+        updatedPrice += 15 * this.foodQty;
+      }else if(food.size =="Large"){
+        updatedPrice += 25 * this.foodQty;
+      }
+    }
+    return updatedPrice;
   }
 
   save(): void {

@@ -143,6 +143,11 @@ namespace OrderingSystem.Roles
                 GrantedPermissionNames = grantedPermissions.Select(p => p.Name).ToList()
             };
         }
+
+        public override Task<PagedResultDto<RoleDto>> GetAllAsync(PagedRoleResultRequestDto input)
+        {
+            return base.GetAllAsync(input);
+        }
     }
 }
 

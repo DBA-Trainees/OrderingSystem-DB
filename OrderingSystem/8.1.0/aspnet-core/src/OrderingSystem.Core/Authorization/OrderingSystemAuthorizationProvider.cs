@@ -14,23 +14,11 @@ namespace OrderingSystem.Authorization
             context.CreatePermission(PermissionNames.Pages_Roles, L("Roles"));
             context.CreatePermission(PermissionNames.Pages_Tenants, L("Tenants"), multiTenancySides: MultiTenancySides.Host);
 
-            //var vendorView = context.CreatePermission("Vendor");
-            //var foodPage = context.CreatePermission(PermissionNames.Pages_Foods, L("Food"));
-            //foodPage.CreateChildPermission(PermissionNames.Pages_Foods_Create_Update, L("FoodCreateEdit"));
-            //foodPage.CreateChildPermission(PermissionNames.Pages_Foods_FoodList, L("FoodList"));
-            //foodPage.CreateChildPermission(PermissionNames.Pages_Foods_FoodDetails, L("FoodDetails"));                                  
-
             var admin = context.GetPermissionOrNull(PermissionNames.Pages_Admin) ?? context.CreatePermission(PermissionNames.Pages_Admin, L("AdminView"));
 
             var division = admin.CreateChildPermission(PermissionNames.Pages_Admin_Divisions, L("Division"));
-            //division.CreateChildPermission(PermissionNames.Pages_Admin_Divisions_Create, L("CreateDivision"));
-            //division.CreateChildPermission(PermissionNames.Pages_Admin_Divisions_Update, L("UpdateDivision"));
-            //division.CreateChildPermission(PermissionNames.Pages_Admin_Division_Delete, L("DeleteDivision"));
 
             var customer = admin.CreateChildPermission(PermissionNames.Pages_Admin_Customers, L("Customer"));
-            //customer.CreateChildPermission(PermissionNames.Pages_Admin_Customers_Create, L("CreateCustomer"));
-            //customer.CreateChildPermission(PermissionNames.Pages_Admin_Customers_Update, L("UpdateCustomer"));
-            //customer.CreateChildPermission(PermissionNames.Pages_Admin_Customers_Delete, L("DeleteCustomer"));
 
             var vendor = context.GetPermissionOrNull(PermissionNames.Pages_Vendor) ?? context.CreatePermission(PermissionNames.Pages_Vendor, L("VendorView"));
 

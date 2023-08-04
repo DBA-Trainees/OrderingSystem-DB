@@ -25,7 +25,7 @@ export class CreateEditCustomerModalComponent
   implements OnInit
 {
   saving = false;
-  customer: CustomerDto = new CustomerDto();
+  customer = new CustomerDto();
   id: number = 0;
   divisions: DivisionDto[] = [];
   users: UserDto[] = [];
@@ -50,21 +50,18 @@ export class CreateEditCustomerModalComponent
 
   ngOnInit() {
     if (this.id) {
-      this._customerService.get(this.id).subscribe((res) => {
+      this._customerService.get(this.id).subscribe((res:CustomerDto) => {
         this.customer = res;
         this.selectedDivision = res.divisionId;
-        this.selectedUser = res.userId || null;
+        this.selectedUser = res.userId;        
       });
     }
     this._divisionService.getAllDivisions().subscribe((res) => {
       this.divisions = res;
     });
     this._userService.getUsersWithCustomerRole().subscribe((res) => {
-      this.users = res;
+      this.users = res;    
     });
-    /* this._userService.getAll(this.keyword, this.isActive,this.skipCount,this.maxResultCount).subscribe((res) =>{
-      this.users = res.items;
-    }) */
   }
 
   save(): void {

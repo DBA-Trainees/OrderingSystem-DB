@@ -110,17 +110,20 @@ export class FoodListComponent extends AppComponentBase implements OnInit {
       );
   }
 
-  /* formatLastModificationDate(lastModificationDate: Date): string {
-    const currentTime = new Date();
-    const difference = Math.round((currentTime.getTime() - new Date(lastModificationDate).getTime()) / 60000);
-    if (difference < 1) {
-      return 'just now';
-    } else if (difference === 1) {
-      return '1 min ago';
-    } else {
-      return `${difference} ago`;
+  grandTotalPrice(food:FoodDto): number{
+    let updatedPrice = food.price;
+
+    if(food.size && food.size !=="Regular"){
+      if(food.size =="Medium"){
+        updatedPrice += 15 * this.foodQty;
+      }else if(food.size =="Large"){
+        updatedPrice += 25 * this.foodQty;
+      }
+    }else{
+      updatedPrice * this.foodQty;
     }
-  } */
+    return updatedPrice;
+  }
 
   private setDefaultFoodSizes(): void {
     this.foods.forEach((food) => {

@@ -265,10 +265,10 @@ namespace OrderingSystem.Users
             var usersNotAddedInCustomer = userRole
                 .Where(x => !customer
                 .Contains(x.Id))
-                .ToList();
+                .FirstOrDefault();
 
-            var user = ObjectMapper.Map<List<UserDto>>(usersNotAddedInCustomer);
-            return new List<UserDto>(user);
+            return ObjectMapper.Map<List<UserDto>>(usersNotAddedInCustomer);
+
         }
         
     }

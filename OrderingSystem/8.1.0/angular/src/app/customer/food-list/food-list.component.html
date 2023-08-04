@@ -13,7 +13,10 @@
                     (click)="displayFoodDetails(food.id)"
                     class="center card-img-top" />
                   </div>
-                  <a class="card-action" [hidden]="food.quantity==0" (click)="addTocart(food)">
+                  <a 
+                  class="card-action"
+                  [hidden]="food.quantity==0" 
+                  (click)="addTocart(food)">
                     <i class="fa fa-shopping-cart"></i>
                   </a>
                   <div class="card-heading">
@@ -23,7 +26,7 @@
                     <h6>{{food.category?.name}}</h6>
                   </div>
                   <div class="card-text">
-                    <h5>{{food.price | currency:'PHP'}}</h5>
+                    <h5>{{ grandTotalPrice(food) | currency:'PHP'}}</h5>
                   </div>
                   <div class="card-text" *ngIf="food.size != 0">
                     <label for="foodSize">Food Size:</label>

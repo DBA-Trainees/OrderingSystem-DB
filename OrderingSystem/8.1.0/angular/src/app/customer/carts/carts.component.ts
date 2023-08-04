@@ -34,6 +34,7 @@ export class AddToCartsComponent extends PagedListingComponentBase<OrderDto> {
   order: OrderDto = new OrderDto();
   selectedFoodOrder: number;
   availableSizesDict: { [key: number]: string[] } = {};
+  selected: boolean;
 
   constructor(
     injector: Injector,
@@ -69,24 +70,13 @@ export class AddToCartsComponent extends PagedListingComponentBase<OrderDto> {
         this.setDefaultAvailableSizes();
       });
   }
-
-  decrementQty(): void {
-    if (this.order.quantity > 1) {
-      this.foodQty--;
-    }
-  }
-
-  incrementQty(maxQty: number): void {
-    if (this.foodQty < this.order.quantity) {
-      this.foodQty++;
-    }
-  }
-
   updateOrder(order: OrderDto): void {
     this._orderService.update(order).subscribe(() => {
       this.notify.info(this.l('OrderUpdatedSuccessfully'));
     });
   }
+
+
 
   private setDefaultAvailableSizes(): void {
     this.orders.forEach((order) => {
@@ -109,6 +99,26 @@ export class AddToCartsComponent extends PagedListingComponentBase<OrderDto> {
       }
     }
   } */
+
+  grandTotalPrice(order: OrderDto): number{
+    let updatedPrice = order.food.price;
+
+    if(order.food.size && order.size !=="Regular"){
+      if(order.size =="Medium"){
+        updatedPrice += 15 * order.quantity;
+      }else if(order.size =="Large"){
+        updatedPrice += 25 * order.quantity;
+      }
+    }else{
+      updatedPrice * order.quantity;
+    }
+
+    if(order.food.category && order.food.category.name == "Group"){
+      updatedPrice *= 2
+    }
+
+    return updatedPrice;
+  }
 
 
   
