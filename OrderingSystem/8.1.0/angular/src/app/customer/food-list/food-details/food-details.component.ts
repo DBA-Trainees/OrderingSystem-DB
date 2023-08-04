@@ -105,17 +105,20 @@ export class FoodDetailsComponent extends AppComponentBase implements OnInit {
     return date;
   }
 
-  grandTotalPrice(food:FoodDto): number{
+  grandTotalPrice(food: FoodDto): number {
     let updatedPrice = food.price;
 
-    if(food.size && food.size !=="Regular"){
-      if(food.size =="Medium"){
-        updatedPrice += 15 * this.foodQty;
-      }else if(food.size =="Large"){
-        updatedPrice += 25 * this.foodQty;
-      }
+    if (food.size == "Medium") {
+      updatedPrice += 15;
+    } else if (food.size == "Large") {
+      updatedPrice += 25;
     }
-    return updatedPrice;
+
+    if (food.category && food.category.name == "Group") {
+      updatedPrice *= 2;
+    }
+
+    return updatedPrice * this.foodQty;
   }
 
   save(): void {

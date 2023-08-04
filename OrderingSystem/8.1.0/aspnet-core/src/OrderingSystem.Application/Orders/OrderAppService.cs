@@ -35,7 +35,7 @@ namespace OrderingSystem.Orders
             var userId = AbpSession.GetUserId();
             var order = ObjectMapper.Map<Order>(input);
 
-            order.DateTimeAddedInCart = input.DateTimeAddedInCart.ToLocalTime();
+            //order.DateTimeAddedInCart = input.DateTimeAddedInCart.ToLocalTime();
 
             order.FoodId = input.FoodId;
             order.UserId = userId;
@@ -75,7 +75,7 @@ namespace OrderingSystem.Orders
                 .Include(x => x.User)
                 .Include(x => x.OrderStatus)
                 .Where(x => x.UserId == userId)
-                .OrderByDescending(x => x.DateTimeAddedInCart)
+                //.OrderByDescending(x => x.DateTimeAddedInCart)
                 .Select(x => ObjectMapper.Map<OrderDto>(x))
                 .ToListAsync();
 
@@ -96,21 +96,24 @@ namespace OrderingSystem.Orders
         public async Task<OrderDto> UpdateAddToCart(OrderDto input)
         {
             var userId = AbpSession.GetUserId();
+            var order = ObjectMapper.Map<Order>(input);
             var existingOrder = await _repository
                 .FirstOrDefaultAsync(
                 o => o.FoodId == input.FoodId && o.UserId == userId
             );
 
-            if (existingOrder != null)
+            if (existingOrder != null && input.OrderStatusId == 1)
             {
                 existingOrder.Quantity += input.Quantity;
-                existingOrder.DateTimeAddedInCart = input.DateTimeAddedInCart.ToLocalTime();
+                //existingOrder.DateTimeAddedInCart = input.DateTimeAddedInCart.ToLocalTime();
+                existingOrder.Size = input.Size;
+
                 await _repository.UpdateAsync(existingOrder);
                 return ObjectMapper.Map<OrderDto>(existingOrder);
             }
             else
             {
-                var order = ObjectMapper.Map<Order>(input);
+                order = ObjectMapper.Map<Order>(input);
                 order.FoodId = input.FoodId;
                 order.UserId = userId;
                 order.OrderStatusId = 1;

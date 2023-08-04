@@ -25,6 +25,6 @@ namespace OrderingSystem.Entities
         public int? OrderStatusId { get; set; }
         public OrderStatus OrderStatus { get; set; }
         public DateTime? LastModificationTime { get; set; }
-        public DateTime? DateTimeAddedInCart { get; set; }
+        
     }
 }

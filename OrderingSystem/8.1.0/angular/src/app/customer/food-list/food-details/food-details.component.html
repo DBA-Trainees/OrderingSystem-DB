@@ -87,7 +87,7 @@ autocomplete="off"
         </div>
       </div>
     </div>
-    <div class="form-group row">
+    <div class="form-group row" *ngIf="food.size">
       <label for="foodSize" class="col-md-2 col-form-label">{{ "Size" | localize }}</label>
       <div class="col-md-2">
         <select 

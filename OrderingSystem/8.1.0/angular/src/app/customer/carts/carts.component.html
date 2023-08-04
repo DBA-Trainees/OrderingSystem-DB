@@ -3,30 +3,13 @@
     <section class="content px-2">
         <div class="container-fluid">
             <div class="card">
-                <div class="card-header">
-                    <div class="row">
-                        <div class="col-md-6">&emsp;</div>
-                        <div class="col-md-6">
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <button type="button" class="btn bg-info" (click)="getDataPage(1)">
-                                        <i class="fas fa-search"></i>
-                                    </button>
-                                </div>
-                                <input type="text" class="form-control" name="keyword"
-                                    [placeholder]="'SearchWithThreeDot' | localize" [(ngModel)]="keyword"
-                                    (keyup.enter)="getDataPage(1)" />
-                            </div>
-                        </div>
-                    </div>
-                </div>
                 <div class="card-body">
                     <div class="table-responsive">
                         <table class="table table-bordered" [busy]="isTableLoading">
                             <thead class="bg-light">
                                 <tr class="bg-info text-center">
                                     <th><input type="checkbox"></th>
-                                    <th>{{ "" | localize }}</th>
+                                    <th></th>
                                     <th>{{ "Food Name" | localize }}</th>
                                     <th>{{ "Regular Price" | localize }}</th>
                                     <th>{{ "Qty" | localize }}</th>
@@ -49,6 +32,7 @@
                                         type="checkbox"
                                         [id]="order.food.id"
                                         [name]="order.food.name"
+                                        [value]="order.id"
                                         >
                                     </div></td>
                                     <td><img

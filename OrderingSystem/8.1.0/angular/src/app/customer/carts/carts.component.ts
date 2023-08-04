@@ -14,7 +14,6 @@ import {
 import { BsModalService } from "ngx-bootstrap/modal";
 import { finalize } from "rxjs/operators";
 
-
 class PagedOrdersRequestDto extends PagedRequestDto {
   keyword: string;
   isActive: boolean | null;
@@ -35,6 +34,7 @@ export class AddToCartsComponent extends PagedListingComponentBase<OrderDto> {
   selectedFoodOrder: number;
   availableSizesDict: { [key: number]: string[] } = {};
   selected: boolean;
+  overallTotalAmount: number = 0;
 
   constructor(
     injector: Injector,
@@ -72,19 +72,25 @@ export class AddToCartsComponent extends PagedListingComponentBase<OrderDto> {
   }
   updateOrder(order: OrderDto): void {
     this._orderService.update(order).subscribe(() => {
-      this.notify.info(this.l('OrderUpdatedSuccessfully'));
+      this.notify.info(this.l("OrderUpdatedSuccessfully"));
     });
   }
-
-
 
   private setDefaultAvailableSizes(): void {
     this.orders.forEach((order) => {
       if (order.food && order.food.size) {
-        const sizeArray = order.food.size.split(',').map((size) => size.trim());
+        const sizeArray = order.food.size.split(",").map((size) => size.trim());
         this.availableSizesDict[order.food.id] = sizeArray;
       }
     });
+  }
+
+  onOrderSelection(order: OrderDto, checked:boolean): void{
+    if(checked){
+      this.overallTotalAmount += order.food.price * order.quantity;
+    }else{
+      this.overallTotalAmount -= order.food.price * order.quantity;
+    }
   }
 
   /* isFoodOrderChecked(checked: boolean): void{
@@ -100,28 +106,22 @@ export class AddToCartsComponent extends PagedListingComponentBase<OrderDto> {
     }
   } */
 
-  grandTotalPrice(order: OrderDto): number{
+  grandTotalPrice(order: OrderDto): number {
     let updatedPrice = order.food.price;
 
-    if(order.food.size && order.size !=="Regular"){
-      if(order.size =="Medium"){
-        updatedPrice += 15 * order.quantity;
-      }else if(order.size =="Large"){
-        updatedPrice += 25 * order.quantity;
-      }
-    }else{
-      updatedPrice * order.quantity;
+    if (order.size == "Medium") {
+      updatedPrice += 15;
+    } else if (order.size == "Large") {
+      updatedPrice += 25;
     }
 
-    if(order.food.category && order.food.category.name == "Group"){
-      updatedPrice *= 2
+    if (order.food.category && order.food.category.name == "Group") {
+      updatedPrice *= 2;
     }
 
-    return updatedPrice;
+    return updatedPrice * order.quantity;
   }
 
-
-  
   protected delete(order: OrderDto): void {
     abp.message.confirm(
       this.l("OrderDeleteWarningMessage", order.food.name),
