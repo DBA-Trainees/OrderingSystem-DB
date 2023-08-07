@@ -114,7 +114,8 @@ import { DashboardComponent } from './dashboard/dashboard'
         CreateEditOrderStatusModalComponent,
         OrdersComponent,
         FoodOrderCartModalFooterComponent,
-        FoodOrderProceedModalFooterComponent
+        FoodOrderProceedModalFooterComponent,
+        DashboardComponent
     ],
     imports: [
         CommonModule,

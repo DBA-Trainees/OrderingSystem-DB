@@ -71,9 +71,9 @@
                                 currentPage: pageNumber,
                                 totalItems: totalItems
                                 }">
-                                    <td>{{ order.user?.fullName }}</td>
-                                    <td>{{ order.food?.name }}</td>
-                                    <td>{{ order.quantity }}</td>
+                                    <td>{{ order.cart?.user?.fullName }}</td>
+                                    <td>{{ order.cart?.food?.name }}</td>
+                                    <td>{{ order.cart?.quantity }}</td>
                                     <td>{{ order.size }}</td>
                                     <td>{{ order.totalAmount | currency:'PHP'}}</td>
                                     <td>{{ order.notes }}</td>

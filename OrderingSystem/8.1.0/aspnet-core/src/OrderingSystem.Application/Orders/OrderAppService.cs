@@ -26,9 +26,13 @@ namespace OrderingSystem.Orders
             _repository = repository;
         }
 
-        public override Task<OrderDto> CreateAsync(CreateOrderDto input)
+        public override async Task<OrderDto> CreateAsync(CreateOrderDto input)
         {
-            return base.CreateAsync(input);
+            var order = ObjectMapper.Map<Order>(input);
+            order.DateTimeOrdered = input.DateTimeOrdered.ToLocalTime();
+            order = await _repository.InsertAsync(order);
+
+            return ObjectMapper.Map<OrderDto>(order);
         }
 
         public override Task DeleteAsync(EntityDto<int> input)
