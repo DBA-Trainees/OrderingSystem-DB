@@ -1,126 +1,99 @@
-<form 
-class="form-horizontal" 
-autocomplete="off" 
-#foodDetails="ngForm" 
-(ngSubmit)="save()">
-  <abp-modal-header 
-  [title]="'Food Details' | localize" 
-  (onCloseClick)="bsModalRef.hide()"></abp-modal-header>
+<form
+  class="form-horizontal"
+  autocomplete="off"
+  #foodDetails="ngForm"
+  (ngSubmit)="save(food)"
+>
+  <abp-modal-header
+    [title]="'Food Details' | localize"
+    (onCloseClick)="bsModalRef.hide()"
+  ></abp-modal-header>
   <div class="modal-body">
-    <div class="form-group row">
-      <label class="col-md-2 col-form-label" for="image">
-      </label>
-      <div class="col-md-10">
-        <div class="col-md-4">
-          <img 
-          *ngIf="food.imageFileType && food.image" 
-          class="center"
-          [src]="'data:image/' + food.imageFileType + ';base64,' + food.image" />
+    <div class="row">
+      <div class="col-md-6">
+        <div class="text-center">
+          <img
+            *ngIf="food.imageFileType && food.image"
+            class="center"
+            [src]="'data:image/' + food.imageFileType + ';base64,' + food.image"
+            width="150"
+          />
         </div>
       </div>
-    </div>
-    <div class="form-group row required">
-      <label class="col-md-2 col-form-label" for="name">
-        {{ "Food Name" | localize }}
-      </label>
-      <div class="col-md-3">
-        <input type="text" 
-        class="form-control validate" 
-        name="name" 
-        id="name" 
-        required 
-        readonly 
-        [(ngModel)]="food.name"          
-        #nameModel="ngModel" 
-        #nameEl />
-        <abp-validation-summary 
-        [control]="nameModel" 
-        [controlEl]="nameEl"></abp-validation-summary>
-      </div>
-    </div>
-    <div class="form-group row required">
-      <label for="foodQuantity" class="col-md-2 col-form-label">
-        {{"Quantity" | localize}}</label>
-      <div class="col-md-2">
-        <div class="input-group">
-          <div class="input-group-prepend">
-            <button 
-            class="btn btn-outline-secondary" 
-            type="button" 
-            (click)="decrementQty()"
-            [disabled]="foodQty<=1">-</button>
+      <div class="col-md-4">
+        <div class="">
+          <span class="intro-1">{{ food.name }}</span>
+          <div class="price">
+            <span class="intro-2"><strong>{{ food.price | currency : "PHP" }}</strong></span>
+            <span class="intro-2">{{ food.category?.name }}</span>
           </div>
-          <input 
-          type="number" 
-          class="form-control" 
-          name="foodQuantity" 
-          id="foodQuantity" 
-          [(ngModel)]="foodQty"            
-          readonly>
-          <div class="input-group-prepend">
-            <button 
-            class="btn btn-outline-secondary" 
-            type="button" 
-            (click)="incrementQty(foodQty)">+</button>
+          <div class="mt-2 price">
+            <strong>{{ food.price | currency : "PHP" }}</strong>
+          </div>
+          <div>
+            <div class="form-group row required" *ngIf="food.size">
+              <label for="foodSize">{{ "Size" | localize }}</label>
+              <div class="input-group">
+                <select
+                  name="foodSize"
+                  id="foodSize"
+                  required
+                  [(ngModel)]="selectedFoodSize"
+                  (ngModelChange)="selectedFoodSize = $event"
+                >
+                  <option
+                    *ngFor="let size of food.size?.split(',') || []"
+                    [value]="size.trim()"
+                  >
+                    {{ size }}
+                  </option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="mt-2">
+            <div class="form-group row required">
+              <label for="foodQuantity"> {{ "Quantity" | localize }}</label>
+              <div>
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <button
+                      class="btn btn-outline-secondary"
+                      type="button"
+                      (click)="decrementQty()"
+                      [disabled]="foodQty <= 1"
+                    >
+                      -
+                    </button>
+                  </div>
+                  <input
+                    type="number"
+                    class="form-control"
+                    name="foodQuantity"
+                    id="foodQuantity"
+                    [(ngModel)]="foodQty"
+                    readonly
+                  />
+                  <div class="input-group-prepend">
+                    <button
+                      class="btn btn-outline-secondary"
+                      type="button"
+                      (click)="incrementQty(foodQty)"
+                    >
+                      +
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-    </div>
-    <div class="form-group row required">
-      <label class="col-md-2 col-form-label" for="foodPrice">
-        {{ "Price" | localize }}
-      </label>
-      <div class="col-md-2">
-        <div class="input-group">
-          <div class="input-group-prepend">
-            <span class="input-group-text">&#8369;</span>
-          </div>
-          <input 
-          type="number" 
-          class="form-control currency" 
-          name="foodPrice" 
-          id="foodPrice" 
-          required            
-          [(ngModel)]="food.price"
-          (change)="grandTotalPrice(food)"
-          readonly />
-        </div>
-      </div>
-    </div>
-    <div class="form-group row" *ngIf="food.size">
-      <label for="foodSize" class="col-md-2 col-form-label">{{ "Size" | localize }}</label>
-      <div class="col-md-2">
-        <select 
-        class="form-control" 
-        name="foodSize" 
-        id="foodSize" 
-        required 
-        [(ngModel)]="selectedFoodSize"
-        (ngModelChange)="selectedFoodSize=$event">
-          <option 
-          *ngFor="let size of food.size?.split(',') || []" 
-          [value]="size.trim()">{{ size }}</option>
-        </select>
-      </div>
-    </div>
-    <div class="form-group row mb-0">
-      <label class="col-md-2 col-form-label" for="notes">
-        {{ "Notes" | localize }}
-      </label>
-      <div class="col-md-9">
-        <textarea
-          type="text"
-          class="form-control"
-          name="notes"
-          id="notes"
-          [(ngModel)]="order.notes"
-        >
-        </textarea>
       </div>
     </div>
   </div>
-  <food-order-cart-footer 
+  <food-order-cart-footer
     [cancelDisabled]="saving"
-    [saveDisabled]="!foodDetails.form.valid || saving || food.quantity==0"
-    (onCancelClick)="bsModalRef.hide()"></food-order-cart-footer>
+    [saveDisabled]="!foodDetails.form.valid || saving || food.quantity == 0"
+    (onCancelClick)="bsModalRef.hide()"
+  ></food-order-cart-footer>
 </form>

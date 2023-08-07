@@ -10,6 +10,6 @@ namespace OrderingSystem.Orders
 {
     public interface IOrderAppService : IAsyncCrudAppService <OrderDto, int, PagedOrderResultRequestDto, CreateOrderDto, OrderDto>
     {
-        Task<OrderDto> UpdateAddToCart(OrderDto input);
+        //Task<OrderDto> UpdateAddToCart(OrderDto input);
     }
 }

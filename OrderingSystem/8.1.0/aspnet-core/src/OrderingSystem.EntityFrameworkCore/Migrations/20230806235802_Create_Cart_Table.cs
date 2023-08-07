@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace OrderingSystem.Migrations
 {
     /// <inheritdoc />
-    public partial class Create_Carts_Table : Migration
+    public partial class Create_Cart_Table : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -24,10 +24,9 @@ namespace OrderingSystem.Migrations
                     FoodId = table.Column<int>(type: "int", nullable: true),
                     Quantity = table.Column<int>(type: "int", nullable: false),
                     Size = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    DateTimeAddedInCart = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    DateTimeAddedInCart = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Amount = table.Column<double>(type: "float", nullable: true),
                     OrderStatusId = table.Column<int>(type: "int", nullable: true),
-                    Notes = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     UserId = table.Column<long>(type: "bigint", nullable: true),
                     CreationTime = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CreatorUserId = table.Column<long>(type: "bigint", nullable: true),

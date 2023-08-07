@@ -81,5 +81,16 @@ namespace OrderingSystem.Foods
 
         //    return foodSize;
         //}
+
+        public async Task<FoodDto> GetAllFoodWithCategory(EntityDto<int> input)
+        {
+            var food = await _repository.GetAll()
+                .Include(x => x.Category)
+                .Where(x => x.Id == input.Id)
+                .Select(x => ObjectMapper.Map<FoodDto>(x))                
+                .FirstOrDefaultAsync();
+
+            return food;
+        }
     }
 }

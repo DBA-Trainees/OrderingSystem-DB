@@ -41,7 +41,7 @@ export class PurchaseHistoryComponent extends PagedListingComponentBase<OrderDto
     request.isActive = this.isActive;
 
     this._orderService
-      .getAllOrderPurchaseHistory(
+      .getAllPurchaseOrders(
         request.keyword,
         request.isActive,
         request.skipCount,

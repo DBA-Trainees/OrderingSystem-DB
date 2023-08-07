@@ -14,10 +14,9 @@ import { AppComponentBase } from "@shared/app-component-base";
 import {
   FoodDto,
   FoodServiceProxy,
-  OrderServiceProxy,
   UserDto,
-  OrderDto,
-  CreateOrderDto,
+  CartDto,
+  CartServiceProxy,
 } from "@shared/service-proxies/service-proxies";
 import * as moment from "moment";
 import { BsModalRef, BsModalService } from "ngx-bootstrap/modal";
@@ -29,10 +28,9 @@ import { BsModalRef, BsModalService } from "ngx-bootstrap/modal";
   animations: [appModuleAnimation()],
 })
 export class FoodListComponent extends AppComponentBase implements OnInit {
-  orders: OrderDto[] = [];
   foods: FoodDto[] = [];
-  order = new OrderDto();
   food = new FoodDto();
+  cart = new CartDto();
   keyword = "";
   isActive: boolean | null;
   skipCount: number;
@@ -44,7 +42,6 @@ export class FoodListComponent extends AppComponentBase implements OnInit {
   sizes: string[];
   user: UserDto = new UserDto();
   availableSizesDict: { [key: number]: string[] } = {};
-  createOrder = new CreateOrderDto();
 
   @Output() onSave = new EventEmitter<any>();
   @Input() saveLabel = this.l('Add To Cart');
@@ -53,7 +50,7 @@ export class FoodListComponent extends AppComponentBase implements OnInit {
   constructor(
     injector: Injector,
     private _foodService: FoodServiceProxy,
-    private _orderService: OrderServiceProxy,
+    private _cartService: CartServiceProxy,
     private _modalService: BsModalService,
     public bsModalRef: BsModalRef,
     private router: Router
@@ -65,9 +62,9 @@ export class FoodListComponent extends AppComponentBase implements OnInit {
     this.getAllFoods();
 
     if (this.id) {
-      this._orderService.get(this.id).subscribe((res) => {
-        this.order.foodId = res.foodId;
-        this.order.food.category = res.food.category;
+      this._cartService.get(this.id).subscribe((res) => {
+        this.cart.foodId = res.foodId;
+        this.cart.food.category = res.food.category;
         /* this.selectedFoodSize = res.size.split(','); */
       });
     }
@@ -92,14 +89,13 @@ export class FoodListComponent extends AppComponentBase implements OnInit {
   }
 
   addTocart(selectedFood: FoodDto): void {
-    this.saving = true;
-    this.order.foodId = selectedFood.id;
-    this.order.quantity = this.foodQty;
-    this.order.totalAmount = selectedFood.price * this.foodQty;
-    this.order.dateTimeAddedInCart = moment(this.today);
-    this.order.size = selectedFood.size;
+    this.cart.foodId = selectedFood.id;
+    this.cart.quantity = this.foodQty;
+    this.cart.amount = selectedFood.price * this.foodQty;
+    this.cart.dateTimeAddedInCart = moment(this.today);
+    this.cart.size = selectedFood.size;
 
-      this._orderService.updateAddToCart(this.order).subscribe(
+      this._cartService.updateAddToCart(this.cart).subscribe(
         (res) => {
           this.notify.info(this.l("SavedSuccessfully"));
           this.bsModalRef.hide();

@@ -55,7 +55,9 @@
                       </option>
                     </select>
                   </div>
-                  <button class="card-button" (click)="displayFoodDetails(food.id)" [hidden]="food.quantity==0">View
+                  <button 
+                  class="card-button" 
+                  (click)="displayFoodDetails(food.id)" [hidden]="food.quantity==0">View
                     More</button>
                   <button class="card-button bg-danger" disabled *ngIf="food.quantity==0"><strong>Sold
                       Out</strong></button>

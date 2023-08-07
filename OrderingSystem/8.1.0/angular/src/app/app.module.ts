@@ -39,7 +39,7 @@ import { SidebarLogoComponent } from './layout/sidebar-logo.component';
 import { SidebarUserPanelComponent } from './layout/sidebar-user-panel.component';
 import { SidebarMenuComponent } from './layout/sidebar-menu.component';
 import { DivisionsComponent } from './admin/divisions/divisions.component'
-import { CategoryServiceProxy, CustomerServiceProxy, DivisionServiceProxy, FoodServiceProxy, OrderServiceProxy, OrderStatusServiceProxy, TypeServiceProxy } from '@shared/service-proxies/service-proxies';
+import { CartServiceProxy, CategoryServiceProxy, CustomerServiceProxy, DivisionServiceProxy, FoodServiceProxy, OrderServiceProxy, OrderStatusServiceProxy, TypeServiceProxy } from '@shared/service-proxies/service-proxies';
 import { CreateEditDivisionModalComponent } from './admin/divisions/create-edit-division-modal/create-edit-division-modal.component'
 import { CustomersComponent } from './admin/customers/customers.component'
 import { CreateEditCustomerModalComponent } from './admin/customers/create-edit-customer-modal/create-edit-customer-modal.component'
@@ -138,7 +138,8 @@ import { DashboardComponent } from './dashboard/dashboard'
         TypeServiceProxy,
         FoodServiceProxy,
         OrderServiceProxy,
-        OrderStatusServiceProxy
+        OrderStatusServiceProxy,
+        CartServiceProxy
     ]
 })
 export class AppModule {}

@@ -9,19 +9,13 @@ import {
 import { Router } from "@angular/router";
 import { AppComponentBase } from "@shared/app-component-base";
 import {
-  PagedRequestDto,
-} from "@shared/paged-listing-component-base";
-import {
-  CategoryDto,
-  CategoryServiceProxy,
-  CreateOrderDto,
+  CartDto,
+  CartServiceProxy,
   CustomerDto,
   FoodDto,
   FoodServiceProxy,
   OrderDto,
   OrderServiceProxy,
-  TypeDto,
-  TypeServiceProxy,
   UserDto,
 } from "@shared/service-proxies/service-proxies";
 import * as moment from "moment";
@@ -37,6 +31,7 @@ export class FoodDetailsComponent extends AppComponentBase implements OnInit {
   foods: FoodDto[] = [];
   food: FoodDto = new FoodDto();
   order: OrderDto = new OrderDto();
+  cart: CartDto = new CartDto();
   customer: CustomerDto = new CustomerDto();
   user: UserDto = new UserDto();
   keyword = "";
@@ -55,21 +50,17 @@ export class FoodDetailsComponent extends AppComponentBase implements OnInit {
     injector: Injector,
     public bsModalRef: BsModalRef,
     private _foodService: FoodServiceProxy,
-    private _orderService: OrderServiceProxy,
+    private _cartService: CartServiceProxy,
     private router: Router
   ) {
     super(injector);
   }
 
   ngOnInit(): void {
-   this.order.food = this.food;
-   this.order.user = this.user;
     if (this.id != 0) {
-      this._foodService.get(this.id).subscribe((res) => {
+      this._foodService.getAllFoodWithCategory(this.id).subscribe((res) => {
         this.food = res;
-        this.food.type = res.type;
-        this.food.category = res.category;
-        /* this.selectedFoodSize = res.size.split(','); */
+        this.food.category.id = res.category.id;
       });
     }
     this.setDefaultFoodSize();
@@ -121,17 +112,17 @@ export class FoodDetailsComponent extends AppComponentBase implements OnInit {
     return updatedPrice * this.foodQty;
   }
 
-  save(): void {
+  save(food:FoodDto): void {
     this.saving = true;
 
-    const orderDto = new OrderDto();   
-    orderDto.foodId = this.food.id;
-    orderDto.quantity = this.foodQty;
-    orderDto.totalAmount = this.foodQty * this.food.price;
-    orderDto.dateTimeAddedInCart = moment(this.today);
-    orderDto.size = this.selectedFoodSize;
+    const cartDto = new CartDto();   
+    cartDto.foodId = food.id;
+    cartDto.quantity = this.foodQty;
+    cartDto.amount = this.foodQty * food.price;
+    cartDto.dateTimeAddedInCart = moment(this.today);
+    cartDto.size = this.selectedFoodSize;
 
-    this._orderService.updateAddToCart(orderDto).subscribe(
+    this._cartService.updateAddToCart(cartDto).subscribe(
       (res) => {
         this.notify.info(this.l("SavedSuccessfully"));
         this.bsModalRef.hide();

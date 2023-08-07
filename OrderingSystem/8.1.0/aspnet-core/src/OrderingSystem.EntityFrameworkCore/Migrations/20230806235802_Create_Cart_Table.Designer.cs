@@ -12,8 +12,8 @@ using OrderingSystem.EntityFrameworkCore;
 namespace OrderingSystem.Migrations
 {
     [DbContext(typeof(OrderingSystemDbContext))]
-    [Migration("20230804091054_Create_Carts_Table")]
-    partial class Create_Carts_Table
+    [Migration("20230806235802_Create_Cart_Table")]
+    partial class Create_Cart_Table
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -1593,7 +1593,7 @@ namespace OrderingSystem.Migrations
                     b.Property<long?>("CreatorUserId")
                         .HasColumnType("bigint");
 
-                    b.Property<DateTime?>("DateTimeAddedInCart")
+                    b.Property<DateTime>("DateTimeAddedInCart")
                         .HasColumnType("datetime2");
 
                     b.Property<long?>("DeleterUserId")
@@ -1613,9 +1613,6 @@ namespace OrderingSystem.Migrations
 
                     b.Property<long?>("LastModifierUserId")
                         .HasColumnType("bigint");
-
-                    b.Property<string>("Notes")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("OrderStatusId")
                         .HasColumnType("int");

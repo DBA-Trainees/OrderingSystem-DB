@@ -1,0 +1,45 @@
+<form
+class="form-horizontal"
+  autocomplete="off"
+  #orderDetails="ngForm"
+  (ngSubmit)="checkOutOrder()" 
+>    <abp-modal-header
+    [title]="'Order Details' | localize"
+    (onCloseClick)="bsModalRef.hide()"
+  ></abp-modal-header>
+    <div class="modal-body ">
+        <div class="px-4">
+            <h5 class="text-uppercase text-center">Hi, {{order.cart?.user?.name}}</h5>
+            <h4 class="mt-5 theme-color mb-5 text-center"><strong>Thanks for your order</strong></h4>
+            <span class="theme-color">Order Summary</span>
+            <div class="mb-3">
+                <hr class="new1">
+            </div>
+            <div class="d-flex justify-content-between">
+                <span class="font-weight-bold">Order Number</span>
+                <span class="text-muted">$1750.00</span>
+            </div>
+
+            <div class="d-flex justify-content-between">
+                <small>Qty Food.Name -
+                    Size Category
+                </small>
+                <small>Amount</small>
+                <small></small>
+            </div>
+            <!-- <div class="d-flex justify-content-between">
+                <small>Tax</small>
+                <small>$200.00</small>
+            </div> -->
+            <div class="d-flex justify-content-between mt-3">
+                <span class="font-weight-bold">Total</span>
+                <span class="font-weight-bold theme-color">totalAmount</span>
+            </div>
+        </div>
+    </div>
+    <food-order-proceed-footer
+    [cancelDisabled]="saving"
+    [saveDisabled]="!orderDetails.form.valid || saving"
+    (onCancelClick)="bsModalRef.hide()">        
+    </food-order-proceed-footer>
+</form>

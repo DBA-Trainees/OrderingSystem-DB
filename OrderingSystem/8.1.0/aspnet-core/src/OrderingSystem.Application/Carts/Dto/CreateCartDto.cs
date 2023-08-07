@@ -1,24 +1,22 @@
-﻿using Abp.Domain.Entities.Auditing;
-using OrderingSystem.Authorization.Users;
+﻿using Abp.AutoMapper;
+using OrderingSystem.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace OrderingSystem.Entities
+namespace OrderingSystem.Carts.Dto
 {
-    public class Cart : FullAuditedEntity<int>
+    [AutoMapTo(typeof(Cart))]
+    public class CreateCartDto
     {
-        public int? FoodId { get; set; }
-        public Food Food { get; set; }
+        public int FoodId { get; set; }
         public int Quantity { get; set; }
         public string? Size { get; set; }
         public DateTime DateTimeAddedInCart { get; set; }
         public double? Amount { get; set; }
         public int? OrderStatusId { get; set; }
-        public OrderStatus OrderStatus { get; set; }
         public long? UserId { get; set; }
-        public User User { get; set; }
     }
 }

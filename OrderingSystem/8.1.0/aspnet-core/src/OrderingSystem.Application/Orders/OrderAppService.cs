@@ -21,31 +21,14 @@ namespace OrderingSystem.Orders
     public class OrderAppService : AsyncCrudAppService<Order, OrderDto, int, PagedOrderResultRequestDto, CreateOrderDto, OrderDto>, IOrderAppService
     {
         private readonly IRepository<Order, int> _repository;
-        private readonly IRepository<Food, int> _foodRepository;
-        private readonly IRepository<User, long> _userRepository;
-        public OrderAppService(IRepository<Order, int> repository, IRepository<Food, int> foodRepository, IRepository<User, long> userRepository) : base(repository)
+        public OrderAppService(IRepository<Order, int> repository) : base(repository)
         {
             _repository = repository;
-            _foodRepository = foodRepository;
-            _userRepository = userRepository;
         }
 
-        public override async Task<OrderDto> CreateAsync(CreateOrderDto input)
+        public override Task<OrderDto> CreateAsync(CreateOrderDto input)
         {
-            var userId = AbpSession.GetUserId();
-            var order = ObjectMapper.Map<Order>(input);
-
-            //order.DateTimeAddedInCart = input.DateTimeAddedInCart.ToLocalTime();
-
-            order.FoodId = input.FoodId;
-            order.UserId = userId;
-
-            order.OrderStatusId = 1;
-
-            order = await _repository.InsertAsync(order);
-
-            return ObjectMapper.Map<OrderDto>(order);
-
+            return base.CreateAsync(input);
         }
 
         public override Task DeleteAsync(EntityDto<int> input)
@@ -56,26 +39,9 @@ namespace OrderingSystem.Orders
         public override async Task<PagedResultDto<OrderDto>> GetAllAsync(PagedOrderResultRequestDto input)
         {
             var order = await _repository.GetAll()
-                .Include(x => x.Food)
-                .Include(x => x.User)
-                .OrderByDescending(x => x.Id)
-                .Select(x => ObjectMapper.Map<OrderDto>(x))
-                .ToListAsync();
-
-            return new PagedResultDto<OrderDto>(order.Count(), order);
-        }
-
-        public async Task<PagedResultDto<OrderDto>> GetAllOrderInCart(PagedOrderResultRequestDto input)
-        {
-            var userId = AbpSession.GetUserId();
-
-            var order = await _repository.GetAll()
-                .Include(x => x.Food)
-                .ThenInclude(x => x.Category)
-                .Include(x => x.User)
+                .Include(x => x.Cart)
                 .Include(x => x.OrderStatus)
-                .Where(x => x.UserId == userId)
-                //.OrderByDescending(x => x.DateTimeAddedInCart)
+                .OrderByDescending(x => x.Id)
                 .Select(x => ObjectMapper.Map<OrderDto>(x))
                 .ToListAsync();
 
@@ -93,73 +59,35 @@ namespace OrderingSystem.Orders
             return base.GetAsync(input);
         }
 
-        public async Task<OrderDto> UpdateAddToCart(OrderDto input)
+        public async Task<OrderDto> GetOrderDetails(EntityDto<int> input)
         {
-            var userId = AbpSession.GetUserId();
-            var order = ObjectMapper.Map<Order>(input);
-            var existingOrder = await _repository
-                .FirstOrDefaultAsync(
-                o => o.FoodId == input.FoodId && o.UserId == userId
-            );
+            var order = await _repository.GetAll()
+                .Include(x => x.Cart)
+                .Select(x => ObjectMapper.Map<OrderDto>(x))
+                .FirstOrDefaultAsync();
 
-            if (existingOrder != null && input.OrderStatusId == 1)
-            {
-                existingOrder.Quantity += input.Quantity;
-                //existingOrder.DateTimeAddedInCart = input.DateTimeAddedInCart.ToLocalTime();
-                existingOrder.Size = input.Size;
-
-                await _repository.UpdateAsync(existingOrder);
-                return ObjectMapper.Map<OrderDto>(existingOrder);
-            }
-            else
-            {
-                order = ObjectMapper.Map<Order>(input);
-                order.FoodId = input.FoodId;
-                order.UserId = userId;
-                order.OrderStatusId = 1;
-                await _repository.InsertAsync(order);
-                return ObjectMapper.Map<OrderDto>(order);
-            }
+            return order;
         }
 
-        public async Task<PagedResultDto<OrderDto>> GetAllOrderPurchaseHistory(PagedOrderResultRequestDto input)
+        public override Task<OrderDto> UpdateAsync(OrderDto input)
+        {
+            return base.UpdateAsync(input);
+        }
+
+        public async Task<PagedResultDto<OrderDto>> GetAllPurchaseOrders(PagedOrderResultRequestDto input)
         {
             var userId = AbpSession.GetUserId();
-
             var order = await _repository.GetAll()
-                .Include(x => x.Food)
-                .ThenInclude(x => x.Category)
-                .Include(x => x.User)
+                .Include(x => x.Cart)                
+                    .ThenInclude(x => x.Food)
+                    .ThenInclude(x => x.Category)                
                 .Include(x => x.OrderStatus)
-                .Where(x => x.UserId == userId /*&& x.OrderStatusId!=1*/)
+                .Where(x => x.Cart.UserId == userId)
                 .OrderByDescending(x => x.Id)
-                .Select(x => ObjectMapper.Map<OrderDto>(x))
+                .Select(x => ObjectMapper.Map<OrderDto>(x))                
                 .ToListAsync();
 
             return new PagedResultDto<OrderDto>(order.Count(), order);
-        }
-
-        public override async Task<OrderDto> UpdateAsync(OrderDto input)
-        {
-            var userId = AbpSession.GetUserId();
-            var order = ObjectMapper.Map<Order>(input);
-
-            order.FoodId = input.FoodId;
-            order.UserId = userId;
-
-            await _repository.UpdateAsync(order);
-            return ObjectMapper.Map<OrderDto>(order);
-        }
-
-        public async Task<List<int>> GetAllOrderIdsByOrderNumber(Guid orderNumber)
-        {
-
-            var userId = AbpSession.GetUserId();
-
-            return await _repository.GetAll()
-                .Where(x => x.OrderNumber == orderNumber && x.UserId == userId)
-                .Select(x => x.Id)
-                .ToListAsync();
         }
     }
 }

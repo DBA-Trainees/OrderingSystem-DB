@@ -3,10 +3,10 @@
     <div class="row">
       <div class="col-md-3" *ngFor="let order of orders">
         <div class="card profile-card-1">
-          <img [src]="'data:image/png;base64,' + order.food.image" alt="profile-sample1" class="background" />
-          <img [src]="'data:image/png;base64,' + order.food.image" alt="profile-image" class="profile" />
+          <img [src]="'data:image/png;base64,' + order.cart?.food?.image" alt="profile-sample1" class="background" />
+          <img [src]="'data:image/png;base64,' + order.cart?.food?.image" alt="profile-image" class="profile" />
           <div class="card-content">
-            <h2>{{order.food.name}}
+            <h2>{{order.cart?.food?.name}}
               <!-- <small><span><strong>{{order.food.orderStatus?.name}}</strong><i class="bg-dark"></i></span></small> -->
               <small>{{order.totalAmount | currency: 'PHP'}}</small>
             </h2>
@@ -15,9 +15,9 @@
               <span class="badge badge-dot mr-4">
                 <Strong>{{order.totalAmount | currency: 'PHP'}}</Strong>
                 <i class="bg-dark"></i>
-                <Strong>{{order.size}}</Strong>
+                <Strong>{{order.cart?.size}}</Strong>
                 <i class="bg-dark"></i>
-                <Strong>{{order.food.category?.name}}</Strong>
+                <Strong>{{order.food?.category?.name}}</Strong>
               </span>
             <p>{{ order.dateTimeOrdered | date: 'MM-dd-yyyy, h:mm a'}}</p>
           </div>
