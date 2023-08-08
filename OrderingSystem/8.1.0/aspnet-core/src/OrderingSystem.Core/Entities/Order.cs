@@ -19,5 +19,6 @@ namespace OrderingSystem.Entities
         public double? TotalAmount { get; set; }
         public int? OrderStatusId { get; set; }
         public OrderStatus OrderStatus { get; set; }
+        public ICollection<Cart> Carts { get; set; }
     }
 }

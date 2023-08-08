@@ -17,7 +17,6 @@ import {
   CartServiceProxy,
   CreateCartDto,
   CreateOrderDto,
-  FoodDto,
   OrderDto,
   OrderServiceProxy,
 } from "@shared/service-proxies/service-proxies";
@@ -51,6 +50,8 @@ export class AddToCartsComponent extends PagedListingComponentBase<CartDto> {
   today = new Date();
   selectedCarts: CartDto[] = [];
   createOrder = new CreateOrderDto();
+  createCarts: CreateCartDto[] = [];
+  id: number = 0;
 
   @Output() onSave = new EventEmitter<any>();
 
@@ -138,26 +139,41 @@ export class AddToCartsComponent extends PagedListingComponentBase<CartDto> {
     );
   }
 
-  proceedOrder(selectedCart: CartDto): void {
-    /* if (this.selectedCarts.length === 0) {
-      this.notify.warn(this.l("Please select at least one cart to proceed."));
-      return;
-    } */
+  proceedOrder(id): void {
+    const groupedCarts: { [key: string]: CartDto[] } = {};
 
-    const createOrder = new CreateOrderDto();
-    createOrder.cartId = this.cart.id;
-    createOrder.dateTimeOrdered = moment(this.today);
-    createOrder.totalAmount = this.overallTotalAmount;
+  for (const cart of this.selectedCarts) {
+    const groupKey = "group"; 
+    if (!groupedCarts[groupKey]) {
+      groupedCarts[groupKey] = [];
+    }
+    groupedCarts[groupKey].push(cart);
+  }
 
-    this._orderService.create(this.createOrder).subscribe((res) => {
+  const createOrders: CreateOrderDto[] = [];
+
+  for (const groupKey in groupedCarts) {
+    if (groupedCarts.hasOwnProperty(groupKey)) {
+      const cartsInGroup = groupedCarts[groupKey];
+
+      const createOrder = new CreateOrderDto();
+      createOrder.cartId = cartsInGroup[0].id;
+      createOrder.dateTimeOrdered = moment(this.today);
+      createOrder.totalAmount = cartsInGroup.reduce((total, cart) => total + this.grandTotalPrice(cart), 0);
+
+      createOrders.push(createOrder);
+    }
+  }
+  this.orderNow(this.cart.id);
+    /* this._orderService.createMultipleCartOrder(createOrders).subscribe((res) => {
       this.orderNow(this.cart.id);
       this.notify.info(this.l("SavedSuccessfully"));
       this.bsModalRef.hide();
       this.onSave.emit(res);
-
-      /* this.router.navigate(["./app/customer/purchase-history"]); */
-    });
+    }); */
   }
+  
+  
 
   selectAll(event): void {
     if (event.target.checked) {
@@ -177,19 +193,16 @@ export class AddToCartsComponent extends PagedListingComponentBase<CartDto> {
   }
 
   selectCart(cart: CartDto, selected: boolean): void {
+    const foundCart = this.carts.find(c => c.id === cart.id);
     if (selected) {
-      if (!this.selectedCarts.some((c) => c.id === cart.id)) {
-        this.selectedCarts.push(cart);
+      if (!this.selectedCarts.some(c => c.id === foundCart.id)) {
+        this.selectedCarts.push(foundCart);
       }
     } else {
-      this.selectedCarts = this.selectedCarts.filter((c) => c.id !== cart.id);
+      this.selectedCarts = this.selectedCarts.filter(c => c.id !== foundCart.id);
     }
     this.recalculateOverallTotalAmount();
   }
-
-  /* private getSelectedCardIds(): number{
-    return this.selectedCarts.map(cart => cart.id);
-  } */
 
   orderNow(id): void{
     this.showOrderDetailsModal(id);

@@ -26,5 +26,6 @@ namespace OrderingSystem.Orders.Dto
         public double? TotalAmount { get; set; }
         public int? OrderStatusId { get; set; }
         public OrderStatusDto OrderStatus { get; set; }
+        public List<CartDto> Carts { get; set; }
     }
 }

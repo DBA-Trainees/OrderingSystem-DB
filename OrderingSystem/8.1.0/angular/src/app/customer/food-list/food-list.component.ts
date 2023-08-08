@@ -44,7 +44,7 @@ export class FoodListComponent extends AppComponentBase implements OnInit {
   availableSizesDict: { [key: number]: string[] } = {};
 
   @Output() onSave = new EventEmitter<any>();
-  @Input() saveLabel = this.l('Add To Cart');
+  @Input() saveLabel = this.l("Add To Cart");
   @Input() saveDisabled: boolean;
 
   constructor(
@@ -70,18 +70,19 @@ export class FoodListComponent extends AppComponentBase implements OnInit {
     }
   }
 
-  getAllFoods(): void{
-    this._foodService.getAllAvailableFoods(
-      this.keyword,
-      this.isActive,
-      this.skipCount,
-      this.maxResultCount)
-      .subscribe((result) =>
-      {
-      this.foods = result.items;
-      this.setDefaultFoodSizes();
-      this.foods.forEach((food) => (this.foodQty = 1));
-    })
+  getAllFoods(): void {
+    this._foodService
+      .getAllAvailableFoods(
+        this.keyword,
+        this.isActive,
+        this.skipCount,
+        this.maxResultCount
+      )
+      .subscribe((result) => {
+        this.foods = result.items;
+        this.setDefaultFoodSizes();
+        this.foods.forEach((food) => (this.foodQty = 1));
+      });
   }
 
   displayFoodDetails(id): void {
@@ -95,15 +96,12 @@ export class FoodListComponent extends AppComponentBase implements OnInit {
     this.cart.dateTimeAddedInCart = moment(this.today);
     this.cart.size = selectedFood.size;
 
-      this._cartService.updateAddToCart(this.cart).subscribe(
-        (res) => {
-          this.notify.info(this.l("SavedSuccessfully"));
-          this.bsModalRef.hide();
-          this.onSave.emit(res);
-  
-          this.router.navigate(["./app/customer/carts"]);
-        },
-      );
+    this._cartService.updateAddToCart(this.cart).subscribe((res) => {
+      this.notify.info(this.l("SavedSuccessfully"));
+      this.onSave.emit(res);
+
+      this.router.navigate(["./app/customer/carts"]);
+    });
   }
 
   grandTotalPrice(food: FoodDto): number {
@@ -125,7 +123,7 @@ export class FoodListComponent extends AppComponentBase implements OnInit {
   private setDefaultFoodSizes(): void {
     this.foods.forEach((food) => {
       if (food.size) {
-        const sizeArray = food.size.split(',').map((size) => size.trim());
+        const sizeArray = food.size.split(",").map((size) => size.trim());
         food.size = sizeArray[0];
         this.availableSizesDict[food.id] = sizeArray;
       }
@@ -142,7 +140,7 @@ export class FoodListComponent extends AppComponentBase implements OnInit {
     if (this.foodQty < this.food.quantity) {
       this.foodQty++;
     }
-  } 
+  }
 
   private showFoodDetailsModal(id?: number): void {
     let foodDetailsModal: BsModalRef;

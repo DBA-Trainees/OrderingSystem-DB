@@ -75,7 +75,7 @@
                                         <input type="text" name="name" id="name" required disabled
                                             [ngModel]="overallTotalAmount | currency:'PHP'" />
                                     </div><br>
-                                    <button href="javascript:;" class="btn bg-blue" (click)="proceedOrder(cart)"
+                                    <button href="javascript:;" class="btn bg-blue" (click)="proceedOrder(order.id)"
                                         [disabled]="selectedCarts.length === 0">
                                         {{ "Proceed Order" | localize }}
                                     </button>

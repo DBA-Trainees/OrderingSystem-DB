@@ -44,7 +44,7 @@ export class ViewOrdersComponent extends PagedListingComponentBase<OrderDto> {
     request.isActive = this.isActive;
 
     this._orderService
-      .getAllPurchaseOrders(
+      .getAllOrdersVendorView(
         request.keyword,
         request.isActive,
         request.skipCount,

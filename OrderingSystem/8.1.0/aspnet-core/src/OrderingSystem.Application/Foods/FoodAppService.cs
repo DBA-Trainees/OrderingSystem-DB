@@ -15,8 +15,14 @@ using System.Threading.Tasks;
 
 namespace OrderingSystem.Foods
 {
-    //[AbpAuthorize]
-    public class FoodAppService : AsyncCrudAppService <Food, FoodDto, int, PagedFoodResultRequestDto, CreateFoodDto, FoodDto>, IFoodAppService
+    [AbpAuthorize]
+    public class FoodAppService : AsyncCrudAppService 
+        <Food, 
+        FoodDto, 
+        int, 
+        PagedFoodResultRequestDto, 
+        CreateFoodDto, 
+        FoodDto>, IFoodAppService
     {
         private readonly IRepository <Food, int> _repository;
 
@@ -24,6 +30,7 @@ namespace OrderingSystem.Foods
         {
             _repository = repository;
         }
+        [AbpAuthorize(PermissionNames.Pages_Vendor_Foods)]
         public override Task<FoodDto> CreateAsync(CreateFoodDto input)
         {
             return base.CreateAsync(input);
@@ -72,15 +79,6 @@ namespace OrderingSystem.Foods
         {
             return base.UpdateAsync(input);
         }
-
-        //public async Task<List<FoodDto>> GetAllFoodSize()
-        //{
-        //    var foodSize = await _repository.GetAll()
-        //        .Where(x => x.Size)
-        //        .Select(x => ObjectMapper.Map<FoodDto>(x));
-
-        //    return foodSize;
-        //}
 
         public async Task<FoodDto> GetAllFoodWithCategory(EntityDto<int> input)
         {

@@ -16,7 +16,7 @@ class="form-horizontal"
                 <hr class="new1">
             </div>
             <div class="d-flex justify-content-between">
-                <span class="font-weight-bold">Order Number</span>
+                <span class="font-weight-bold">{{order.id}}</span>
                 <span class="text-muted">$1750.00</span>
             </div>
 
@@ -37,9 +37,4 @@ class="form-horizontal"
             </div>
         </div>
     </div>
-    <food-order-proceed-footer
-    [cancelDisabled]="saving"
-    [saveDisabled]="!orderDetails.form.valid || saving"
-    (onCancelClick)="bsModalRef.hide()">        
-    </food-order-proceed-footer>
 </form>

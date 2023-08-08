@@ -18,21 +18,19 @@ using System.Threading.Tasks;
 
 namespace OrderingSystem.Orders
 {
-    public class OrderAppService : AsyncCrudAppService<Order, OrderDto, int, PagedOrderResultRequestDto, CreateOrderDto, OrderDto>, IOrderAppService
+    public class OrderAppService : AsyncCrudAppService<
+        Order, 
+        OrderDto, 
+        int, 
+        PagedOrderResultRequestDto, 
+        CreateOrderDto, 
+        OrderDto
+        >, IOrderAppService
     {
         private readonly IRepository<Order, int> _repository;
         public OrderAppService(IRepository<Order, int> repository) : base(repository)
         {
             _repository = repository;
-        }
-
-        public override async Task<OrderDto> CreateAsync(CreateOrderDto input)
-        {
-            var order = ObjectMapper.Map<Order>(input);
-            order.DateTimeOrdered = input.DateTimeOrdered.ToLocalTime();
-            order = await _repository.InsertAsync(order);
-
-            return ObjectMapper.Map<OrderDto>(order);
         }
 
         public override Task DeleteAsync(EntityDto<int> input)
@@ -81,14 +79,77 @@ namespace OrderingSystem.Orders
         public async Task<PagedResultDto<OrderDto>> GetAllPurchaseOrders(PagedOrderResultRequestDto input)
         {
             var userId = AbpSession.GetUserId();
-            var order = await _repository.GetAll()
-                .Include(x => x.Cart)                
-                    .ThenInclude(x => x.Food)
-                    .ThenInclude(x => x.Category)                
-                .Include(x => x.OrderStatus)
+            var order = await _repository
+                .GetAllIncluding(
+                x => x.Cart,
+                x => x.Cart.Food,
+                x => x.Cart.User,
+                x => x.OrderStatus)
                 .Where(x => x.Cart.UserId == userId)
                 .OrderByDescending(x => x.Id)
-                .Select(x => ObjectMapper.Map<OrderDto>(x))                
+                .Select(x => ObjectMapper.Map<OrderDto>(x))
+                .ToListAsync();
+
+            return new PagedResultDto<OrderDto>(order.Count(), order);
+        }
+
+        public async Task<ListResultDto<OrderDto>> CreateMultipleCartOrder(List<CreateOrderDto> inputs)
+        {
+            {
+                var createdOrders = new List<Order>();
+
+                foreach (var input in inputs)
+                {
+                    var order = ObjectMapper.Map<Order>(input);
+                    order.DateTimeOrdered = input.DateTimeOrdered.ToLocalTime();
+
+                    var cartsForOrder = new List<Cart>();
+
+                    foreach (var cartInput in input.Carts)
+                    {
+                        var cart = ObjectMapper.Map<Cart>(cartInput);
+                        cartsForOrder.Add(cart);
+                    }
+
+                    order.Carts = cartsForOrder;
+
+                    var createdOrder = await _repository.InsertAsync(order);
+                    createdOrders.Add(createdOrder);
+                }
+
+                return new ListResultDto<OrderDto>(
+                    ObjectMapper.Map<List<OrderDto>>(createdOrders)
+                );
+            }
+
+        }
+        public async Task<OrderDto> GetOrder(EntityDto<int> input)
+        {
+            //var userId = AbpSession.GetUserId();
+            var order = await _repository
+                .GetAllIncluding(
+                    x => x.Cart,
+                    x => x.Cart.Food,
+                    x => x.Cart.User,
+                    x => x.OrderStatus)
+                .Where(x => x.Id == input.Id /*&& x.Cart.UserId == */)
+                .Select(x => ObjectMapper.Map<OrderDto>(x))
+                .FirstOrDefaultAsync();
+
+            return order;
+        }
+
+        public async Task<PagedResultDto<OrderDto>> GetAllOrdersVendorView(PagedOrderResultRequestDto input)
+        {
+            var order = await _repository
+                .GetAllIncluding(
+                x => x.Cart,
+                x => x.Cart.Food,
+                x => x.Cart.User,
+                x => x.Cart.Food.Category,
+                x => x.OrderStatus)
+                .OrderByDescending(x => x.Id)
+                .Select(x => ObjectMapper.Map<OrderDto>(x))
                 .ToListAsync();
 
             return new PagedResultDto<OrderDto>(order.Count(), order);

@@ -1,4 +1,5 @@
 ﻿using Abp.AutoMapper;
+using OrderingSystem.Carts.Dto;
 using OrderingSystem.Entities;
 using System;
 using System.Collections.Generic;
@@ -16,5 +17,6 @@ namespace OrderingSystem.Orders.Dto
         public DateTime DateTimeOrdered { get; set; }
         public double TotalAmount { get; set; }
         public int? OrderStatusId { get; set; }
+        public List<CreateCartDto> Carts { get; set; } = new List<CreateCartDto>();
     }
 }

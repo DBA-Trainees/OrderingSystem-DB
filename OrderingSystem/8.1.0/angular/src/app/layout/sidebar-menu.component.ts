@@ -44,20 +44,20 @@ export class SidebarMenuComponent extends AppComponentBase implements OnInit {
 
   getMenuItems(): MenuItem[] {
     return [
-      new MenuItem(this.l("Admin"), "", "", "Pages.Admin", [
+      new MenuItem(this.l("Admin"), "", "fa fa-lock", "Pages.Admin", [
         new MenuItem(this.l("Divisions"),"/app/admin/divisions","fas fa-user-friends","Pages.Admin.Divisions"),
         new MenuItem(this.l("Customers"),"/app/admin/customers","fas fa-restroom","Pages.Admin.Customers"),
         new MenuItem(this.l("Roles"),"/app/roles","fas fa-theater-masks","Pages.Roles"),
         new MenuItem(this.l("Users"),"/app/users","fas fa-users","Pages.Users"),
       ]),
-      new MenuItem(this.l("Vendor"), "", "", "Pages.Vendor", [
+      new MenuItem(this.l("Vendor"), "", "fa fa-credit-card", "Pages.Vendor", [
         new MenuItem(this.l("Food Categories"),"/app/vendor/categories","fas fa-hamburger","Pages.Vendor.Categories"),
         new MenuItem(this.l("Food Types"),"/app/vendor/types","fas fa-drumstick-bite","Pages.Vendor.Types"),
         new MenuItem(this.l("Food"),"/app/vendor/foods","fa fa-cutlery","Pages.Vendor.Foods"),
         new MenuItem(this.l("Orders"),"/app/vendor/view-order","fa fa-shopping-cart","Pages.Vendor.ViewOrders"),
         new MenuItem(this.l("Sales Reports"),"/app/vendor/reports","fa fa-pie-chart","Pages.Vendor.SalesReports"),
       ]),  
-      new MenuItem(this.l("Customer"), "", "", "Pages.Customer", [
+      new MenuItem(this.l("Customer"), "", "fa fa-user-plus", "Pages.Customer", [
         new MenuItem(this.l("Feed"),"/app/customer/food-list","fas fa-th-list","Pages.Customer.FoodList"),
         new MenuItem(this.l("Cart"),"/app/customer/carts","fa fa-cart-plus","Pages.Customer.Carts"),
         new MenuItem(this.l("My Purchases"),"/app/customer/purchase-history","fa fa-history","Pages.Customer.PurchaseHistory"),
