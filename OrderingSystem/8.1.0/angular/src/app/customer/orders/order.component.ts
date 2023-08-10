@@ -1,8 +1,6 @@
 import { Component, Injector, OnInit } from "@angular/core";
 import { AppComponentBase } from "@shared/app-component-base";
 import {
-  CartDto,
-  CartServiceProxy,
   OrderDto,
   OrderServiceProxy,
 } from "@shared/service-proxies/service-proxies";
@@ -17,12 +15,10 @@ export class OrdersComponent extends AppComponentBase implements OnInit {
   saving: boolean = false;
   id: number = 0;
   order: OrderDto = new OrderDto();
-  cart = new CartDto();
 
   constructor(
     injector: Injector,
     public bsModalRef: BsModalRef,
-    private _cartService: CartServiceProxy,
     private _orderService: OrderServiceProxy
   ) {
     super(injector);

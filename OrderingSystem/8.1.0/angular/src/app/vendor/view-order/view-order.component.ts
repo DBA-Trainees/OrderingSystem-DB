@@ -63,7 +63,7 @@ export class ViewOrdersComponent extends PagedListingComponentBase<OrderDto> {
 
   protected delete(order: OrderDto): void {
     abp.message.confirm(
-      this.l("OrdernDeleteWarningMessage", order.cart?.food?.name),
+      this.l("OrdernDeleteWarningMessage", order.food?.name),
       undefined,
       (result: boolean) => {
         if (result) {

@@ -9,8 +9,6 @@ import {
 import { Router } from "@angular/router";
 import { AppComponentBase } from "@shared/app-component-base";
 import {
-  CartDto,
-  CartServiceProxy,
   CustomerDto,
   FoodDto,
   FoodServiceProxy,
@@ -31,7 +29,6 @@ export class FoodDetailsComponent extends AppComponentBase implements OnInit {
   foods: FoodDto[] = [];
   food: FoodDto = new FoodDto();
   order: OrderDto = new OrderDto();
-  cart: CartDto = new CartDto();
   customer: CustomerDto = new CustomerDto();
   user: UserDto = new UserDto();
   keyword = "";
@@ -50,7 +47,7 @@ export class FoodDetailsComponent extends AppComponentBase implements OnInit {
     injector: Injector,
     public bsModalRef: BsModalRef,
     private _foodService: FoodServiceProxy,
-    private _cartService: CartServiceProxy,
+    private _orderService: OrderServiceProxy,
     private router: Router
   ) {
     super(injector);
@@ -115,14 +112,14 @@ export class FoodDetailsComponent extends AppComponentBase implements OnInit {
   save(food:FoodDto): void {
     this.saving = true;
 
-    const cartDto = new CartDto();   
-    cartDto.foodId = food.id;
-    cartDto.quantity = this.foodQty;
-    cartDto.amount = this.foodQty * food.price;
-    cartDto.dateTimeAddedInCart = moment(this.today).locale('ph');
-    cartDto.size = this.selectedFoodSize;
+    const orderDto = new OrderDto();   
+    orderDto.foodId = food.id;
+    orderDto.quantity = this.foodQty;
+    orderDto.totalAmount = this.foodQty * food.price;
+    orderDto.dateTimeAddedToCart = moment(this.today).locale('ph');
+    orderDto.size = this.selectedFoodSize;
 
-    this._cartService.updateAddToCart(cartDto).subscribe(
+    this._orderService.updateAddToCart(orderDto).subscribe(
       (res) => {
         this.notify.info(this.l("SavedSuccessfully"));
         this.bsModalRef.hide();

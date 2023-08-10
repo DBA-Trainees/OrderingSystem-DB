@@ -12,13 +12,18 @@ namespace OrderingSystem.Entities
 {
     public class Order : FullAuditedEntity<int>
     {
-        public int? CartId { get; set; }
-        public Cart Cart { get; set; }
+        public int? FoodId { get; set; }
+        public Food Food { get; set; }
         public string? Notes { get; set; }
+        public DateTime? DateTimeAddedToCart { get; set; }
         public DateTime? DateTimeOrdered { get; set; }
-        public double? TotalAmount { get; set; }
+        public double TotalAmount { get; set; }
+        public long? UserId { get; set; }
+        public User User { get; set; }
+        public int Quantity { get; set; }
+        public string? Size { get; set; }
+        public Guid? OrderNumber { get; set; } 
         public int? OrderStatusId { get; set; }
         public OrderStatus OrderStatus { get; set; }
-        public ICollection<Cart> Carts { get; set; }
     }
 }

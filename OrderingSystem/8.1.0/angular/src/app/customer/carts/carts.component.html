@@ -1,4 +1,4 @@
-<div [@routerTransition]>
+<div>
     <section class="content px-2">
         <div class="container-fluid">
             <div class="card">
@@ -19,7 +19,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr *ngFor="let cart of carts | paginate
+                                <tr *ngFor="let order of orders | paginate
                                     : {
                                         id: 'server',
                                         itemsPerPage: pageSize,
@@ -28,22 +28,22 @@
                                         } ">
                                     <td>
                                         <div class="col-2">
-                                            <input type="checkbox" [checked]="selectedCarts.includes(cart)"
-                                                (change)="selectCart(cart, $event.target.checked)" [id]="cart.id">
+                                            <input type="checkbox" [checked]="selectedOrder.includes(order)"
+                                                (change)="selectCart(order, $event.target.checked)" [id]="order.id">
                                         </div>
                                     </td>
-                                    <td><img [src]="'data:image/png;base64,' + cart.food.image" alt="profile-sample1"
+                                    <td><img [src]="'data:image/png;base64,' + order.food.image" alt="profile-sample1"
                                             class="background" /></td>
-                                    <td>{{ cart.food.name }}</td>
-                                    <td>{{ cart.food.price | currency: 'PHP' }}</td>
+                                    <td>{{ order.food.name }}</td>
+                                    <td>{{ order.food.price | currency: 'PHP' }}</td>
                                     <td>
-                                        <input type="number" class="form-control" [(ngModel)]="cart.quantity"
-                                            (change)="updateOrder(cart)" />
+                                        <input type="number" class="form-control" [(ngModel)]="order.quantity"
+                                            (change)="updateOrder(order)" />
                                     </td>
-                                    <td *ngIf="cart.food.size != 0 else NoSizeAvailable">
-                                        <select class="form-control" [(ngModel)]="cart.size"
-                                            (change)="updateOrder(cart)">
-                                            <option *ngFor="let size of availableSizesDict[cart.food?.id]"
+                                    <td *ngIf="order.food.size != 0 else NoSizeAvailable">
+                                        <select class="form-control" [(ngModel)]="order.size"
+                                            (change)="updateOrder(order)">
+                                            <option *ngFor="let size of availableSizesDict[order.food?.id]"
                                                 [value]="size">
                                                 {{ size }}
                                             </option>
@@ -52,13 +52,13 @@
                                     <ng-template #NoSizeAvailable>
                                         <td><strong>-</strong></td>
                                     </ng-template>
-                                    <td>{{ cart.food?.category?.name }}</td>
-                                    <td class="amount"><strong>{{ grandTotalPrice(cart) | currency:'PHP'}}</strong></td>
+                                    <td>{{ order.food?.category?.name }}</td>
+                                    <td class="amount"><strong>{{ grandTotalPrice(order) | currency:'PHP'}}</strong></td>
                                     <td>
-                                        <button type="button" class="btn btn-md bg-danger" (click)="delete(cart)">
+                                        <button type="button" class="btn btn-md bg-danger" (click)="delete(order)">
                                             <i class="fas fa-trash"></i>
                                         </button>
-                                        <button type="button" class="btn btn-md bg-success" (click)="orderNow(cart.id)">
+                                        <button type="button" class="btn btn-md bg-success" (click)="orderNow(order.id)">
                                             <i class="fa fa-eye"></i>
                                         </button>
                                     </td>
@@ -76,7 +76,7 @@
                                             [ngModel]="overallTotalAmount | currency:'PHP'" />
                                     </div><br>
                                     <button href="javascript:;" class="btn bg-blue" (click)="proceedOrder(order.id)"
-                                        [disabled]="selectedCarts.length === 0">
+                                        [disabled]="selectedOrder.length === 0">
                                         {{ "Proceed Order" | localize }}
                                     </button>
                                 </div>

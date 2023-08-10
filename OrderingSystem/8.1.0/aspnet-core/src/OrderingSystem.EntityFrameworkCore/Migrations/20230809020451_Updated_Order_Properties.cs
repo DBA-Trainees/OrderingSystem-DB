@@ -6,11 +6,21 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace OrderingSystem.Migrations
 {
     /// <inheritdoc />
-    public partial class Added_DateTimeAddedInCart_In_OrderTable : Migration
+    public partial class Updated_Order_Properties : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.AlterColumn<double>(
+                name: "TotalAmount",
+                table: "Orders",
+                type: "float",
+                nullable: false,
+                defaultValue: 0.0,
+                oldClrType: typeof(double),
+                oldType: "float",
+                oldNullable: true);
+
             migrationBuilder.AlterColumn<DateTime>(
                 name: "DateTimeOrdered",
                 table: "Orders",
@@ -20,7 +30,7 @@ namespace OrderingSystem.Migrations
                 oldType: "datetime2");
 
             migrationBuilder.AddColumn<DateTime>(
-                name: "DateTimeAddedInCart",
+                name: "DateTimeAddedToCart",
                 table: "Orders",
                 type: "datetime2",
                 nullable: true);
@@ -30,8 +40,16 @@ namespace OrderingSystem.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropColumn(
-                name: "DateTimeAddedInCart",
+                name: "DateTimeAddedToCart",
                 table: "Orders");
+
+            migrationBuilder.AlterColumn<double>(
+                name: "TotalAmount",
+                table: "Orders",
+                type: "float",
+                nullable: true,
+                oldClrType: typeof(double),
+                oldType: "float");
 
             migrationBuilder.AlterColumn<DateTime>(
                 name: "DateTimeOrdered",

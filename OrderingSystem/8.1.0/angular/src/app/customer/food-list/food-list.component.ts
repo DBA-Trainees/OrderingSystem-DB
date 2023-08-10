@@ -15,8 +15,8 @@ import {
   FoodDto,
   FoodServiceProxy,
   UserDto,
-  CartDto,
-  CartServiceProxy,
+  OrderServiceProxy,
+  OrderDto,
 } from "@shared/service-proxies/service-proxies";
 import * as moment from "moment";
 import { BsModalRef, BsModalService } from "ngx-bootstrap/modal";
@@ -30,7 +30,7 @@ import { BsModalRef, BsModalService } from "ngx-bootstrap/modal";
 export class FoodListComponent extends AppComponentBase implements OnInit {
   foods: FoodDto[] = [];
   food = new FoodDto();
-  cart = new CartDto();
+  order = new OrderDto();
   keyword = "";
   isActive: boolean | null;
   skipCount: number;
@@ -50,7 +50,7 @@ export class FoodListComponent extends AppComponentBase implements OnInit {
   constructor(
     injector: Injector,
     private _foodService: FoodServiceProxy,
-    private _cartService: CartServiceProxy,
+    private _orderService: OrderServiceProxy,
     private _modalService: BsModalService,
     public bsModalRef: BsModalRef,
     private router: Router
@@ -62,9 +62,9 @@ export class FoodListComponent extends AppComponentBase implements OnInit {
     this.getAllFoods();
 
     if (this.id) {
-      this._cartService.get(this.id).subscribe((res) => {
-        this.cart.foodId = res.foodId;
-        this.cart.food.category = res.food.category;
+      this._orderService.get(this.id).subscribe((res) => {
+        this.order.foodId = res.foodId;
+        this.order.food.category = res.food.category;
         /* this.selectedFoodSize = res.size.split(','); */
       });
     }
@@ -90,13 +90,17 @@ export class FoodListComponent extends AppComponentBase implements OnInit {
   }
 
   addTocart(selectedFood: FoodDto): void {
-    this.cart.foodId = selectedFood.id;
-    this.cart.quantity = this.foodQty;
-    this.cart.amount = selectedFood.price * this.foodQty;
-    this.cart.dateTimeAddedInCart = moment(this.today);
-    this.cart.size = selectedFood.size;
+    this.order.foodId = selectedFood.id;
+    this.order.quantity = this.foodQty;
+    this.order.totalAmount = selectedFood.price * this.foodQty;
+    this.order.dateTimeAddedToCart = moment(this.today);
+    this.order.size = selectedFood.size;
 
-    this._cartService.updateAddToCart(this.cart).subscribe((res) => {
+    if(this.order.dateTimeOrdered){
+      this.order.dateTimeOrdered = moment(this.order.dateTimeOrdered)
+    }
+
+    this._orderService.updateAddToCart(this.order).subscribe((res) => {
       this.notify.info(this.l("SavedSuccessfully"));
       this.onSave.emit(res);
 

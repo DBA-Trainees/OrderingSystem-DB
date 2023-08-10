@@ -12,12 +12,10 @@ import {
   PagedRequestDto,
 } from "@shared/paged-listing-component-base";
 import {
-  CartDto,
-  CartDtoPagedResultDto,
-  CartServiceProxy,
-  CreateCartDto,
   CreateOrderDto,
+  FoodDto,
   OrderDto,
+  OrderDtoPagedResultDto,
   OrderServiceProxy,
 } from "@shared/service-proxies/service-proxies";
 import * as moment from "moment";
@@ -25,7 +23,7 @@ import { BsModalRef, BsModalService } from "ngx-bootstrap/modal";
 import { finalize } from "rxjs/operators";
 import { OrdersComponent } from "../orders/order.component";
 
-class PagedCartsRequestDto extends PagedRequestDto {
+class PagedOrdersRequestDto extends PagedRequestDto {
   keyword: string;
   isActive: boolean | null;
 }
@@ -36,28 +34,26 @@ class PagedCartsRequestDto extends PagedRequestDto {
   styleUrls: ["./carts.component.css"],
   animations: [appModuleAnimation()],
 })
-export class AddToCartsComponent extends PagedListingComponentBase<CartDto> {
-  carts: CartDto[] = [];
+export class AddToCartsComponent extends PagedListingComponentBase<OrderDto> {
+  
+  orders: OrderDto[] = [];
   keyword = "";
   isActive: boolean | null;
   foodQty: number = 1;
-  cart: CartDto = new CartDto();
   order: OrderDto = new OrderDto();
+  food: FoodDto = new FoodDto();
   selectedFoodOrder: number;
   availableSizesDict: { [key: number]: string[] } = {};
   selected: boolean;
   overallTotalAmount: number = 0;
   today = new Date();
-  selectedCarts: CartDto[] = [];
-  createOrder = new CreateOrderDto();
-  createCarts: CreateCartDto[] = [];
+  selectedOrder: OrderDto[] = [];
   id: number = 0;
 
   @Output() onSave = new EventEmitter<any>();
 
   constructor(
     injector: Injector,
-    private _cartService: CartServiceProxy,
     private _orderService: OrderServiceProxy,
     private _modalService: BsModalService,
     public bsModalRef: BsModalRef,
@@ -67,14 +63,14 @@ export class AddToCartsComponent extends PagedListingComponentBase<CartDto> {
   }
 
   protected list(
-    request: PagedCartsRequestDto,
+    request: PagedOrdersRequestDto,
     pageNumber: number,
     finishedCallback: Function
   ): void {
     request.keyword = this.keyword;
     request.isActive = this.isActive;
 
-    this._cartService
+    this._orderService
       .getAllOrderInCart(
         request.keyword,
         request.isActive,
@@ -86,51 +82,51 @@ export class AddToCartsComponent extends PagedListingComponentBase<CartDto> {
           finishedCallback();
         })
       )
-      .subscribe((result: CartDtoPagedResultDto) => {
-        this.carts = result.items;
+      .subscribe((result: OrderDtoPagedResultDto) => {
+        this.orders = result.items;
         this.showPaging(result, pageNumber);
         this.setDefaultAvailableSizes();
       });
   }
 
-  updateOrder(cart: CartDto): void {
-    this._cartService.update(cart).subscribe(() => {
+  updateOrder(order: OrderDto): void {
+    this._orderService.update(order).subscribe(() => {
       this.notify.info(this.l("OrderUpdatedSuccessfully"));
     });
   }
 
   private setDefaultAvailableSizes(): void {
-    this.carts.forEach((cart) => {
-      if (cart.food && cart.food.size) {
-        const sizeArray = cart.food.size.split(",").map((size) => size.trim());
-        this.availableSizesDict[cart.food.id] = sizeArray;
+    this.orders.forEach((order) => {
+      if (order.food && order.food.size) {
+        const sizeArray = order.food.size.split(",").map((size) => size.trim());
+        this.availableSizesDict[order.food.id] = sizeArray;
       }
     });
   }
 
-  grandTotalPrice(cart: CartDto): number {
-    let updatedPrice = cart.food.price;
+  grandTotalPrice(order: OrderDto): number {
+    let updatedPrice = order.food?.price;
 
-    if (cart.size == "Medium") {
+    if (order.size == "Medium") {
       updatedPrice += 15;
-    } else if (cart.size == "Large") {
+    } else if (order.size == "Large") {
       updatedPrice += 25;
     }
 
-    if (cart.food.category && cart.food.category.name == "Group") {
-      updatedPrice *= 2;
+    if (order.food?.category && order.food?.category?.name == "Group") {
+      updatedPrice *= .5;
     }
 
-    return updatedPrice * cart.quantity;
+    return updatedPrice * order.quantity;
   }
 
-  protected delete(cart: CartDto): void {
+  protected delete(order: OrderDto): void {
     abp.message.confirm(
-      this.l("OrderDeleteWarningMessage", cart.food.name),
+      this.l("OrderDeleteWarningMessage", order.food.name),
       undefined,
       (result: boolean) => {
         if (result) {
-          this._cartService.delete(cart.id).subscribe(() => {
+          this._orderService.delete(order.id).subscribe(() => {
             abp.notify.success(this.l("SuccessfullyDeleted"));
             this.refresh();
           });
@@ -138,68 +134,65 @@ export class AddToCartsComponent extends PagedListingComponentBase<CartDto> {
       }
     );
   }
+ 
+  proceedOrder(orderId: number): void {
 
-  proceedOrder(id): void {
-    const groupedCarts: { [key: string]: CartDto[] } = {};
+    const totalAmount = this.selectedOrder.reduce((total, order) => this.grandTotalPrice(order),0);
+    
+    const orderDto = new OrderDto();
+    
+    orderDto.orders = this.selectedOrder.map( order =>{
+      const postOrder = new OrderDto();
+      postOrder.foodId = order.food.id;
+      postOrder.id = order.id;
+      postOrder.userId = order.userId;
+      postOrder.orderStatusId = order.orderStatusId;
+      postOrder.size = order.size;
+      postOrder.quantity = order.quantity;
+      postOrder.totalAmount = totalAmount;
+      postOrder.dateTimeOrdered = moment(this.today);
+      return postOrder;
+    });
 
-  for (const cart of this.selectedCarts) {
-    const groupKey = "group"; 
-    if (!groupedCarts[groupKey]) {
-      groupedCarts[groupKey] = [];
-    }
-    groupedCarts[groupKey].push(cart);
+    /* this.orderNow(orderId); */
+
+    this._orderService.updateBeforeProceedOrder(orderDto).subscribe(res => {
+      orderId = res.id;
+      /* if (res.id) {*/
+        this.orderNow(res.id); 
+        this.notify.info(this.l("SavedSuccessfully"));
+        this.bsModalRef.hide();
+        this.onSave.emit(res);
+      /* } */
+    });
   }
-
-  const createOrders: CreateOrderDto[] = [];
-
-  for (const groupKey in groupedCarts) {
-    if (groupedCarts.hasOwnProperty(groupKey)) {
-      const cartsInGroup = groupedCarts[groupKey];
-
-      const createOrder = new CreateOrderDto();
-      createOrder.cartId = cartsInGroup[0].id;
-      createOrder.dateTimeOrdered = moment(this.today);
-      createOrder.totalAmount = cartsInGroup.reduce((total, cart) => total + this.grandTotalPrice(cart), 0);
-
-      createOrders.push(createOrder);
-    }
-  }
-  this.orderNow(this.cart.id);
-    /* this._orderService.createMultipleCartOrder(createOrders).subscribe((res) => {
-      this.orderNow(this.cart.id);
-      this.notify.info(this.l("SavedSuccessfully"));
-      this.bsModalRef.hide();
-      this.onSave.emit(res);
-    }); */
-  }
-  
   
 
   selectAll(event): void {
     if (event.target.checked) {
-      this.selectedCarts = this.carts.slice();
+      this.selectedOrder = this.orders.slice();
     } else {
-      this.selectedCarts = [];
+      this.selectedOrder = [];
     }
     this.recalculateOverallTotalAmount();
   }
 
   recalculateOverallTotalAmount(): void {
     this.order.totalAmount = this.overallTotalAmount;
-    this.overallTotalAmount = this.selectedCarts.reduce(
-      (total, cart) => total + this.grandTotalPrice(cart),
+    this.overallTotalAmount = this.selectedOrder.reduce(
+      (total, order) => total + this.grandTotalPrice(order),
       0
     );
   }
 
-  selectCart(cart: CartDto, selected: boolean): void {
-    const foundCart = this.carts.find(c => c.id === cart.id);
+  selectCart(order: OrderDto, selected: boolean): void {
+    const foundOrder = this.orders.find(c => c.id === order.id);
     if (selected) {
-      if (!this.selectedCarts.some(c => c.id === foundCart.id)) {
-        this.selectedCarts.push(foundCart);
+      if (!this.selectedOrder.some(c => c.id === foundOrder.id)) {
+        this.selectedOrder.push(foundOrder);
       }
     } else {
-      this.selectedCarts = this.selectedCarts.filter(c => c.id !== foundCart.id);
+      this.selectedOrder = this.selectedOrder.filter(c => c.id !== foundOrder.id);
     }
     this.recalculateOverallTotalAmount();
   }

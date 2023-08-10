@@ -1,6 +1,6 @@
 ﻿using Abp.Application.Services.Dto;
 using Abp.AutoMapper;
-using OrderingSystem.Carts.Dto;
+using OrderingSystem.Authorization.Users;
 using OrderingSystem.Customers.Dto;
 using OrderingSystem.Entities;
 using OrderingSystem.Foods.Dto;
@@ -19,13 +19,20 @@ namespace OrderingSystem.Orders.Dto
     [AutoMapFrom(typeof(Order))]
     public class OrderDto : EntityDto<int>
     {
-        public int? CartId { get; set; }
-        public CartDto Cart { get; set; }
+        public int Id { get; set; }
+        public int FoodId { get; set; }
+        public int Quantity { get; set; }
+        public string? Size { get; set; }
+        public FoodDto Food { get; set; }
         public string? Notes { get; set; }
-        public DateTime DateTimeOrdered { get; set; }
-        public double? TotalAmount { get; set; }
+        public DateTime? DateTimeOrdered { get; set; }
+        public DateTime DateTimeAddedToCart { get; set; }
+        public double TotalAmount { get; set; }
         public int? OrderStatusId { get; set; }
         public OrderStatusDto OrderStatus { get; set; }
-        public List<CartDto> Carts { get; set; }
+        public Guid? OrderNumber { get; set; }
+        public long? UserId { get; set; }
+        public UserDto User { get; set; }
+        public List<OrderDto> Orders { get; set; }
     }
 }
