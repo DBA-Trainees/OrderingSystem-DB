@@ -15,6 +15,8 @@ export class OrdersComponent extends AppComponentBase implements OnInit {
   saving: boolean = false;
   id: number = 0;
   order: OrderDto = new OrderDto();
+  orders: OrderDto[] = [];
+  orderIds: any[]=[];
 
   constructor(
     injector: Injector,
@@ -32,43 +34,15 @@ export class OrdersComponent extends AppComponentBase implements OnInit {
     }
   }
 
-  checkOutOrder(): void {
-    /* const groupedCarts: { [key: string]: CartDto[] } = {};
+  displayAllPurchaseOrder(): void{
+    this._orderService.getAllOrderWithOrderNumbers(this.orderIds).subscribe(orders => {      
+      this.orders = orders;
+    });
+  }
 
-    for (const cart of this.selectedCarts) {
-      const groupKey = "group";
-      if (!groupedCarts[groupKey]) {
-        groupedCarts[groupKey] = [];
-      }
-      groupedCarts[groupKey].push(cart);
-    }
+  getAllOrdersByOrderNumber(orderNumber: string):OrderDto[]{
+    return this.orders.filter (order => order.orderNumber ==  orderNumber && order.dateTimeOrdered)
+  }
 
-    const createOrders: CreateOrderDto[] = [];
-
-    for (const groupKey in groupedCarts) {
-      if (groupedCarts.hasOwnProperty(groupKey)) {
-        const cartsInGroup = groupedCarts[groupKey];
-
-        const createOrder = new CreateOrderDto();
-        createOrder.cartId = cartsInGroup[0].id;
-        createOrder.dateTimeOrdered = moment(this.today);
-        createOrder.totalAmount = cartsInGroup.reduce(
-          (total, cart) => total + this.grandTotalPrice(cart),
-          0
-        );
-
-        createOrders.push(createOrder);
-      }
-    }
-
-    this._orderService
-      .createMultipleCartOrder(createOrders)
-      .subscribe((res) => {
-        this.orderNow(this.cart.id);
-        this.notify.info(this.l("SavedSuccessfully"));
-        this.bsModalRef.hide();
-        this.onSave.emit(res);
-      }); */
-    }
   
 }

@@ -113,10 +113,10 @@ export class AddToCartsComponent extends PagedListingComponentBase<OrderDto> {
       updatedPrice += 25;
     }
 
-    if (order.food?.category && order.food?.category?.name == "Group") {
-      updatedPrice *= .5;
+    /* if (order.food?.category && order.food?.category?.name == "Group") {
+      updatedPrice *= 1.5;
     }
-
+ */
     return updatedPrice * order.quantity;
   }
 
@@ -135,7 +135,7 @@ export class AddToCartsComponent extends PagedListingComponentBase<OrderDto> {
     );
   }
  
-  proceedOrder(orderId: number): void {
+  proceedOrder(orderNumber: string): void {
 
     const totalAmount = this.selectedOrder.reduce((total, order) => this.grandTotalPrice(order),0);
     
@@ -157,7 +157,7 @@ export class AddToCartsComponent extends PagedListingComponentBase<OrderDto> {
     /* this.orderNow(orderId); */
 
     this._orderService.updateBeforeProceedOrder(orderDto).subscribe(res => {
-      orderId = res.id;
+      orderNumber = res.orderNumber;
       /* if (res.id) {*/
         this.orderNow(res.id); 
         this.notify.info(this.l("SavedSuccessfully"));

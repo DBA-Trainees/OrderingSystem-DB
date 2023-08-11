@@ -1,13 +1,9 @@
-<form
-class="form-horizontal"
-  autocomplete="off"
-  #orderDetails="ngForm"
-  (ngSubmit)="checkOutOrder()" 
->    <abp-modal-header
-    [title]="'Order Details' | localize"
-    (onCloseClick)="bsModalRef.hide()"
-  ></abp-modal-header>
-    <div class="modal-body ">
+<abp-modal-header 
+[title]="'Order Details' | localize" 
+(onCloseClick)="bsModalRef.hide()">
+</abp-modal-header>
+<div class="modal-body">
+    <div *ngFor="let order of getAllOrdersByOrderNumber(order.orderNumber)">
         <div class="px-4">
             <h5 class="text-uppercase text-center">Hi, {{order.user?.name}}</h5>
             <h4 class="mt-5 theme-color mb-5 text-center"><strong>Thanks for your order</strong></h4>
@@ -16,25 +12,25 @@ class="form-horizontal"
                 <hr class="new1">
             </div>
             <div class="d-flex justify-content-between">
-                <span class="font-weight-bold">{{order.id}}</span>
-                <span class="text-muted">$1750.00</span>
+                <span class="font-weight-bold">{{order.orderNumber}}</span>
+                <span class="text-muted"></span>
             </div>
 
             <div class="d-flex justify-content-between">
-                <small>Qty Food.Name -
-                    Size Category
+                <small>{{order.quantity}} {{order.food?.name}} -
+                    {{order.size}} {{order.food?.category?.name}}
                 </small>
-                <small>Amount</small>
+                <small>{{order.totalAmount | currency: 'PHP'}}</small>
                 <small></small>
             </div>
             <!-- <div class="d-flex justify-content-between">
-                <small>Tax</small>
-                <small>$200.00</small>
-            </div> -->
+                    <small>Tax</small>
+                    <small>$200.00</small>
+                </div> -->
             <div class="d-flex justify-content-between mt-3">
                 <span class="font-weight-bold">Total</span>
-                <span class="font-weight-bold theme-color">totalAmount</span>
+                <span class="font-weight-bold theme-color">{{order.totalAmount | currency: 'PHP'}}</span>
             </div>
         </div>
     </div>
-</form>
+</div>

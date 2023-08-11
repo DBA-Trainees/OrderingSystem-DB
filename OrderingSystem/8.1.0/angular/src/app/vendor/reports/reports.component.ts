@@ -48,8 +48,8 @@ export class ReportsComponent extends AppComponentBase implements OnInit {
     const dateTo = moment().endOf(this.selectedFiltered).local().toDate();
 
     this.getSalesForPeriod(dateFrom, dateTo).subscribe((salesData) =>{
-      /* this.salesData = salesData;
-      this.totalSales = this.calculateTotalSales(this.totalSales); */
+      this.totalSales = salesData;
+      /* this.totalSales = this.calculateTotalSales(this.salesData); */
     })
    /*  this.get
 
