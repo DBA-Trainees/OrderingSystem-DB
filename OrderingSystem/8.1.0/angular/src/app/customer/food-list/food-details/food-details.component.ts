@@ -116,8 +116,9 @@ export class FoodDetailsComponent extends AppComponentBase implements OnInit {
     orderDto.foodId = food.id;
     orderDto.quantity = this.foodQty;
     orderDto.totalAmount = this.foodQty * food.price;
-    orderDto.dateTimeAddedToCart = moment(this.today).locale('ph');
+    orderDto.dateTimeAddedToCart = moment(this.today);
     orderDto.size = this.selectedFoodSize;
+    orderDto.orderStatusId = 1;
 
     this._orderService.updateAddToCart(orderDto).subscribe(
       (res) => {

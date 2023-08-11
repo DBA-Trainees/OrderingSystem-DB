@@ -1,4 +1,4 @@
-@import url("https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css");
+/* @import url("https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css");
 @import url('https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700');
 @import url('https://fonts.googleapis.com/css?family=Libre+Baskerville:400,700');
 body{
@@ -11,23 +11,22 @@ body{
 section{
     float:left;
     width:100%;
-    background: #fff;  /* fallback for old browsers */
+    background: #fff;
     padding:30px 0;
 }
 h1{float:left; width:100%; color:#232323; margin-bottom:30px; font-size: 14px;}
 h1 span{font-family: 'Libre Baskerville', serif; display:block; font-size:45px; text-transform:none; margin-bottom:20px; margin-top:30px; font-weight:700}
 h1 a{color:#131313; font-weight:bold;}
 
-/*Profile Card 1*/
 .profile-card-1 {
   font-family: 'Open Sans', Arial, sans-serif;
   position: relative;
   float: left;
   overflow: hidden;
   width: 100%;
-  color: #ffffff;
+  color: #000000;
   text-align: center;
-  height:368px;
+  height: 100px;
   border:none;
 }
 .profile-card-1 .background {
@@ -118,4 +117,120 @@ h1 a{color:#131313; font-weight:bold;}
 
 p{
     font-size: 15px;
+} */
+
+body {
+  background-color: #f9f9fa
+}
+
+.flex {
+  -webkit-box-flex: 1;
+  -ms-flex: 1 1 auto;
+  flex: 1 1 auto
+}
+
+@media (max-width:991.98px) {
+  .padding {
+      padding: 1.5rem
+  }
+}
+
+@media (max-width:767.98px) {
+  .padding {
+      padding: 1rem
+  }
+}
+
+.padding {
+  padding: 5rem
+}
+
+.card {
+  box-shadow: none;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  -ms-box-shadow: none
+}
+
+.pl-3,
+.px-3 {
+  padding-left: 1rem !important
+}
+
+.card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  word-wrap: break-word;
+  background-color: #fff;
+  background-clip: border-box;
+  border: 1px solid #d2d2dc;
+  border-radius: 0
+}
+
+.card .card-title {
+ color: #000000;
+ margin-bottom: 0.625rem;
+ text-transform: capitalize;
+ font-size: 18px;
+ font-weight: 500;
+}
+
+.card .card-description {
+margin-bottom: 0.625rem;
+ font-weight: 400;
+ color: #005db4;
+ margin-top:10;
+ font-weight: 500;
+}
+
+p {
+ font-size: 0.875rem;
+ margin-bottom: .5rem;
+ line-height: 1.5rem;
+ margin-top:10;
+}
+
+.table-responsive {
+ display: block;
+ width: 100%;
+ overflow-x: auto;
+ -webkit-overflow-scrolling: touch;
+ -ms-overflow-style: -ms-autohiding-scrollbar;
+}
+
+.table, .jsgrid .jsgrid-table {
+ width: 100%;
+ max-width: 100%;
+ margin-bottom: 1rem;
+ background-color: transparent;
+}
+
+.table thead th, .jsgrid .jsgrid-table thead th {
+ border-top: 0;
+ border-bottom-width: 1px;
+ font-weight: 500;
+ font-size: .875rem;
+ text-transform: uppercase;
+}
+
+.table td, .jsgrid .jsgrid-table td {
+ font-size: 0.875rem;
+}
+
+.badge {
+ border-radius: 0;
+ font-size: 12px;
+ line-height: 1;
+ padding: .375rem .5625rem;
+ font-weight: normal;
+}
+
+img{
+  width: 50px;
+  height: 50;
+}
+th{
+  font-weight: normal;
 }

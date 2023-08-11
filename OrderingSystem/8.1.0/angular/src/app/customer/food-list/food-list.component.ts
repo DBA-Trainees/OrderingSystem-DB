@@ -95,11 +95,7 @@ export class FoodListComponent extends AppComponentBase implements OnInit {
     this.order.totalAmount = selectedFood.price * this.foodQty;
     this.order.dateTimeAddedToCart = moment(this.today);
     this.order.size = selectedFood.size;
-
-    if(this.order.dateTimeOrdered){
-      this.order.dateTimeOrdered = moment(this.order.dateTimeOrdered)
-    }
-
+    this.order.orderStatusId = 1;
     this._orderService.updateAddToCart(this.order).subscribe((res) => {
       this.notify.info(this.l("SavedSuccessfully"));
       this.onSave.emit(res);

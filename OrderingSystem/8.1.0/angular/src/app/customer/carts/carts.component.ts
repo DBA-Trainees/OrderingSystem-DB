@@ -163,6 +163,7 @@ export class AddToCartsComponent extends PagedListingComponentBase<OrderDto> {
         this.notify.info(this.l("SavedSuccessfully"));
         this.bsModalRef.hide();
         this.onSave.emit(res);
+        this.refresh();
       /* } */
     });
   }

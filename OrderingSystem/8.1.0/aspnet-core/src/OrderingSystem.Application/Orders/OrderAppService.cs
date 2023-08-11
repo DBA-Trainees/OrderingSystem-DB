@@ -14,6 +14,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace OrderingSystem.Orders
@@ -44,6 +45,7 @@ namespace OrderingSystem.Orders
         {
             var order = await _repository.GetAll()
                 .Include(x => x.Food)
+                .ThenInclude(x => x.Category)
                 .Include(x => x.User)
                 .Include(x => x.OrderStatus)
                 .OrderByDescending(x => x.Id)
@@ -68,6 +70,7 @@ namespace OrderingSystem.Orders
         {
             var order = await _repository.GetAll()
                 .Include(x => x.Food)
+                .ThenInclude(x => x.Category)
                 .Include(x => x.User)
                 .Select(x => ObjectMapper.Map<OrderDto>(x))
                 .FirstOrDefaultAsync();
@@ -93,9 +96,10 @@ namespace OrderingSystem.Orders
             var order = await _repository
                 .GetAllIncluding(
                 x => x.Food,
+                x => x.Food.Category,
                 x => x.User,
                 x => x.OrderStatus)
-                .Where(x => x.UserId == userId)
+                .Where(x => x.UserId == userId && x.OrderStatusId ==2 && x.DateTimeOrdered != null)
                 .OrderByDescending(x => x.Id)
                 .Select(x => ObjectMapper.Map<OrderDto>(x))
                 .ToListAsync();
@@ -103,36 +107,13 @@ namespace OrderingSystem.Orders
             return new PagedResultDto<OrderDto>(order.Count(), order);
         }
 
-        //public async Task<ListResultDto<OrderDto>> CreateMultipleCartOrder(List<CreateOrderDto> inputs)
-        //{
-        //    var order = new Order
-        //    {
-        //        DateTimeOrdered = input.DateTimeOrdered.ToLocalTime(),
-        //        TotalAmount = input.TotalAmount
-        //    };
-
-        //    var createdOrder = await _repository.InsertAsync(order);
-
-        //    foreach (var cartInput in input.Carts)
-        //    {
-        //        var cart = new Cart
-        //        {
-        //            FoodId = cartInput.FoodId,
-        //            Size = cartInput.Size,
-        //            Quantity = cartInput.Quantity
-        //        };
-
-        //        await _cartRepository.InsertAsync(cart);
-        //    }
-
-        //    return ObjectMapper.Map<OrderDto>(createdOrder);
-        //}
         public async Task<OrderDto> GetOrder(EntityDto<int> input)
         {
             //var userId = AbpSession.GetUserId();
             var order = await _repository
                 .GetAllIncluding(
                     x => x.Food,
+                    x => x.Food.Category,
                     x => x.User,
                     x => x.OrderStatus)
                 .Where(x => x.Id == input.Id /*&& x.Cart.UserId == */)
@@ -147,6 +128,7 @@ namespace OrderingSystem.Orders
             var order = await _repository
                 .GetAllIncluding(
                         x => x.Food,
+                        x => x.Food.Category,
                         x => x.User,
                         x => x.OrderStatus)
                 .OrderByDescending(x => x.Id)
@@ -178,14 +160,16 @@ namespace OrderingSystem.Orders
             var userId = AbpSession.GetUserId();
             var order = ObjectMapper.Map<Order>(input);
             var existingFoodOrder = await _repository
-                .FirstOrDefaultAsync(
-                o => o.FoodId == input.FoodId && o.UserId == userId
-            );
+                .FirstOrDefaultAsync
+                (
+                o => o.OrderStatusId == 1 &&
+                o.FoodId == input.FoodId && 
+                o.UserId == userId); 
 
             if (existingFoodOrder != null)
             {
                 existingFoodOrder.Quantity += input.Quantity;
-                existingFoodOrder.DateTimeAddedToCart = input.DateTimeAddedToCart.ToLocalTime();
+                existingFoodOrder.DateTimeAddedToCart = input.DateTimeAddedToCart?.ToLocalTime();
                 existingFoodOrder.Size = input.Size;
 
                 await _repository.UpdateAsync(existingFoodOrder);
@@ -194,7 +178,7 @@ namespace OrderingSystem.Orders
             else
             {
                 order = ObjectMapper.Map<Order>(input);
-                order.DateTimeAddedToCart = input.DateTimeAddedToCart.ToLocalTime();
+                order.DateTimeAddedToCart = input.DateTimeAddedToCart?.ToLocalTime();
                 order.FoodId = input.FoodId;
                 order.UserId = userId;
                 order.OrderStatusId = 1;
@@ -212,7 +196,7 @@ namespace OrderingSystem.Orders
                 .ThenInclude(x => x.Category)
                 .Include(x => x.User)
                 .Include(x => x.OrderStatus)
-                .Where(x => x.UserId == userId)
+                .Where(x => x.UserId == userId && x.OrderStatusId ==1)
                 .OrderByDescending(x => x.DateTimeAddedToCart)
                 .Select(x => ObjectMapper.Map<OrderDto>(x))
                 .ToListAsync();
@@ -222,23 +206,73 @@ namespace OrderingSystem.Orders
 
         public List<Guid?> GetOrderIdsByOrderNumber()
         {
-            var query = _repository.GetAll()
-                .OrderBy(x => x.Id)
-                .Select(x => x.OrderNumber)
-                .Distinct()
+            var userId = AbpSession.GetUserId();
+            var orderNumberLatestOrder = _repository.GetAll()
+                .Where(x => x.UserId == userId && x.OrderStatusId == 2)
+                .GroupBy(x => x.OrderNumber)
+                .ToDictionary(
+                group => group.Key,
+                group => group.Max(x => x.DateTimeOrdered));
+
+            var query = orderNumberLatestOrder
+                .OrderByDescending(x => x.Value)
+                .Select(x => x.Key)
                 .ToList();
 
             return query;
+
+            //var userId = AbpSession.GetUserId();
+            //var query = _repository.GetAll()                
+            //    .Where(x => x.UserId == userId && x.OrderStatusId == 2 && x.DateTimeOrdered != null)                
+            //    .Select(x => x.OrderNumber)
+            //    .Distinct()
+            //    .ToList();
+
+            //return query;
+        }
+
+        //public List<(Guid? OrderNumber, DateTime? DateTimeOrdered)> GetOrderIdsByOrderNumber()
+        //{
+        //    var userId = AbpSession.GetUserId();
+        //    var order = _repository.GetAll()
+        //        .Where(x => x.UserId == userId)
+        //        .GroupBy(x => x.OrderNumber)
+        //        .Select(y => new
+        //        {
+        //            OrderNumber = y.Key,
+        //            LatestDateTimeOrdered = y.Max(x => x.DateTimeOrdered)
+        //        })
+        //        .OrderByDescending(x => x.LatestDateTimeOrdered)
+        //        .ToList();
+
+        //    return order.Select(x => (x.OrderNumber, x.LatestDateTimeOrdered)).ToList();
+        //}
+
+        public List<OrderDto> GetAllOrderWithOrderNumbers(List<Guid?> orderNumbers)
+        {
+            var userId = AbpSession.GetUserId();
+            var query = _repository.GetAll()
+                .Include(x => x.Food)
+                .ThenInclude(x => x.Category)
+                .Include(x => x.OrderStatus)
+                .Where(x => x.UserId == userId && orderNumbers.Contains(x.OrderNumber) && x.OrderStatusId ==2)
+                .ToList();
+
+            return ObjectMapper.Map<List<OrderDto>>(query);
         }
 
         public async Task<OrderDto> UpdateBeforeProceedOrder(OrderDto input)
         {
             var order = new Order();
+            var orderNumber = Guid.NewGuid();
+            
             foreach (var item in input.Orders)
             {
-                 order = ObjectMapper.Map<Order>(item);
+                order = ObjectMapper.Map<Order>(item);
                 order.Id = item.Id;
+                order.DateTimeOrdered = item.DateTimeOrdered?.ToLocalTime();
                 order.OrderStatusId = 2;
+                order.OrderNumber = orderNumber;
                 await _repository.UpdateAsync(order);
 
                 var food = await _foodRepository.GetAsync(item.FoodId);
@@ -247,6 +281,27 @@ namespace OrderingSystem.Orders
             }           
             
             return base.MapToEntityDto(order);
+        }
+
+        public async Task<double> GetTotalSales (DateTime DateFrom, DateTime DateTo)
+        {
+            var sales = await _repository.GetAll()
+                .Where(x => x.DateTimeOrdered >= DateFrom && x.DateTimeOrdered <= DateTo)
+                .SumAsync(x => x.TotalAmount);
+
+            return sales;
+        }
+        public async Task<double> GetTotalPurchase (DateTime DateFrom, DateTime DateTo)
+        {
+            var sales = await _repository.GetAll()
+                .Where(x => x.DateTimeOrdered >= DateFrom && x.DateTimeOrdered <= DateTo)
+                .SumAsync(x => x.TotalAmount);
+
+            return sales;
+        }
+        private bool IsWorkingDays(DateTime date)
+        {
+            return date.DayOfWeek != DayOfWeek.Saturday || date.DayOfWeek != DayOfWeek.Sunday;
         }
 
     }

@@ -49,16 +49,17 @@
                 <div class="card-body">
                     <div class="table-responsive">
                         <table 
-                        class="table table-striped table-bordered" 
+                        class="table table-striped" 
                         [busy]="isTableLoading">
                             <thead class="bg-light">
                                 <tr class="bg-info text-center">
                                     <th>{{ "Customer Name" | localize }}</th>
                                     <th>{{ "Food Name" | localize }}</th>
+                                    <th>{{ "Order Number" | localize }}</th>
                                     <th>{{ "Qty" | localize }}</th>
                                     <th>{{ "Size" | localize }}</th>
                                     <th>{{ "Category" | localize }}</th>
-                                    <th>{{ "Total Amount" | localize }}</th>
+                                    <th>{{ "Total Amount" | localize }}</th>                                    
                                     <th>{{ "Notes" | localize }}</th>
                                     <th>{{ "Date Ordered" | localize }}</th>
                                     <th>{{ "Time Ordered" | localize }}</th>
@@ -72,12 +73,13 @@
                                 currentPage: pageNumber,
                                 totalItems: totalItems
                                 }">
-                                    <td>{{ order.cart?.user?.fullName }}</td>
-                                    <td>{{ order.cart?.food?.name }}</td>
-                                    <td>{{ order.cart?.quantity }}</td>
-                                    <td>{{ order.cart?.size }}</td>
-                                    <td>{{ order.cart?.food?.category?.name }}</td>
-                                    <td>{{ order.totalAmount | currency:'PHP'}}</td>
+                                    <td>{{ order.user?.fullName }}</td>
+                                    <td>{{ order.food?.name }}</td>
+                                    <td>{{ order.orderNumber }}</td>
+                                    <td>{{ order.quantity }}</td>
+                                    <td>{{ order.size }}</td>
+                                    <td>{{ order.food?.category?.name }}</td>
+                                    <td>{{ order.totalAmount | currency:'PHP'}}</td>                                    
                                     <td>{{ order.notes }}</td>
                                     <td>{{ order.dateTimeOrdered | date: 'MM/dd/yyyy'}}</td>
                                     <td>{{ order.dateTimeOrdered | date: 'hh:mm a'}}</td>

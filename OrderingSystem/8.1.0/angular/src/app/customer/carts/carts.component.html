@@ -4,7 +4,7 @@
             <div class="card">
                 <div class="card-body">
                     <div class="table-responsive">
-                        <table class="table table-bordered" [busy]="isTableLoading">
+                        <table class="table" [busy]="isTableLoading">
                             <thead class="bg-light">
                                 <tr class="bg-info text-center">
                                     <th><input type="checkbox" (change)="selectAll($event)"></th>
@@ -37,8 +37,11 @@
                                     <td>{{ order.food.name }}</td>
                                     <td>{{ order.food.price | currency: 'PHP' }}</td>
                                     <td>
-                                        <input type="number" class="form-control" [(ngModel)]="order.quantity"
-                                            (change)="updateOrder(order)" />
+                                        <input 
+                                        type="number" 
+                                        class="form-control" 
+                                        [(ngModel)]="order.quantity"                                            
+                                        (change)="updateOrder(order)" />
                                     </td>
                                     <td *ngIf="order.food.size != 0 else NoSizeAvailable">
                                         <select class="form-control" [(ngModel)]="order.size"

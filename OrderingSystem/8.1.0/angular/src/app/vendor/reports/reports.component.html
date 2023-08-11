@@ -1,53 +1,61 @@
-<div [@routerTransition]>
-    <section class="content-header">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-lg-6 col-6">
-                    <div class="small-box bg-success">
-                        <div class="inner">
-                            <h1><strong>{{ "Sales Reports" | localize }}</strong></h1>
-                            <p>Dashboard</p>
-                            <div class="icon">
-                                <i class="fa fa-university"></i>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-6 col-6">
-                    <div class="small-box bg-info">
-                        <div class="inner">
-                            <h1><strong>{{ [0] }}</strong></h1>
-                            <p>Total Count</p>
-                            <div class="icon">
-                                <i class="fa fa-line-chart"></i>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+<!-- <div>
     <section class="content px-2">
         <div class="container-fluid">
             <div class="card">
-                <div class="card-header">
-                    <div class="row">
-                        <div class="col-md-6">&emsp;</div>
-                        <div class="col-md-6">
-                            <div class="input-group">
-                                <input 
-                                type="text" 
-                                class="form-control" 
-                                name="keyword"                                    
-                                [placeholder]="'SearchWithThreeDot' | localize" 
-                                [(ngModel)]="keyword"
-                                (keyup.enter)="getDataPage(1)" />
-                            </div>
-                        </div>
-                    </div>
-                </div>
                 <div class="card-body">
                     <div class="table-responsive">
+                        <div class="container-fluid mt-5 mb-5">
+                            <table class="table bg-white table-bordered">
+                                <tbody>
+                                    <tr>
+                                        <th scope="column"><span class="font-weight-bold">Pick a Plan</span></th>
+                                        <td>
+                                            <div
+                                                class="d-flex flex-row justify-content-between align-items-baseline mt-0">
+                                                <span class="font-weight-bold">Starter</span>
+                                                <div class="price d-flex flex-row align-items-center"> <span
+                                                        class="margins">$</span> <span class="amount">109</span> <span
+                                                        class="margins">/month</span> </div>
+                                            </div> <button class="btn btn-outline-primary btn-block outline-button">Get
+                                                started</button>
+                                        </td>
+                                        <td>
+                                            <div
+                                                class="d-flex flex-row justify-content-between align-items-baseline mt-0">
+                                                <span class="font-weight-bold">Advanced</span>
+                                                <div class="price d-flex flex-row align-items-center"> <span
+                                                        class="margins">$</span> <span class="amount">125</span> <span
+                                                        class="margins">/month</span> </div>
+                                            </div> <button class="btn btn-primary btn-block normal-button">Get
+                                                started</button>
+                                        </td>
+                                        <td>
+                                            <div
+                                                class="d-flex flex-row justify-content-between align-items-baseline mt-0">
+                                                <span class="font-weight-bold">Ultimate</span>
+                                                <div class="price d-flex flex-row align-items-center"> <span
+                                                        class="margins">$</span> <span class="amount">349</span> <span
+                                                        class="margins">/month</span> </div>
+                                            </div> <button class="btn btn-outline-primary btn-block outline-button">Get
+                                                started</button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row"> <span class="d-block">Retail Point of sale</span> <span
+                                                class="font-weight-light">Streamline your everday</span> </th>
+                                        <td>
+                                            <div class="text-center check"> <i class="fa fa-check"></i> </div>
+                                        </td>
+                                        <td>
+                                            <div class="text-center check"> <i class="fa fa-check"></i> </div>
+                                        </td>
+                                        <td>
+                                            <div class="text-center check"> <i class="fa fa-check"></i> </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -55,21 +63,68 @@
         <div class="card-footer table-card-footer bg-light border-top">
             <div class="row">
                 <div class="col-sm-6 col-12 text-sm-left text-center">
-                    <button 
-                    class="btn btn-secondary" 
-                    (click)="refresh()">
+                    <button class="btn btn-secondary" (click)="refresh()">
                         <i class="fas fa-redo-alt"></i>
                     </button>
                 </div>
                 <div class="col-sm-6 col-12">
                     <div class="float-sm-right m-auto">
-                        <abp-pagination-controls 
-                        id="server" 
-                        (pageChange)="getDataPage($event)">
+                        <abp-pagination-controls id="server" (pageChange)="getDataPage($event)">
                         </abp-pagination-controls>
                     </div>
                 </div>
             </div>
         </div>
     </section>
-</div>
+</div> -->
+
+<section>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Total Sales</h5>
+                        <div class="form-group">
+                            <label for="filter">Filter</label>
+                            <select id="filter" 
+                            class="form-control" 
+                            [(ngModel)]="selectedFiltered" 
+                            (change)="dateFilter()">
+                                <option value="day">Per Day</option>
+                                <option value="month">Per Month</option>
+                                <option value="year">Per Year</option>
+                            </select>
+                        </div>
+                        <p class="card-text">{{ totalSales | currency: 'PHP'}}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Total Sales</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let day of workingDays">
+                                <td>{{day | date}}</td>
+                                <td>{{getSalesPerDay(day) | currency : 'PHP'}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
