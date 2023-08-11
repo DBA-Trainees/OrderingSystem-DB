@@ -57,32 +57,6 @@ export class PurchaseHistoryComponent extends AppComponentBase /* PagedListingCo
 
   getAllOrdersByOrderNumber(orderNumber: string):OrderDto[]{
     return this.orders.filter (order => order.orderNumber ==  orderNumber && order.dateTimeOrdered)
-  }
-  /* protected list(
-    request: PagedOrdersRequestDto,
-    pageNumber: number,
-    finishedCallback: Function
-  ): void {
-    request.keyword = this.keyword;
-    request.isActive = this.isActive;
-
-    this._orderService
-      .getAllPurchaseOrders(
-        request.keyword,
-        request.isActive,
-        request.skipCount,
-        request.maxResultCount
-      )
-      .pipe(
-        finalize(() => {
-          finishedCallback();
-        })
-      )
-      .subscribe((result: OrderDtoPagedResultDto) => {
-        this.orders = result.items;
-        this.showPaging(result, pageNumber);
-      });
-
-  } */
+  }  
   
 }

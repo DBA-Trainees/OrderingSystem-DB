@@ -35,7 +35,6 @@ class PagedOrdersRequestDto extends PagedRequestDto {
   animations: [appModuleAnimation()],
 })
 export class AddToCartsComponent extends PagedListingComponentBase<OrderDto> {
-  
   orders: OrderDto[] = [];
   keyword = "";
   isActive: boolean | null;
@@ -48,7 +47,7 @@ export class AddToCartsComponent extends PagedListingComponentBase<OrderDto> {
   overallTotalAmount: number = 0;
   today = new Date();
   selectedOrder: OrderDto[] = [];
-  id: number = 0;
+  ordernumber: number = 0;
 
   @Output() onSave = new EventEmitter<any>();
 
@@ -90,6 +89,7 @@ export class AddToCartsComponent extends PagedListingComponentBase<OrderDto> {
   }
 
   updateOrder(order: OrderDto): void {
+    order.totalAmount = this.grandTotalPrice(order);
     this._orderService.update(order).subscribe(() => {
       this.notify.info(this.l("OrderUpdatedSuccessfully"));
     });
@@ -112,11 +112,6 @@ export class AddToCartsComponent extends PagedListingComponentBase<OrderDto> {
     } else if (order.size == "Large") {
       updatedPrice += 25;
     }
-
-    /* if (order.food?.category && order.food?.category?.name == "Group") {
-      updatedPrice *= 1.5;
-    }
- */
     return updatedPrice * order.quantity;
   }
 
@@ -134,14 +129,11 @@ export class AddToCartsComponent extends PagedListingComponentBase<OrderDto> {
       }
     );
   }
- 
-  proceedOrder(orderNumber: string): void {
 
-    const totalAmount = this.selectedOrder.reduce((total, order) => this.grandTotalPrice(order),0);
-    
+  proceedOrder(orderNumber: string): void {
     const orderDto = new OrderDto();
-    
-    orderDto.orders = this.selectedOrder.map( order =>{
+
+    orderDto.orders = this.selectedOrder.map((order) => {
       const postOrder = new OrderDto();
       postOrder.foodId = order.food.id;
       postOrder.id = order.id;
@@ -149,25 +141,20 @@ export class AddToCartsComponent extends PagedListingComponentBase<OrderDto> {
       postOrder.orderStatusId = order.orderStatusId;
       postOrder.size = order.size;
       postOrder.quantity = order.quantity;
-      postOrder.totalAmount = totalAmount;
+      postOrder.totalAmount = order.totalAmount;
       postOrder.dateTimeOrdered = moment(this.today);
       return postOrder;
     });
 
-    /* this.orderNow(orderId); */
-
-    this._orderService.updateBeforeProceedOrder(orderDto).subscribe(res => {
+    this._orderService.updateBeforeProceedOrder(orderDto).subscribe((res) => {
       orderNumber = res.orderNumber;
-      /* if (res.id) {*/
-        this.orderNow(res.id); 
-        this.notify.info(this.l("SavedSuccessfully"));
-        this.bsModalRef.hide();
-        this.onSave.emit(res);
-        this.refresh();
-      /* } */
+      this.notify.info(this.l("SavedSuccessfully"));
+      this.bsModalRef.hide();
+      this.onSave.emit(res);
+      this.refresh();
+      this.orderNow(orderNumber);
     });
   }
-  
 
   selectAll(event): void {
     if (event.target.checked) {
@@ -187,27 +174,29 @@ export class AddToCartsComponent extends PagedListingComponentBase<OrderDto> {
   }
 
   selectCart(order: OrderDto, selected: boolean): void {
-    const foundOrder = this.orders.find(c => c.id === order.id);
+    const foundOrder = this.orders.find((c) => c.id === order.id);
     if (selected) {
-      if (!this.selectedOrder.some(c => c.id === foundOrder.id)) {
+      if (!this.selectedOrder.some((c) => c.id === foundOrder.id)) {
         this.selectedOrder.push(foundOrder);
       }
     } else {
-      this.selectedOrder = this.selectedOrder.filter(c => c.id !== foundOrder.id);
+      this.selectedOrder = this.selectedOrder.filter(
+        (c) => c.id !== foundOrder.id
+      );
     }
     this.recalculateOverallTotalAmount();
   }
 
-  orderNow(id): void{
-    this.showOrderDetailsModal(id);
+  orderNow(ordernumber: string): void {
+    this.showOrderDetailsModal(ordernumber);
   }
 
-  private showOrderDetailsModal(id?: number): void {
+  private showOrderDetailsModal(ordernumber?: string): void {
     let orderDetailsModal: BsModalRef;
     orderDetailsModal = this._modalService.show(OrdersComponent, {
       class: "modal-lg",
       initialState: {
-        id: id,
+        ordernumber: ordernumber,
       },
     });
   }

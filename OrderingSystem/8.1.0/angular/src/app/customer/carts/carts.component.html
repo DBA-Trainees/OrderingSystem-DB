@@ -14,6 +14,7 @@
                                     <th>{{ "Qty" | localize }}</th>
                                     <th>{{ "Size" | localize }}</th>
                                     <th>{{ "Category" | localize }}</th>
+                                    <th>{{ "Additional Notes to Vendor" | localize}}</th>
                                     <th>{{ "Total Amount" | localize }}</th>
                                     <th></th>
                                 </tr>
@@ -28,12 +29,17 @@
                                         } ">
                                     <td>
                                         <div class="col-2">
-                                            <input type="checkbox" [checked]="selectedOrder.includes(order)"
-                                                (change)="selectCart(order, $event.target.checked)" [id]="order.id">
+                                            <input 
+                                            type="checkbox" 
+                                            [checked]="selectedOrder.includes(order)"                                                
+                                            (change)="selectCart(order, $event.target.checked)" 
+                                            [id]="order.id">
                                         </div>
                                     </td>
-                                    <td><img [src]="'data:image/png;base64,' + order.food.image" alt="profile-sample1"
-                                            class="background" /></td>
+                                    <td><img 
+                                        [src]="'data:image/png;base64,' + order.food.image" 
+                                        alt="profile-sample1"                                            
+                                        class="background" /></td>
                                     <td>{{ order.food.name }}</td>
                                     <td>{{ order.food.price | currency: 'PHP' }}</td>
                                     <td>
@@ -44,10 +50,13 @@
                                         (change)="updateOrder(order)" />
                                     </td>
                                     <td *ngIf="order.food.size != 0 else NoSizeAvailable">
-                                        <select class="form-control" [(ngModel)]="order.size"
-                                            (change)="updateOrder(order)">
-                                            <option *ngFor="let size of availableSizesDict[order.food?.id]"
-                                                [value]="size">
+                                        <select 
+                                        class="form-control" 
+                                        [(ngModel)]="order.size"                                            
+                                        (change)="updateOrder(order)">
+                                            <option 
+                                            *ngFor="let size of availableSizesDict[order.food?.id]"                                                
+                                            [value]="size">
                                                 {{ size }}
                                             </option>
                                         </select>
@@ -56,12 +65,30 @@
                                         <td><strong>-</strong></td>
                                     </ng-template>
                                     <td>{{ order.food?.category?.name }}</td>
-                                    <td class="amount"><strong>{{ grandTotalPrice(order) | currency:'PHP'}}</strong></td>
                                     <td>
-                                        <button type="button" class="btn btn-md bg-danger" (click)="delete(order)">
+                                        <textarea
+                                        type="text"
+                                        class="form-control"
+                                        name="description"
+                                        id="description"
+                                        [(ngModel)]="order.notes"
+                                        (change)="updateOrder(order)"
+                                        >
+                                        </textarea>
+                                    </td>
+                                    <td class="amount"><strong>{{ grandTotalPrice(order) | currency:'PHP'}}</strong>
+                                    </td>
+                                    <td>
+                                        <button 
+                                        type="button" 
+                                        class="btn btn-md bg-danger" 
+                                        (click)="delete(order)">
                                             <i class="fas fa-trash"></i>
                                         </button>
-                                        <button type="button" class="btn btn-md bg-success" (click)="orderNow(order.id)">
+                                        <button 
+                                        type="button" 
+                                        class="btn btn-md bg-success"                                            
+                                        (click)="orderNow(order.id)">
                                             <i class="fa fa-eye"></i>
                                         </button>
                                     </td>
@@ -78,7 +105,8 @@
                                         <input type="text" name="name" id="name" required disabled
                                             [ngModel]="overallTotalAmount | currency:'PHP'" />
                                     </div><br>
-                                    <button href="javascript:;" class="btn bg-blue" (click)="proceedOrder(order.orderNumber)"
+                                    <button href="javascript:;" class="btn bg-blue"
+                                        (click)="proceedOrder(order.orderNumber)"
                                         [disabled]="selectedOrder.length === 0">
                                         {{ "Proceed Order" | localize }}
                                     </button>

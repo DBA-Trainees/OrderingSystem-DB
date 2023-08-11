@@ -13,6 +13,7 @@ import { BsModalRef } from "ngx-bootstrap/modal";
 })
 export class OrdersComponent extends AppComponentBase implements OnInit {
   saving: boolean = false;
+  ordernumber: string;
   id: number = 0;
   order: OrderDto = new OrderDto();
   orders: OrderDto[] = [];
@@ -27,22 +28,29 @@ export class OrdersComponent extends AppComponentBase implements OnInit {
   }
 
   ngOnInit(): void {
-    if (this.id != 0) {
+    /* if (this.id != 0) {
       this._orderService.getOrder(this.id).subscribe((res) => {
         this.order = res;
       });
     }
+ */
+    if (this.ordernumber){
+      this.getAllOrdersByOrderNumber(this.ordernumber);
+    }
   }
 
-  displayAllPurchaseOrder(): void{
-    this._orderService.getAllOrderWithOrderNumbers(this.orderIds).subscribe(orders => {      
+  getAllOrdersByOrderNumber(orderNumber: string):void{
+    this._orderService.getordersByOrderNumber(orderNumber).subscribe((orders) =>{
       this.orders = orders;
     });
+  }  
+
+  sumTotalAmounts(orders:OrderDto[]): number{
+    return orders.reduce((total, order) => total + order.totalAmount, 0);
   }
 
-  getAllOrdersByOrderNumber(orderNumber: string):OrderDto[]{
+  getOrdersByOrderNumber(orderNumber: string):OrderDto[]{
     return this.orders.filter (order => order.orderNumber ==  orderNumber && order.dateTimeOrdered)
   }
-
   
 }

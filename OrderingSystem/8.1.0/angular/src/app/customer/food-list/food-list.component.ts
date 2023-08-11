@@ -113,9 +113,9 @@ export class FoodListComponent extends AppComponentBase implements OnInit {
       updatedPrice += 25;
     }
 
-    if (food.category && food.category.name == "Group") {
+    /* if (food.category && food.category.name == "Group") {
       updatedPrice *= 2;
-    }
+    } */
 
     return updatedPrice * this.foodQty;
   }

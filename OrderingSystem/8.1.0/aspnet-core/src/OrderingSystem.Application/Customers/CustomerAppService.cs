@@ -64,16 +64,6 @@ namespace OrderingSystem.Customers
             return base.GetEntityByIdAsync(id);
         }
 
-        //public async Task<List<UserDto>> GetAllCustomerUserRole()
-        //{
-        //    var user = await _userRepository.GetAll()
-        //        .Include(x =>x.FullName)
-        //        .Include(x =>x.Roles)
-        //        .ToListAsync();
-
-        //    return ObjectMapper.Map<List<UserDto>>(user);
-        //}
-
         public async Task<PagedResultDto<UserDto>> GetAllCustomerFromUser(PagedCustomerResultRequestDto input)
         {
             var customer = await _repository.GetAll()

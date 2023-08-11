@@ -1,36 +1,28 @@
-<abp-modal-header 
-[title]="'Order Details' | localize" 
-(onCloseClick)="bsModalRef.hide()">
+<abp-modal-header [title]="'Order Details' | localize" (onCloseClick)="bsModalRef.hide()">
 </abp-modal-header>
 <div class="modal-body">
-    <div *ngFor="let order of getAllOrdersByOrderNumber(order.orderNumber)">
-        <div class="px-4">
-            <h5 class="text-uppercase text-center">Hi, {{order.user?.name}}</h5>
-            <h4 class="mt-5 theme-color mb-5 text-center"><strong>Thanks for your order</strong></h4>
-            <span class="theme-color">Order Summary</span>
-            <div class="mb-3">
-                <hr class="new1">
-            </div>
-            <div class="d-flex justify-content-between">
-                <span class="font-weight-bold">{{order.orderNumber}}</span>
-                <span class="text-muted"></span>
-            </div>
+    <h4 class="theme-color text-center"><strong>Thanks for your order</strong></h4>
+    <span class="theme-color">Order Summary</span>
+    <div class="d-flex justify-content-between">
+        <span class="font-weight-bold">{{orders[0]?.orderNumber}}</span>
+        <span class="text-muted"></span>
+    </div>
 
-            <div class="d-flex justify-content-between">
-                <small>{{order.quantity}} {{order.food?.name}} -
-                    {{order.size}} {{order.food?.category?.name}}
-                </small>
-                <small>{{order.totalAmount | currency: 'PHP'}}</small>
-                <small></small>
-            </div>
-            <!-- <div class="d-flex justify-content-between">
+    <div *ngFor="let order of orders">
+        <div class="d-flex justify-content-between">
+            <small><strong>{{order.quantity}}</strong> {{order.food?.name}} -
+                {{order.size}} {{order.food?.category?.name}}
+            </small>
+            <small>{{order.totalAmount | currency: 'PHP'}}</small>
+        </div>
+    </div>
+    <!-- <div class="d-flex justify-content-between">
                     <small>Tax</small>
                     <small>$200.00</small>
                 </div> -->
-            <div class="d-flex justify-content-between mt-3">
-                <span class="font-weight-bold">Total</span>
-                <span class="font-weight-bold theme-color">{{order.totalAmount | currency: 'PHP'}}</span>
-            </div>
-        </div>
+    <div class="d-flex justify-content-between mt-3">
+        <span class="font-weight-bold">Total</span>
+        <span class="font-weight-bold theme-color">{{sumTotalAmounts(getOrdersByOrderNumber(orders[0]?.orderNumber)) |
+            currency: 'PHP'}}</span>
     </div>
 </div>

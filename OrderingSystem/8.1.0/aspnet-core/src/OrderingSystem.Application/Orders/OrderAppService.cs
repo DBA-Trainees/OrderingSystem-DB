@@ -221,32 +221,7 @@ namespace OrderingSystem.Orders
 
             return query;
 
-            //var userId = AbpSession.GetUserId();
-            //var query = _repository.GetAll()                
-            //    .Where(x => x.UserId == userId && x.OrderStatusId == 2 && x.DateTimeOrdered != null)                
-            //    .Select(x => x.OrderNumber)
-            //    .Distinct()
-            //    .ToList();
-
-            //return query;
-        }
-
-        //public List<(Guid? OrderNumber, DateTime? DateTimeOrdered)> GetOrderIdsByOrderNumber()
-        //{
-        //    var userId = AbpSession.GetUserId();
-        //    var order = _repository.GetAll()
-        //        .Where(x => x.UserId == userId)
-        //        .GroupBy(x => x.OrderNumber)
-        //        .Select(y => new
-        //        {
-        //            OrderNumber = y.Key,
-        //            LatestDateTimeOrdered = y.Max(x => x.DateTimeOrdered)
-        //        })
-        //        .OrderByDescending(x => x.LatestDateTimeOrdered)
-        //        .ToList();
-
-        //    return order.Select(x => (x.OrderNumber, x.LatestDateTimeOrdered)).ToList();
-        //}
+        }        
 
         public List<OrderDto> GetAllOrderWithOrderNumbers(List<Guid?> orderNumbers)
         {
@@ -283,6 +258,20 @@ namespace OrderingSystem.Orders
             return base.MapToEntityDto(order);
         }
 
+        public List<OrderDto> GetordersByOrderNumber( Guid orderNumber)
+        {
+            var userId = AbpSession.GetUserId();
+
+            var query = _repository.GetAll()
+                .Include(x => x.Food)
+                .ThenInclude(x => x.Category)
+                .Include(x => x.OrderStatus)
+                .Where(x => x.UserId == userId && x.OrderNumber == orderNumber && x.OrderStatusId == 2)
+                .ToList();
+
+            return ObjectMapper.Map<List<OrderDto>>(query);
+        }
+
         public async Task<double> GetTotalSales (DateTime DateFrom, DateTime DateTo)
         {
             var sales = await _repository.GetAll()
@@ -293,8 +282,9 @@ namespace OrderingSystem.Orders
         }
         public async Task<double> GetTotalPurchase (DateTime DateFrom, DateTime DateTo)
         {
+            var userId = AbpSession.GetUserId();
             var sales = await _repository.GetAll()
-                .Where(x => x.DateTimeOrdered >= DateFrom && x.DateTimeOrdered <= DateTo)
+                .Where(x => x.DateTimeOrdered >= DateFrom && x.DateTimeOrdered <= DateTo && x.UserId == userId)
                 .SumAsync(x => x.TotalAmount);
 
             return sales;
