@@ -10,6 +10,6 @@ namespace OrderingSystem.Categories
 {
     public interface ICategoryAppService : IAsyncCrudAppService<CategoryDto, int, PagedCategoryResultRequestDto, CreateCategoryDto, CategoryDto>
     {
-
+        Task<int> GetCategoryCount();
     }
 }

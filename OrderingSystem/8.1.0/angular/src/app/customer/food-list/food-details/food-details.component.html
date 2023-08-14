@@ -10,31 +10,40 @@
   ></abp-modal-header>
   <div class="modal-body">
     <div class="row">
-      <div class="col-md-6">
+      <div class="col-md-5">
         <div class="text-center">
           <img
             *ngIf="food.imageFileType && food.image"
             class="center"
             [src]="'data:image/' + food.imageFileType + ';base64,' + food.image"
             width="150"
+            [ngStyle]="{'opacity': food.quantity == 0 ? '0.5' : '1'}" 
           />
         </div>
       </div>
-      <div class="col-md-4">
+      <div class="col-md-7">
         <div class="">
-          <span class="intro-1">{{ food.name }}</span>
+          <h6 class="intro-1">{{ food.name }}</h6>
           <div class="price">
-            <span class="intro-2"><strong>{{ food.price | currency : "PHP" }}</strong></span>
-            <span class="intro-2">{{ food.category?.name }}</span>
+            <span class="intro-2"><strong> {{ food.price | currency : "PHP" }}</strong></span>            
           </div>
-          <div class="mt-2 price">
-            <strong>{{ food.price | currency : "PHP" }}</strong>
+          <div class="mt-2">
+            <span class="intro-3"><strong>{{ food.category?.name }}</strong></span>
           </div>
-          <div>
-            <div class="form-group row required" *ngIf="food.size">
-              <label for="foodSize">{{ "Size" | localize }}</label>
-              <div class="input-group">
+          <div class="mt-2">
+            <span class="intro-3">Available:<strong> {{ food.quantity }}</strong></span>
+          </div>
+          <!-- <div class="mt-2">
+            <ng-container></ng-container>
+            <ng-template></ng-template>
+          </div> -->
+          <div class="mt-2">
+            <div class="form-group required" *ngIf="food.size">
+              <span class="intro-3 required">Size</span>
+              <!-- <label for="foodSize">{{ "Size" | localize }}</label> -->
+              <span class="input-group">
                 <select
+                class="form-control"
                   name="foodSize"
                   id="foodSize"
                   required
@@ -42,19 +51,21 @@
                   (ngModelChange)="selectedFoodSize = $event"
                 >
                   <option
+                  class="form-control"
                     *ngFor="let size of food.size?.split(',') || []"
                     [value]="size.trim()"
                   >
                     {{ size }}
                   </option>
                 </select>
-              </div>
+              </span>
             </div>
           </div>
           <div class="mt-2">
-            <div class="form-group row required">
-              <label for="foodQuantity"> {{ "Quantity" | localize }}</label>
-              <div>
+            <div class="form-group required">
+              <span class="intro-3 required">Quantity</span>
+              <!-- <label for="foodQuantity"> {{ "Quantity" | localize }}</label> -->
+              <div class="mt-1"><br>
                 <div class="input-group">
                   <div class="input-group-prepend">
                     <button
@@ -68,7 +79,7 @@
                   </div>
                   <input
                     type="number"
-                    class="form-control"
+                    class="form-control flex"
                     name="foodQuantity"
                     id="foodQuantity"
                     [(ngModel)]="foodQty"

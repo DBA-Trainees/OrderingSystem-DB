@@ -12,7 +12,6 @@ import {
   PagedRequestDto,
 } from "@shared/paged-listing-component-base";
 import {
-  CreateOrderDto,
   FoodDto,
   OrderDto,
   OrderDtoPagedResultDto,
@@ -148,11 +147,11 @@ export class AddToCartsComponent extends PagedListingComponentBase<OrderDto> {
 
     this._orderService.updateBeforeProceedOrder(orderDto).subscribe((res) => {
       orderNumber = res.orderNumber;
-      this.notify.info(this.l("SavedSuccessfully"));
+      this.notify.info(this.l("Ordered Successfully"));
       this.bsModalRef.hide();
       this.onSave.emit(res);
       this.refresh();
-      this.orderNow(orderNumber);
+      this.orderNow(orderNumber);      
     });
   }
 

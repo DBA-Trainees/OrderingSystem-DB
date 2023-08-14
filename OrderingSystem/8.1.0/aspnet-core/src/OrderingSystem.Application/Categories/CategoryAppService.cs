@@ -25,5 +25,9 @@ namespace OrderingSystem.Categories
             var category = await _repository.GetAllListAsync();
             return ObjectMapper.Map<List<CategoryDto>>(category);
         }
+        public async Task<int> GetCategoryCount()
+        {
+            return await _repository.CountAsync();
+        }
     }
 }

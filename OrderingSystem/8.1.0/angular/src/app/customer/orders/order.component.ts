@@ -1,4 +1,5 @@
 import { Component, Injector, OnInit } from "@angular/core";
+import { Router } from "@angular/router";
 import { AppComponentBase } from "@shared/app-component-base";
 import {
   OrderDto,
@@ -22,7 +23,8 @@ export class OrdersComponent extends AppComponentBase implements OnInit {
   constructor(
     injector: Injector,
     public bsModalRef: BsModalRef,
-    private _orderService: OrderServiceProxy
+    private _orderService: OrderServiceProxy,
+    private router: Router
   ) {
     super(injector);
   }
@@ -42,6 +44,7 @@ export class OrdersComponent extends AppComponentBase implements OnInit {
   getAllOrdersByOrderNumber(orderNumber: string):void{
     this._orderService.getordersByOrderNumber(orderNumber).subscribe((orders) =>{
       this.orders = orders;
+      this.router.navigate(["./app/customer/purchase-history"]);
     });
   }  
 

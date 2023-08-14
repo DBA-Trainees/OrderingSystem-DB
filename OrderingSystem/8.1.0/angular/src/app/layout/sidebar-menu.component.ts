@@ -54,7 +54,7 @@ export class SidebarMenuComponent extends AppComponentBase implements OnInit {
         new MenuItem(this.l("Food Categories"),"/app/vendor/categories","fas fa-hamburger","Pages.Vendor.Categories"),
         new MenuItem(this.l("Food Types"),"/app/vendor/types","fas fa-drumstick-bite","Pages.Vendor.Types"),
         new MenuItem(this.l("Food"),"/app/vendor/foods","fa fa-cutlery","Pages.Vendor.Foods"),
-        new MenuItem(this.l("Orders"),"/app/vendor/view-order","fa fa-shopping-cart","Pages.Vendor.ViewOrders"),
+        new MenuItem(this.l("View Orders"),"/app/vendor/view-order","fa fa-shopping-cart","Pages.Vendor.ViewOrders"),
         new MenuItem(this.l("Sales Reports"),"/app/vendor/reports","fa fa-pie-chart","Pages.Vendor.SalesReports"),
       ]),  
       new MenuItem(this.l("Customer"), "", "fa fa-user-plus", "Pages.Customer", [
@@ -63,8 +63,6 @@ export class SidebarMenuComponent extends AppComponentBase implements OnInit {
         new MenuItem(this.l("My Purchases"),"/app/customer/purchase-history","fa fa-history","Pages.Customer.PurchaseHistory"),
         new MenuItem(this.l("Order Report"),"/app/customer/order-spent-report","fa fa-calendar","Pages.Customer.OrderSpentReport"),
       ]),          
-      /* new MenuItem(this.l("About"), "/app/about", "fas fa-info-circle"),
-      new MenuItem(this.l("HomePage"), "/app/home", "fas fa-home"), */
       new MenuItem(
         this.l("Tenants"),
         "/app/tenants",

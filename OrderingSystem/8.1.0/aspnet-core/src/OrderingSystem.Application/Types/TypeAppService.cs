@@ -24,5 +24,9 @@ namespace OrderingSystem.Types
             var category = await _repository.GetAllListAsync();
             return ObjectMapper.Map<List<TypeDto>>(category);
         }
+        public async Task<int> GetFoodTypeCount()
+        {
+            return await _repository.CountAsync();
+        }
     }
 }

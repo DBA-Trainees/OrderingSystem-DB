@@ -45,7 +45,7 @@ export class PurchaseHistoryComponent extends AppComponentBase /* PagedListingCo
   displayOrderByOrderNumber(): void{
     this._orderService.getOrderIdsByOrderNumber().subscribe(orders =>{
       this.orderIds = orders;
-      this,this.displayAllPurchaseOrder();    
+      this.displayAllPurchaseOrder();    
     })
   }
 
@@ -57,6 +57,10 @@ export class PurchaseHistoryComponent extends AppComponentBase /* PagedListingCo
 
   getAllOrdersByOrderNumber(orderNumber: string):OrderDto[]{
     return this.orders.filter (order => order.orderNumber ==  orderNumber && order.dateTimeOrdered)
-  }  
+  } 
+  
+  sumTotalAmounts(orders:OrderDto[]): number{
+    return orders.reduce((total, order) => total + order.totalAmount, 0);
+  }
   
 }

@@ -1,8 +1,8 @@
 <div>
   <section class="content px-2">
     <div class="container-fluid">
-      <div class="container-fluid" style="margin-top:25px;">
-        <div class="container">
+      <div class="container" style="margin-top:25px;">
+        <div class="container-fluid">
           <div class="row">
             <div class="col-xs-12 col-sm-6 col-md-3 p-1" *ngFor="let food of foods">
               <div class="card-sl" [ariaDisabled]="food.quantity==0">
@@ -11,13 +11,19 @@
                     <img 
                     [src]="'data:image/png;base64,' + food.image" 
                     (click)="displayFoodDetails(food.id)"
-                    class="center card-img-top" />
+                    class="center card-img-top"
+                    [ngStyle]="{'opacity': food.quantity == 0 ? '0.5' : '1'}" />
                   </div>
                   <a 
                   class="card-action"
                   [hidden]="food.quantity==0" 
                   (click)="addTocart(food)">
                     <i class="fa fa-shopping-cart"></i>
+                  </a>
+                  <a 
+                  class="card-action-danger"
+                  [hidden]="food.quantity!=0">
+                    <i class="fa fa-ban"></i>
                   </a>
                   <div class="card-heading">
                     {{food.name}}

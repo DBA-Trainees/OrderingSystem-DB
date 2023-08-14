@@ -74,5 +74,10 @@ namespace OrderingSystem.Customers
 
             return new PagedResultDto<UserDto>(customer.Count(), customer);
         }
+
+        public async Task<int> GetCustomerCount()
+        {
+            return await _repository.CountAsync();
+        }
     }
 }

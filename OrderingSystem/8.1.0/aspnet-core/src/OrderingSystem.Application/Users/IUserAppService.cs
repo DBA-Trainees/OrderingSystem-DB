@@ -17,6 +17,6 @@ namespace OrderingSystem.Users
         Task<bool> ChangePassword(ChangePasswordDto input);
         //Task<List<UserDto>> GetAllUsers();
         Task<List<UserDto>> GetUsersWithCustomerRole();
-
+        Task<long> GetuserCount();
     }
 }

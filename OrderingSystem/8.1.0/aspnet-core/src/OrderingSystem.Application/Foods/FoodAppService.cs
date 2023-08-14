@@ -90,5 +90,10 @@ namespace OrderingSystem.Foods
 
             return food;
         }
+
+        public async Task<int> GetFoodCount()
+        {
+            return await _repository.CountAsync();
+        }
     }
 }

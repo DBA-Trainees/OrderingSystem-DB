@@ -1,6 +1,7 @@
 /* .btn {
     border-radius: 2em;
 } */
+
 .create-button{
     position: fixed;
     bottom: 120px;
@@ -37,11 +38,15 @@ th,td,img{
 }
 
 .food-avail{
-    color: green
+    color: rgb(7, 143, 7)
   }
 
 .food-unavail{
     color:rgb(224, 27, 54)
+}
+
+.fa-index {
+    font-size: 50px;
 }
 /* .main-sidebar.elevation-4{
     background-color: #0f72b3;

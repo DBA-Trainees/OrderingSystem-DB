@@ -26,5 +26,9 @@ namespace OrderingSystem.Divisions
             var division = await _repository.GetAllListAsync();
             return ObjectMapper.Map<List<DivisionDto>>(division);
         }
+        public async Task<int> GetDivisionCount()
+        {
+            return await _repository.CountAsync();
+        }
     }
 }

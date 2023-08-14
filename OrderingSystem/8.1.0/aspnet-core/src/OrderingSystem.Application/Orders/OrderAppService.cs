@@ -3,34 +3,27 @@ using Abp.Application.Services.Dto;
 using Abp.Domain.Repositories;
 using Abp.Runtime.Session;
 using Microsoft.EntityFrameworkCore;
-using OrderingSystem.Authorization.Roles;
-using OrderingSystem.Authorization.Users;
 using OrderingSystem.Entities;
-using OrderingSystem.Foods.Dto;
 using OrderingSystem.Orders.Dto;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace OrderingSystem.Orders
 {
     public class OrderAppService : AsyncCrudAppService<
-        Order, 
-        OrderDto, 
-        int, 
-        PagedOrderResultRequestDto, 
-        CreateOrderDto, 
+        Order,
+        OrderDto,
+        int,
+        PagedOrderResultRequestDto,
+        CreateOrderDto,
         OrderDto
         >, IOrderAppService
     {
         private readonly IRepository<Order, int> _repository;
         private readonly IRepository<Food, int> _foodRepository;
-        public OrderAppService(IRepository<Order, int> repository, IRepository<Food, int>foodRepository) : base(repository)
+        public OrderAppService(IRepository<Order, int> repository, IRepository<Food, int> foodRepository) : base(repository)
         {
             _repository = repository;
             _foodRepository = foodRepository;
@@ -99,7 +92,7 @@ namespace OrderingSystem.Orders
                 x => x.Food.Category,
                 x => x.User,
                 x => x.OrderStatus)
-                .Where(x => x.UserId == userId && x.OrderStatusId ==2 && x.DateTimeOrdered != null)
+                .Where(x => x.UserId == userId && x.OrderStatusId == 2 && x.DateTimeOrdered != null)
                 .OrderByDescending(x => x.Id)
                 .Select(x => ObjectMapper.Map<OrderDto>(x))
                 .ToListAsync();
@@ -132,6 +125,7 @@ namespace OrderingSystem.Orders
                         x => x.User,
                         x => x.OrderStatus)
                 .OrderByDescending(x => x.Id)
+                .Where(x => x.OrderStatusId == 2)
                 .Select(x => ObjectMapper.Map<OrderDto>(x))
                 .ToListAsync();
 
@@ -163,8 +157,8 @@ namespace OrderingSystem.Orders
                 .FirstOrDefaultAsync
                 (
                 o => o.OrderStatusId == 1 &&
-                o.FoodId == input.FoodId && 
-                o.UserId == userId); 
+                o.FoodId == input.FoodId &&
+                o.UserId == userId);
 
             if (existingFoodOrder != null)
             {
@@ -196,7 +190,7 @@ namespace OrderingSystem.Orders
                 .ThenInclude(x => x.Category)
                 .Include(x => x.User)
                 .Include(x => x.OrderStatus)
-                .Where(x => x.UserId == userId && x.OrderStatusId ==1)
+                .Where(x => x.UserId == userId && x.OrderStatusId == 1)
                 .OrderByDescending(x => x.DateTimeAddedToCart)
                 .Select(x => ObjectMapper.Map<OrderDto>(x))
                 .ToListAsync();
@@ -221,7 +215,7 @@ namespace OrderingSystem.Orders
 
             return query;
 
-        }        
+        }
 
         public List<OrderDto> GetAllOrderWithOrderNumbers(List<Guid?> orderNumbers)
         {
@@ -230,7 +224,7 @@ namespace OrderingSystem.Orders
                 .Include(x => x.Food)
                 .ThenInclude(x => x.Category)
                 .Include(x => x.OrderStatus)
-                .Where(x => x.UserId == userId && orderNumbers.Contains(x.OrderNumber) && x.OrderStatusId ==2)
+                .Where(x => x.UserId == userId && orderNumbers.Contains(x.OrderNumber) && x.OrderStatusId == 2)
                 .ToList();
 
             return ObjectMapper.Map<List<OrderDto>>(query);
@@ -240,7 +234,7 @@ namespace OrderingSystem.Orders
         {
             var order = new Order();
             var orderNumber = Guid.NewGuid();
-            
+
             foreach (var item in input.Orders)
             {
                 order = ObjectMapper.Map<Order>(item);
@@ -253,12 +247,12 @@ namespace OrderingSystem.Orders
                 var food = await _foodRepository.GetAsync(item.FoodId);
                 food.Quantity -= order.Quantity;
                 await _foodRepository.UpdateAsync(food);
-            }           
-            
+            }
+
             return base.MapToEntityDto(order);
         }
 
-        public List<OrderDto> GetordersByOrderNumber( Guid orderNumber)
+        public List<OrderDto> GetordersByOrderNumber(Guid orderNumber)
         {
             var userId = AbpSession.GetUserId();
 
@@ -272,7 +266,7 @@ namespace OrderingSystem.Orders
             return ObjectMapper.Map<List<OrderDto>>(query);
         }
 
-        public async Task<double> GetTotalSales (DateTime DateFrom, DateTime DateTo)
+        public async Task<double> GetTotalSales(DateTime DateFrom, DateTime DateTo)
         {
             var sales = await _repository.GetAll()
                 .Where(x => x.DateTimeOrdered >= DateFrom && x.DateTimeOrdered <= DateTo)
@@ -280,7 +274,7 @@ namespace OrderingSystem.Orders
 
             return sales;
         }
-        public async Task<double> GetTotalPurchase (DateTime DateFrom, DateTime DateTo)
+        public async Task<double> GetTotalPurchase(DateTime DateFrom, DateTime DateTo)
         {
             var userId = AbpSession.GetUserId();
             var sales = await _repository.GetAll()
@@ -292,6 +286,28 @@ namespace OrderingSystem.Orders
         private bool IsWorkingDays(DateTime date)
         {
             return date.DayOfWeek != DayOfWeek.Saturday || date.DayOfWeek != DayOfWeek.Sunday;
+        }
+
+        public async Task<int> GetEntityRowCountAsync()
+        {
+            return await _repository.CountAsync();
+        }
+        public async Task<string?> GetMostPurchasedFoodId()
+        {
+            var mostPurchasedFoodId = await _repository.GetAll()
+                .GroupBy(o => o.Food.Name)
+                .OrderByDescending(group => group.Count())
+                .Select(group => group.Key)
+                .FirstOrDefaultAsync();
+
+            return mostPurchasedFoodId;
+        }
+
+        public async Task<int> GetMostPurchasedFoodRowCount(int foodId)
+        {
+            int rowCount = await _repository.CountAsync(o => o.FoodId == foodId);
+
+            return rowCount;
         }
 
     }

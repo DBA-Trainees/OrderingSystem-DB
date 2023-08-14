@@ -20,5 +20,6 @@ namespace OrderingSystem.Orders
         Task<PagedResultDto<OrderDto>> GetAllOrdersVendorView(PagedOrderResultRequestDto input);
         Task<OrderDto> UpdateAddToCart(OrderDto input);
         Task<OrderDto> UpdateBeforeProceedOrder(OrderDto input);
+        Task<string?> GetMostPurchasedFoodId();
     }
 }

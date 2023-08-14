@@ -29,8 +29,7 @@ export class ViewOrdersComponent extends PagedListingComponentBase<OrderDto> {
 
   constructor(
     injector: Injector,
-    private _orderService: OrderServiceProxy,
-    private _modalService: BsModalService
+    private _orderService: OrderServiceProxy
   ) {
     super(injector);
   }

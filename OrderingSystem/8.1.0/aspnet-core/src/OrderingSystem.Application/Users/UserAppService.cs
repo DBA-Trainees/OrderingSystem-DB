@@ -265,12 +265,17 @@ namespace OrderingSystem.Users
             var usersNotAddedInCustomer = userRole
                 .Where(x => !customer
                 .Contains(x.Id))
-                .FirstOrDefault();
+                .ToList();
 
-            return ObjectMapper.Map<List<UserDto>>(usersNotAddedInCustomer);
-
+            var user = ObjectMapper.Map<List<UserDto>>(usersNotAddedInCustomer);
+            return new List<UserDto>(user);
         }
-        
+
+        public async Task<long> GetuserCount()
+        {
+            return await Repository.CountAsync();
+        }
+
     }
 }
 
