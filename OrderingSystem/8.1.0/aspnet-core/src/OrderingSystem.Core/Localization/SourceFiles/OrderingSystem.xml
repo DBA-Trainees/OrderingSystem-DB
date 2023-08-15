@@ -133,7 +133,7 @@
 	<text name="CreateNewType">Create New Type</text>
 	<text name="TypeDeleteWarningMessage">{0} will be deleted.</text>
 	<text name="ViewOrder">View Order</text>
-	<text name="AddToCart">Add To Cart</text>
+	<text name="AddToCart">Added To Cart</text>
 	<text name="OrderSpentReport">Order Spent Report</text>
 	<text name="FoodList">Food List</text>
 	<text name="PurchaseHistory">Purchase History</text>
@@ -150,6 +150,21 @@
 	<text name="CustomerView">Customer View</text>
 	<text name="AdminView">Admin View</text>
 	<text name="CartDeleteWarningMessage">{0} will be deleted</text>
-	<text name="CartOrderedSuccessfully">Cart updated successfully</text>
+	<text name="CartOrderedSuccessfully">Food ordered successfully</text>
+	<text name="UsersAdmin">Users - Admin</text>
+	<text name="UsersActivationAdmin">Users activation - Admin</text>
+	<text name="RolesAdmin">Roles - Admin</text>
+	<text name="DivisionsAdmin">Divisions - Admin</text>
+	<text name="CustomersAdmin">Customers - Admin</text>
+	<text name="CategoryVendor">Food Category - Vendor</text>
+	<text name="TypeVendor">Food Type - Vendor</text>
+	<text name="FoodVendor">Food - Vendor</text>
+	<text name="ViewOrderVendor">View Orders - Vendor</text>
+	<text name="SalesReportVendor">Sales Report - Vendor</text>
+	<text name="FoodListCustomer">Food List - Customer</text>
+	<text name="FoodDetailsCustomer">Food Details - Customer</text>
+	<text name="AddToCartCustomer">Add To Cart - Customer</text>
+	<text name="PurchaseHistoryCustomer">Purchase History - Customer</text>
+	<text name="OrderSpentReportCustomer">Order Spent Report - Customer</text>
   </texts>
 </localizationDictionary>

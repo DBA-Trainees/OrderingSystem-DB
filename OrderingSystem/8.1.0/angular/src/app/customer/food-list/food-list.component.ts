@@ -97,7 +97,7 @@ export class FoodListComponent extends AppComponentBase implements OnInit {
     this.order.size = selectedFood.size;
     this.order.orderStatusId = 1;
     this._orderService.updateAddToCart(this.order).subscribe((res) => {
-      this.notify.info(this.l("Added To Cart"));
+      this.notify.info(this.l("AddToCart"));
       this.onSave.emit(res);
     });
   }

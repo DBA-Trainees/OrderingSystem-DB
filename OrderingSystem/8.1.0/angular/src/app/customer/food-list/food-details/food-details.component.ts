@@ -122,7 +122,7 @@ export class FoodDetailsComponent extends AppComponentBase implements OnInit {
 
     this._orderService.updateAddToCart(orderDto).subscribe(
       (res) => {
-        this.notify.info(this.l("SavedSuccessfully"));
+        this.notify.info(this.l("AddToCart"));
         this.bsModalRef.hide();
         this.onSave.emit(res);
 
