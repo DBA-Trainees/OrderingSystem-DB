@@ -4,9 +4,11 @@ import {
   CategoryServiceProxy,
   CustomerServiceProxy,
   DivisionServiceProxy,
+  FoodServiceProxy,
   OrderDto,
   OrderServiceProxy,
   TypeServiceProxy,
+  UserDto,
   UserServiceProxy,
 } from "@shared/service-proxies/service-proxies";
 
@@ -16,14 +18,19 @@ import {
 })
 export class DashboardComponent extends AppComponentBase implements OnInit {
   order = new OrderDto();
+  user = new UserDto();
   orderRowCount: number;
   categoryRowCount: number;
   customerRowCount: number;
   typeRowCount: number;
   divisionRowCount: number;
   userRowCount: number;
+  foodRowCount: number;
   mostPurchasedFood: string;
+  customerMostPurchased: string;
   mostPurchasedFoodRowCount: number;
+  foodAvailableCount: number;
+  foodUnavailableCount: number;
 
   constructor(
     injector: Injector,
@@ -32,7 +39,8 @@ export class DashboardComponent extends AppComponentBase implements OnInit {
     private _customerService: CustomerServiceProxy,
     private _typeService: TypeServiceProxy,
     private _divisionService: DivisionServiceProxy,
-    private _userService: UserServiceProxy
+    private _userService: UserServiceProxy,
+    private _foodService: FoodServiceProxy
   ) {
     super(injector);
   }
@@ -44,8 +52,12 @@ export class DashboardComponent extends AppComponentBase implements OnInit {
     this.getFoodTypeRowCount();
     this.getDivisionRowCount();
     this.getUsersRowCount();
+    this.getFoodRowCount();
     this.getMostPurchaseFood();
     /* this.getMostPurchaseFoodCount(); */
+    this.getUserWithMostPurchased();
+    this.getAvailableFoodCount();
+    this.getUnvailableFoodCount();
   }
 
   getOrderRowCount(): void {
@@ -83,11 +95,35 @@ export class DashboardComponent extends AppComponentBase implements OnInit {
       this.userRowCount = count;
     });
   }
+  getFoodRowCount(): void {
+    this._foodService.getFoodCount().subscribe((count: number) => {
+      this.foodRowCount = count;
+    });
+  }
 
   getMostPurchaseFood(): void {
     this._orderService.getMostPurchasedFoodId().subscribe((foodName) => {
       this.mostPurchasedFood = foodName;
     });
+  }
+
+  getUserWithMostPurchased(): void{
+    this._userService.getCustomerWithMostPurchases().subscribe((customer) => {
+      this.user = customer;
+      this.customerMostPurchased = customer.fullName;
+    })
+  }
+
+  getAvailableFoodCount(): void{
+    this._foodService.getAvailableFoodCount().subscribe((foodAvail) =>{
+      this.foodAvailableCount = foodAvail;
+    })
+  }
+
+  getUnvailableFoodCount(): void{
+    this._foodService.getUnavailableFoodCount().subscribe((foodUnavail) =>{
+      this.foodUnavailableCount = foodUnavail;
+    })
   }
 
   /* getMostPurchaseFoodCount(): void {

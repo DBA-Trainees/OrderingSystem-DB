@@ -109,8 +109,8 @@ export class CreateEditFoodModalComponent
     }
   }
 
-  isFoodCategoryGroup(selectedCategory:number): boolean{
-    return this.selectedCategory == 3;
+  isFoodCategoryGroup(selectedCategory:number, selectedType: number): boolean{
+    return this.selectedCategory == 3 || this.selectedType == 6;
   }
 
   save(): void {

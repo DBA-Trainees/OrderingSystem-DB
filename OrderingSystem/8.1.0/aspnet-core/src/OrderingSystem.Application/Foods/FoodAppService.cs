@@ -95,5 +95,14 @@ namespace OrderingSystem.Foods
         {
             return await _repository.CountAsync();
         }
+
+        public async Task<int> GetAvailableFoodCount()
+        {
+            return await _repository.CountAsync(food => food.Availability == true && food.Quantity > 0);
+        }
+        public async Task<int> GetUnavailableFoodCount()
+        {
+            return await _repository.CountAsync(food => food.Availability == false || food.Quantity <= 0);
+        }
     }
 }

@@ -49,7 +49,7 @@
                 <div class="card-body">
                     <div class="table-responsive">
                         <table 
-                        class="table table-striped" 
+                        class="table table-bordered" 
                         [busy]="isTableLoading">
                             <thead class="bg-light">
                                 <tr class="bg-info text-center">
@@ -72,7 +72,15 @@
                                 itemsPerPage: pageSize,
                                 currentPage: pageNumber,
                                 totalItems: totalItems
-                                }">
+                                } | search : keyword: 
+                                ['user.fullName',
+                                'food.name', 
+                                'order.orderNumber', 
+                                'order.size', 
+                                'food.category.name',
+                                'order.notes',
+                                'order.dateTimeOrdered']" 
+                                class="text-center">
                                     <td>{{ order.user?.fullName }}</td>
                                     <td>{{ order.food?.name }}</td>
                                     <td>{{ order.orderNumber }}</td>

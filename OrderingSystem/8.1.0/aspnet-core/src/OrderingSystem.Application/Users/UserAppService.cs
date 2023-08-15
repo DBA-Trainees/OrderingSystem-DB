@@ -276,6 +276,26 @@ namespace OrderingSystem.Users
             return await Repository.CountAsync();
         }
 
+        public async Task<UserDto> GetCustomerWithMostPurchases()
+        {
+            var customerWithMostPurchasesId = await Repository.GetAll()
+                .GroupBy(o => o.Id)
+                .OrderByDescending(group => group.Count())
+                .Select(group => group.Key)
+                .FirstOrDefaultAsync();
+
+            if (customerWithMostPurchasesId == null)
+            {
+                return null;
+            }
+
+            var customer = await _userManager.GetUserByIdAsync(customerWithMostPurchasesId);
+
+            var customerDto = ObjectMapper.Map<UserDto>(customer);
+
+            return customerDto;
+        }
+
     }
 }
 

@@ -290,8 +290,10 @@ namespace OrderingSystem.Orders
 
         public async Task<int> GetEntityRowCountAsync()
         {
-            return await _repository.CountAsync();
-        }
+            //return await _repository.CountAsync();
+            return await _repository.CountAsync(order => order.OrderStatusId == 2);
+        }       
+
         public async Task<string?> GetMostPurchasedFoodId()
         {
             var mostPurchasedFoodId = await _repository.GetAll()
@@ -309,6 +311,5 @@ namespace OrderingSystem.Orders
 
             return rowCount;
         }
-
     }
 }

@@ -1,17 +1,13 @@
 import { Component, Injector, OnInit } from "@angular/core";
 import { AppComponentBase } from "@shared/app-component-base";
 import {
-  PagedListingComponentBase,
-  PagedRequestDto,
+  PagedRequestDto
 } from "@shared/paged-listing-component-base";
 import {
   OrderDto,
-  OrderDtoPagedResultDto,
   OrderServiceProxy,
 } from "@shared/service-proxies/service-proxies";
 import * as moment from "moment/moment";
-import { BsModalService } from "ngx-bootstrap/modal";
-import { finalize } from "rxjs/operators";
 
 class PagedOrdersRequestDto extends PagedRequestDto {
   keyword: string;

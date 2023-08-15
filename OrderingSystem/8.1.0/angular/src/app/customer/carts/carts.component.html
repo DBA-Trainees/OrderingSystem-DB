@@ -1,136 +1,119 @@
-<div>
-    <section class="content px-2">
-        <div class="container-fluid">
-            <div class="card">
-                <div class="card-body">
-                    <div class="table-responsive">
-                        <table class="table" [busy]="isTableLoading">
-                            <thead class="bg-light">
-                                <tr class="bg-info text-center">
-                                    <th><input type="checkbox" (change)="selectAll($event)"></th>
-                                    <th></th>
-                                    <th>{{ "Food Name" | localize }}</th>
-                                    <th>{{ "Regular Price" | localize }}</th>
-                                    <th>{{ "Qty" | localize }}</th>
-                                    <th>{{ "Size" | localize }}</th>
-                                    <th>{{ "Category" | localize }}</th>
-                                    <th>{{ "Additional Notes to Vendor" | localize}}</th>
-                                    <th>{{ "Total Amount" | localize }}</th>
-                                    <th></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr *ngFor="let order of orders | paginate
-                                    : {
-                                        id: 'server',
-                                        itemsPerPage: pageSize,
-                                        currentPage: pageNumber,
-                                        totalItems: totalItems
-                                        } ">
-                                    <td>
-                                        <div class="col-2">
-                                            <input 
-                                            type="checkbox" 
-                                            [checked]="selectedOrder.includes(order)"                                                
-                                            (change)="selectCart(order, $event.target.checked)" 
-                                            [id]="order.id">
-                                        </div>
-                                    </td>
-                                    <td><img 
-                                        [src]="'data:image/png;base64,' + order.food.image" 
-                                        alt="profile-sample1"                                            
-                                        class="background" /></td>
-                                    <td>{{ order.food.name }}</td>
-                                    <td>{{ order.food.price | currency: 'PHP' }}</td>
-                                    <td>
+<section>
+    <div>
+        <div class="card">
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table" [busy]="isTableLoading">
+                        <thead class="bg-light">
+                            <tr class="bg-info text-center">
+                                <th><input type="checkbox" (change)="selectAll($event)"></th>
+                                <th></th>
+                                <th>{{ "Food Name" | localize }}</th>
+                                <th>{{ "Regular Price" | localize }}</th>
+                                <th>{{ "Qty" | localize }}</th>
+                                <th>{{ "Size" | localize }}</th>
+                                <th>{{ "Category" | localize }}</th>
+                                <th>{{ "Additional Notes to Vendor" | localize}}</th>
+                                <th>{{ "Total Amount" | localize }}</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let order of orders | paginate
+                                : {
+                                    id: 'server',
+                                    itemsPerPage: pageSize,
+                                    currentPage: pageNumber,
+                                    totalItems: totalItems
+                                    } ">
+                                <td>
+                                    <div class="col-2">
                                         <input 
-                                        type="number" 
-                                        class="form-control" 
-                                        [(ngModel)]="order.quantity"                                            
-                                        (change)="updateOrder(order)" />
-                                    </td>
-                                    <td *ngIf="order.food.size != 0 else NoSizeAvailable">
-                                        <select 
-                                        class="form-control" 
-                                        [(ngModel)]="order.size"                                            
-                                        (change)="updateOrder(order)">
-                                            <option 
-                                            *ngFor="let size of availableSizesDict[order.food?.id]"                                                
-                                            [value]="size">
-                                                {{ size }}
-                                            </option>
-                                        </select>
-                                    </td>
-                                    <ng-template #NoSizeAvailable>
-                                        <td><strong>-</strong></td>
-                                    </ng-template>
-                                    <td>{{ order.food?.category?.name }}</td>
-                                    <td>
-                                        <textarea
-                                        type="text"
-                                        class="form-control"
-                                        name="description"
-                                        id="description"
-                                        [(ngModel)]="order.notes"
-                                        (change)="updateOrder(order)"
-                                        >
-                                        </textarea>
-                                    </td>
-                                    <td class="amount"><strong>{{ grandTotalPrice(order) | currency:'PHP'}}</strong>
-                                    </td>
-                                    <td>
-                                        <button 
-                                        type="button" 
-                                        class="btn btn-md bg-danger" 
-                                        (click)="delete(order)">
-                                            <i class="fas fa-trash"></i>
-                                        </button>
-                                        <button 
-                                        type="button" 
-                                        class="btn btn-md bg-success"                                            
-                                        (click)="orderNow(order.id)">
-                                            <i class="fa fa-eye"></i>
-                                        </button>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                        <div class="container-fluid">
-                            <div class="row">
-                                <div class="col-12 text-right">
-                                    <label class="col-form-label" for="name">
-                                        {{ "Total Amount" | localize }}
-                                    </label>
-                                    <div class="col-12 text-right">
-                                        <input type="text" name="name" id="name" required disabled
-                                            [ngModel]="overallTotalAmount | currency:'PHP'" />
-                                    </div><br>
-                                    <button href="javascript:;" class="btn bg-blue"
-                                        (click)="proceedOrder(order.orderNumber)"
-                                        [disabled]="selectedOrder.length === 0">
-                                        {{ "Proceed Order" | localize }}
+                                        type="checkbox" 
+                                        [checked]="selectedOrder.includes(order)"                                            
+                                        (change)="selectCart(order, $event.target.checked)" 
+                                        [id]="order.id">
+                                    </div>
+                                </td>
+                                <td>
+                                    <img 
+                                    [src]="'data:image/png;base64,' + order.food.image" 
+                                    alt="profile-sample1"                                        
+                                    class="background" /></td>
+                                <td>{{ order.food.name }}</td>
+                                <td>{{ order.food.price | currency: 'PHP' }}</td>
+                                <td>
+                                    <input 
+                                    type="number" 
+                                    class="form-control" 
+                                    [(ngModel)]="order.quantity"                                        
+                                    (change)="updateOrder(order)" />
+                                </td>
+                                <td *ngIf="order.food.size != 0 else NoSizeAvailable">
+                                    <select 
+                                    class="form-control" 
+                                    [(ngModel)]="order.size" 
+                                    (change)="updateOrder(order)">
+                                        <option 
+                                        *ngFor="let size of availableSizesDict[order.food?.id]" 
+                                        [value]="size">
+                                            {{ size }}
+                                        </option>
+                                    </select>
+                                </td>
+                                <ng-template #NoSizeAvailable>
+                                    <td><strong>-</strong></td>
+                                </ng-template>
+                                <td>{{ order.food?.category?.name }}</td>
+                                <td>
+                                    <textarea type="text" class="form-control" name="description" id="description"
+                                        [(ngModel)]="order.notes" (change)="updateOrder(order)">
+                                    </textarea>
+                                </td>
+                                <td class="amount"><strong>{{ grandTotalPrice(order) | currency:'PHP'}}</strong>
+                                </td>
+                                <td>
+                                    <button type="button" class="btn btn-md bg-danger" (click)="delete(order)">
+                                        <i class="fas fa-trash"></i>
                                     </button>
-                                </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-12 text-right">
+                                <label class="col-form-label" for="name">
+                                    {{ "Total Amount" | localize }}
+                                </label>
+                                <div class="col-12 text-right">
+                                    <input type="text" name="name" id="name" required disabled
+                                        [ngModel]="overallTotalAmount | currency:'PHP'" />
+                                </div><br>
+                                <button href="javascript:;" class="btn bg-blue"
+                                    (click)="proceedOrder(order.orderNumber)" [disabled]="selectedOrder.length === 0">
+                                    {{ "Proceed Order" | localize }}
+                                </button>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="card-footer table-card-footer bg-light border-top">
-            <div class="row">
-                <div class="col-sm-6 col-12 text-sm-left text-center">
-                    <button class="btn btn-secondary" (click)="refresh()">
-                        <i class="fas fa-redo-alt"></i>
-                    </button>
-                </div>
-                <div class="col-sm-12 col-12">
-                    <div class="float-sm-right m-auto">
-                        <abp-pagination-controls id="server" (pageChange)="getDataPage($event)">
-                        </abp-pagination-controls>
-                    </div>
+    </div>
+    <div class="card-footer table-card-footer bg-light border-top">
+        <div class="row">
+            <div class="col-sm-6 col-12 text-sm-left text-center">
+                <button class="btn btn-secondary" (click)="refresh()">
+                    <i class="fas fa-redo-alt"></i>
+                </button>
+            </div>
+            <div class="col-sm-12 col-12">
+                <div class="float-sm-right m-auto">
+                    <abp-pagination-controls id="server" (pageChange)="getDataPage($event)">
+                    </abp-pagination-controls>
                 </div>
             </div>
         </div>
-    </section>
-</div>
+    </div>
+</section>

@@ -156,7 +156,7 @@
             [value]="foodSize.value"
             [checked]="isFoodSizeChecked(foodSize.value)"
             (change)="onFoodSizeChanged(foodSize.value, $event.target.checked)"
-            [disabled]="isFoodCategoryGroup(selectedCategory)"
+            [disabled]="isFoodCategoryGroup(selectedCategory, selectedType)"
           />
           <label class="form-check-label" [for]="'foodSize' + foodSize.id">{{
             foodSize.value

@@ -1,21 +1,11 @@
-
-<link
-  rel="stylesheet"
-  type="text/css"
-  href="https://pixinvent.com/stack-responsive-bootstrap-4-admin-template/app-assets/css/bootstrap-extended.min.css"
-/>
+<link rel="stylesheet" type="text/css"
+  href="https://pixinvent.com/stack-responsive-bootstrap-4-admin-template/app-assets/css/bootstrap-extended.min.css" />
 <!-- icon size -->
-<link
-  rel="stylesheet"
-  type="text/css"
-  href="https://pixinvent.com/stack-responsive-bootstrap-4-admin-template/app-assets/fonts/simple-line-icons/style.min.css"
-/>
+<link rel="stylesheet" type="text/css"
+  href="https://pixinvent.com/stack-responsive-bootstrap-4-admin-template/app-assets/fonts/simple-line-icons/style.min.css" />
 <!-- icons -->
-<link
-  rel="stylesheet"
-  type="text/css"
-  href="https://pixinvent.com/stack-responsive-bootstrap-4-admin-template/app-assets/css/colors.min.css"
-/>
+<link rel="stylesheet" type="text/css"
+  href="https://pixinvent.com/stack-responsive-bootstrap-4-admin-template/app-assets/css/colors.min.css" />
 
 <div class="grey-bg container-fluid">
   <section id="minimal-statistics">
@@ -25,7 +15,7 @@
       </div>
     </div>
     <div class="row">
-      <div class="col-xl-3 col-sm-6 col-12">
+      <div class="col-xl-4 col-sm-6 col-12">
         <div class="card">
           <div class="card-content">
             <div class="card-body">
@@ -35,14 +25,14 @@
                 </div>
                 <div class="media-body text-right">
                   <h3>Order</h3>
-                  <span>{{orderRowCount}}</span>
+                  <h5 class="primary"><strong>{{orderRowCount}}</strong></h5>
                 </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-      <div class="col-xl-3 col-sm-6 col-12">
+      <div class="col-xl-4 col-sm-6 col-12">
         <div class="card">
           <div class="card-content">
             <div class="card-body">
@@ -52,14 +42,14 @@
                 </div>
                 <div class="media-body text-right">
                   <h3>Divisions</h3>
-                  <span>{{divisionRowCount}}</span>
+                  <h5 class="warning"><strong>{{divisionRowCount}}</strong></h5>
                 </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-      <div class="col-xl-3 col-sm-6 col-12">
+      <div class="col-xl-4 col-sm-6 col-12">
         <div class="card">
           <div class="card-content">
             <div class="card-body">
@@ -69,7 +59,7 @@
                 </div>
                 <div class="media-body text-right">
                   <h3>Customers</h3>
-                  <span>{{customerRowCount}}</span>
+                  <h5 class="success"><strong>{{customerRowCount}}</strong></h5>
                 </div>
               </div>
             </div>
@@ -86,7 +76,7 @@
                 </div>
                 <div class="media-body text-right">
                   <h3>Food Type</h3>
-                  <span>{{typeRowCount}}</span>
+                  <h5 class="danger"><strong>{{typeRowCount}}</strong></h5>
                 </div>
               </div>
             </div>
@@ -99,11 +89,11 @@
             <div class="card-body">
               <div class="media d-flex">
                 <div class="align-self-center">
-                  <i class="fas fa-hamburger danger font-large-2 float-left"></i>
+                  <i class="fas fa-hamburger blue font-large-2 float-left"></i>
                 </div>
                 <div class="media-body text-right">
                   <h3>Food Category</h3>
-                  <span>{{categoryRowCount}}</span>
+                  <h5 class="blue"><strong>{{categoryRowCount}}</strong></h5>
                 </div>
               </div>
             </div>
@@ -116,11 +106,28 @@
             <div class="card-body">
               <div class="media d-flex">
                 <div class="align-self-center">
-                  <i class="fas fa-users danger font-large-2 float-left"></i>
+                  <i class="fas fa-users cyan font-large-2 float-left"></i>
                 </div>
                 <div class="media-body text-right">
                   <h3>Users</h3>
-                  <span>{{userRowCount}}</span>
+                  <h5 class="cyan"><strong>{{userRowCount}}</strong></h5>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-3 col-sm-6 col-12">
+        <div class="card">
+          <div class="card-content">
+            <div class="card-body">
+              <div class="media d-flex">
+                <div class="align-self-center">
+                  <i class="fa fa-cutlery teal font-large-2 float-left"></i>
+                </div>
+                <div class="media-body text-right">
+                  <h3>Foods</h3>
+                  <h5 class="teal"><strong>{{foodRowCount}}</strong></h5>
                 </div>
               </div>
             </div>
@@ -130,14 +137,14 @@
     </div>
 
     <div class="row">
-      <div class="col-xl-3 col-sm-6 col-12">
+      <div class="col-xl-6 col-md-12">
         <div class="card">
           <div class="card-content">
             <div class="card-body">
               <div class="media d-flex">
                 <div class="media-body text-left">
-                  <h3 class="danger">Most Purchased Food</h3>
-                  <span>{{mostPurchasedFood}}</span>
+                  <h3 class="danger"><strong>{{mostPurchasedFood}}</strong></h3>
+                  <span>Most Purchased Food</span>
                 </div>
                 <div class="align-self-center">
                   <i class="icon-rocket danger font-large-2 float-right"></i>
@@ -147,14 +154,14 @@
           </div>
         </div>
       </div>
-      <!-- <div class="col-xl-3 col-sm-6 col-12">
+      <div class="col-xl-6 col-md-12">
         <div class="card">
           <div class="card-content">
             <div class="card-body">
               <div class="media d-flex">
                 <div class="media-body text-left">
-                  <h3 class="success">156</h3>
-                  <span>New Clients</span>
+                  <h3 class="success"><strong>{{customerMostPurchased}}</strong></h3>
+                  <span>Customer with Most Purchased</span>
                 </div>
                 <div class="align-self-center">
                   <i class="icon-user success font-large-2 float-right"></i>
@@ -163,35 +170,33 @@
             </div>
           </div>
         </div>
-      </div> -->
+      </div>
 
-      <!-- <div class="col-xl-3 col-sm-6 col-12">
+      <div class="col-xl-6 col-md-12">
         <div class="card">
           <div class="card-content">
             <div class="card-body">
               <div class="media d-flex">
                 <div class="media-body text-left">
-                  <h3 class="warning">64.89 %</h3>
-                  <span>Conversion Rate</span>
+                  <h3 class="warning"><strong>{{foodAvailableCount}}</strong></h3>
+                  <span>Available Foods </span>
                 </div>
                 <div class="align-self-center">
-                  <i
-                    class="icon-pie-chart warning font-large-2 float-right"
-                  ></i>
+                  <i class="icon-pie-chart warning font-large-2 float-right"></i>
                 </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-      <div class="col-xl-3 col-sm-6 col-12">
+      <div class="col-xl-6 col-md-12">
         <div class="card">
           <div class="card-content">
             <div class="card-body">
               <div class="media d-flex">
                 <div class="media-body text-left">
-                  <h3 class="primary">423</h3>
-                  <span>Support Tickets</span>
+                  <h3 class="primary"><strong>{{foodUnavailableCount}}</strong></h3>
+                  <span>Not Available Foods</span>
                 </div>
                 <div class="align-self-center">
                   <i class="icon-support primary font-large-2 float-right"></i>
@@ -203,7 +208,7 @@
       </div>
     </div>
 
-    <div class="row">
+    <!-- <div class="row">
       <div class="col-xl-3 col-sm-6 col-12">
         <div class="card">
           <div class="card-content">
@@ -214,20 +219,12 @@
                   <span>New Posts</span>
                 </div>
                 <div class="align-self-center">
-                  <i
-                    class="icon-book-open primary font-large-2 float-right"
-                  ></i>
+                  <i class="icon-book-open primary font-large-2 float-right"></i>
                 </div>
               </div>
               <div class="progress mt-1 mb-0" style="height: 7px">
-                <div
-                  class="progress-bar bg-primary"
-                  role="progressbar"
-                  style="width: 80%"
-                  aria-valuenow="80"
-                  aria-valuemin="0"
-                  aria-valuemax="100"
-                ></div>
+                <div class="progress-bar bg-primary" role="progressbar" style="width: 80%" aria-valuenow="80"
+                  aria-valuemin="0" aria-valuemax="100"></div>
               </div>
             </div>
           </div>
@@ -247,14 +244,8 @@
                 </div>
               </div>
               <div class="progress mt-1 mb-0" style="height: 7px">
-                <div
-                  class="progress-bar bg-warning"
-                  role="progressbar"
-                  style="width: 35%"
-                  aria-valuenow="35"
-                  aria-valuemin="0"
-                  aria-valuemax="100"
-                ></div>
+                <div class="progress-bar bg-warning" role="progressbar" style="width: 35%" aria-valuenow="35"
+                  aria-valuemin="0" aria-valuemax="100"></div>
               </div>
             </div>
           </div>
@@ -275,14 +266,8 @@
                 </div>
               </div>
               <div class="progress mt-1 mb-0" style="height: 7px">
-                <div
-                  class="progress-bar bg-success"
-                  role="progressbar"
-                  style="width: 60%"
-                  aria-valuenow="60"
-                  aria-valuemin="0"
-                  aria-valuemax="100"
-                ></div>
+                <div class="progress-bar bg-success" role="progressbar" style="width: 60%" aria-valuenow="60"
+                  aria-valuemin="0" aria-valuemax="100"></div>
               </div>
             </div>
           </div>
@@ -302,19 +287,13 @@
                 </div>
               </div>
               <div class="progress mt-1 mb-0" style="height: 7px">
-                <div
-                  class="progress-bar bg-danger"
-                  role="progressbar"
-                  style="width: 40%"
-                  aria-valuenow="40"
-                  aria-valuemin="0"
-                  aria-valuemax="100"
-                ></div>
+                <div class="progress-bar bg-danger" role="progressbar" style="width: 40%" aria-valuenow="40"
+                  aria-valuemin="0" aria-valuemax="100"></div>
               </div>
             </div>
           </div>
         </div>
-      </div> -->
-    </div>
-  </section>  
+      </div>
+    </div> -->
+  </section>
 </div>

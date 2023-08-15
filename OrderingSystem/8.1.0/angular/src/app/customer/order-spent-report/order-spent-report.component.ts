@@ -5,7 +5,6 @@ import {
 } from "@shared/paged-listing-component-base";
 import { OrderDto, OrderDtoPagedResultDto, OrderServiceProxy } from "@shared/service-proxies/service-proxies";
 import * as moment from "moment";
-import { BsModalService } from "ngx-bootstrap/modal";
 import { finalize } from "rxjs/operators";
 
 class PagedOrdersRequestDto extends PagedRequestDto {

@@ -116,7 +116,7 @@ export class AddToCartsComponent extends PagedListingComponentBase<OrderDto> {
 
   protected delete(order: OrderDto): void {
     abp.message.confirm(
-      this.l("OrderDeleteWarningMessage", order.food.name),
+      this.l("CartDeleteWarningMessage", order.food.name),
       undefined,
       (result: boolean) => {
         if (result) {
@@ -147,7 +147,7 @@ export class AddToCartsComponent extends PagedListingComponentBase<OrderDto> {
 
     this._orderService.updateBeforeProceedOrder(orderDto).subscribe((res) => {
       orderNumber = res.orderNumber;
-      this.notify.info(this.l("Ordered Successfully"));
+      this.notify.info(this.l("CartOrderedSuccessfully"));
       this.bsModalRef.hide();
       this.onSave.emit(res);
       this.refresh();

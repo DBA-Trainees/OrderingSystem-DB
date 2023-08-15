@@ -4,7 +4,7 @@
     <h4 class="theme-color text-center"><strong>Thanks for your order</strong></h4>
     <span class="theme-color">Order Summary</span>
     <div class="d-flex justify-content-between">
-        <span class="font-weight-bold">{{orders[0]?.orderNumber}}</span>
+        <h5 class="font-weight-bold">{{orders[0]?.orderNumber}}</h5>
         <span class="text-muted"></span>
     </div>
 
@@ -21,8 +21,8 @@
                     <small>$200.00</small>
                 </div> -->
     <div class="d-flex justify-content-between mt-3">
-        <span class="font-weight-bold">Total</span>
-        <span class="font-weight-bold theme-color">{{sumTotalAmounts(getOrdersByOrderNumber(orders[0]?.orderNumber)) |
+        <span class="font-weight-bold total">Total</span>
+        <span class="font-weight-bold total theme-color">{{sumTotalAmounts(getOrdersByOrderNumber(orders[0]?.orderNumber)) |
             currency: 'PHP'}}</span>
     </div>
 </div>

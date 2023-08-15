@@ -149,5 +149,7 @@
 	<text name="VendorView">Vendor View</text>
 	<text name="CustomerView">Customer View</text>
 	<text name="AdminView">Admin View</text>
+	<text name="CartDeleteWarningMessage">{0} will be deleted</text>
+	<text name="CartOrderedSuccessfully">Cart updated successfully</text>
   </texts>
 </localizationDictionary>

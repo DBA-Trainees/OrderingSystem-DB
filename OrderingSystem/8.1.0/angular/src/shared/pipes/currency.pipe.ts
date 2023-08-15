@@ -4,13 +4,7 @@ import { Pipe, PipeTransform } from "@angular/core";
 @Pipe({
   name: "phpcurrency",
 })
-export class CurrencyPipeComponent implements PipeTransform {
-  /* private currencyPipe: CurrencyPipe = new CurrencyPipe('en-PH','PHP'); */
-
-  /* transform(
-    value: any): string {
-    return this.currencyPipe.transform(value, 'PHP', 'symbol-narrow', '1-2-2');
-  } */
+export class CurrencyPipeComponent implements PipeTransform { 
 
   transform(
     value: number, 
@@ -26,8 +20,6 @@ export class CurrencyPipeComponent implements PipeTransform {
     if (isNaN(value) || currencyCode === null){
       return null;
     }
-
-
     return formatCurrency(value, 'PHP', digitsInfo);
   }
 }
