@@ -7,6 +7,7 @@ import {
   FoodServiceProxy,
   OrderDto,
   OrderServiceProxy,
+  RoleDto,
   TypeServiceProxy,
   UserDto,
   UserServiceProxy,
@@ -31,6 +32,7 @@ export class DashboardComponent extends AppComponentBase implements OnInit {
   mostPurchasedFoodRowCount: number;
   foodAvailableCount: number;
   foodUnavailableCount: number;
+  roles = new RoleDto();
 
   constructor(
     injector: Injector,
@@ -58,6 +60,7 @@ export class DashboardComponent extends AppComponentBase implements OnInit {
     this.getUserWithMostPurchased();
     this.getAvailableFoodCount();
     this.getUnvailableFoodCount();
+    console.log(this.roles.id);
   }
 
   getOrderRowCount(): void {
@@ -126,7 +129,7 @@ export class DashboardComponent extends AppComponentBase implements OnInit {
     })
   }
 
-  /* getMostPurchaseFoodCount(): void {
+    /* getMostPurchaseFoodCount(): void {
     this._orderService.getMostPurchasedFoodRowCount(this.mostPurchasedFoodRowCount).subscribe((id) => {
       this.mostPurchasedFoodRowCount = id;
     });

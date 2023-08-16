@@ -7,7 +7,8 @@ import {
 import {
     CustomerDto,
   CustomerDtoPagedResultDto,
-  CustomerServiceProxy
+  CustomerServiceProxy,
+  DivisionDto
 } from "@shared/service-proxies/service-proxies";
 import { BsModalRef, BsModalService } from "ngx-bootstrap/modal";
 import { finalize } from "rxjs/operators";
@@ -16,6 +17,7 @@ import { CreateEditCustomerModalComponent } from "./create-edit-customer-modal/c
 class PagedCustomersRequestDto extends PagedRequestDto {
   keyword: string;
   isActive: boolean | null;
+  divisions = new DivisionDto();
 }
 
 @Component({
@@ -26,9 +28,11 @@ class PagedCustomersRequestDto extends PagedRequestDto {
 })
 export class CustomersComponent extends PagedListingComponentBase<CustomerDto> {
   customers: CustomerDto[] = [];
+  customer = new CustomerDto();
   keyword = "";
   isActive: boolean | null;
   advancedFiltersVisible = false;
+  divisions = new DivisionDto();
 
   constructor(
     injector: Injector,
@@ -36,6 +40,12 @@ export class CustomersComponent extends PagedListingComponentBase<CustomerDto> {
     private _modalService: BsModalService
   ) {
     super(injector);
+  }
+
+  clearFilters(): void {
+    this.keyword = '';
+    this.isActive = undefined;
+    this.getDataPage(1);
   }
 
   createCustomer(): void {
@@ -46,6 +56,10 @@ export class CustomersComponent extends PagedListingComponentBase<CustomerDto> {
     this.showCreateOrEditCustomerModal(id);
   }
 
+  trackByOption(index, customer) {
+    return customer;
+  }
+
   protected list(
     request: PagedCustomersRequestDto,
     pageNumber: number,
@@ -53,6 +67,7 @@ export class CustomersComponent extends PagedListingComponentBase<CustomerDto> {
   ): void {
     request.keyword = this.keyword;
     request.isActive = this.isActive;
+    request.divisions = this.divisions;
 
     this._customerService
       .getAll(
@@ -69,6 +84,7 @@ export class CustomersComponent extends PagedListingComponentBase<CustomerDto> {
       .subscribe((result: CustomerDtoPagedResultDto) => {
         this.customers = result.items;
         this.showPaging(result, pageNumber);
+        this.divisions;
       });
   }
 

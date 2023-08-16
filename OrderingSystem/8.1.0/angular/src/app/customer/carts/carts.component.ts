@@ -89,9 +89,16 @@ export class AddToCartsComponent extends PagedListingComponentBase<OrderDto> {
 
   updateOrder(order: OrderDto): void {
     order.totalAmount = this.grandTotalPrice(order);
-    this._orderService.update(order).subscribe(() => {
-      this.notify.info(this.l("OrderUpdatedSuccessfully"));
-    });
+
+    if(order.quantity <= order.food.quantity){      
+      this._orderService.update(order).subscribe(() => {
+        this.notify.info(this.l("OrderUpdatedSuccessfully"));
+      });
+    }else{
+      abp.message.error(
+        this.l("Unable to save the quantity!")
+      );
+    }    
   }
 
   private setDefaultAvailableSizes(): void {

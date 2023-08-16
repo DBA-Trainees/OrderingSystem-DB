@@ -151,6 +151,7 @@
 	<text name="AdminView">Admin View</text>
 	<text name="CartDeleteWarningMessage">{0} will be deleted</text>
 	<text name="CartOrderedSuccessfully">Food ordered successfully</text>
+	  <text name="OrderUpdatedSuccessfully">Cart updated successfully</text>
 	<text name="UsersAdmin">Users - Admin</text>
 	<text name="UsersActivationAdmin">Users activation - Admin</text>
 	<text name="RolesAdmin">Roles - Admin</text>

@@ -80,6 +80,7 @@ export class UsersComponent extends PagedListingComponentBase<UserDto> {
       .subscribe((result: UserDtoPagedResultDto) => {
         this.users = result.items;
         this.showPaging(result, pageNumber);
+        console.log(this.users);
       });
   }
 

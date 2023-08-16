@@ -23,6 +23,7 @@ using OrderingSystem.Users.Dto;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using OrderingSystem.Entities;
+using OrderingSystem.Orders.Dto;
 
 namespace OrderingSystem.Users
 {
@@ -295,6 +296,28 @@ namespace OrderingSystem.Users
 
             return customerDto;
         }
+
+        //public async Task<OrderDto> UpdateBeforeProceedOrder(OrderDto input)
+        //{
+        //    var order = new Order();
+        //    var orderNumber = Guid.NewGuid();
+
+        //    foreach (var item in input.Orders)
+        //    {
+        //        order = ObjectMapper.Map<Order>(item);
+        //        order.Id = item.Id;
+        //        order.DateTimeOrdered = item.DateTimeOrdered?.ToLocalTime();
+        //        order.OrderStatusId = 2;
+        //        order.OrderNumber = orderNumber;
+        //        await _repository.UpdateAsync(order);
+
+        //        var food = await _foodRepository.GetAsync(item.FoodId);
+        //        food.Quantity -= order.Quantity;
+        //        await _foodRepository.UpdateAsync(food);
+        //    }
+
+        //    return base.MapToEntityDto(order);
+        //}
 
     }
 }

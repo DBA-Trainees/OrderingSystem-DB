@@ -12,6 +12,7 @@
             <tr>
               <th>Image</th>
               <th>Food</th>
+              <th>Quantity</th>
               <th>Size</th>
               <th>Category</th>
               <th>Date</th>
@@ -24,9 +25,11 @@
             <tr *ngFor="let order of getAllOrdersByOrderNumber(orderid)">
               <td class="profile"><img [src]="'data:image/png;base64,' + order.food?.image" /></td>
               <td>{{order.food?.name}}</td>
-              <td>{{order.size}}</td>
+              <td>{{order.quantity}}</td>
+              <td *ngIf="order.size != null">{{order.size}}</td>
+              <td *ngIf="order.size == null">-</td>
               <td>{{order.food?.category?.name}}</td>
-              <td>{{ order.dateTimeOrdered | date: 'MM-dd-yyyy'}}</td>
+              <td>{{ order.dateTimeOrdered | date: 'mediumDate'}}</td>
               <td>{{ order.dateTimeOrdered | date: 'hh:mm a'}}</td>
               <td>{{order.totalAmount | currency: 'PHP'}}</td>
               <td><label class="badge badge-success">{{order.orderStatus?.name}}</label></td>              

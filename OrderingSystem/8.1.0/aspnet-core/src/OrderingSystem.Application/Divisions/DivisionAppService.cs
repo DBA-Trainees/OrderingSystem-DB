@@ -21,6 +21,17 @@ namespace OrderingSystem.Divisions
             _repository = repository;
         }
 
+        public override async Task<DivisionDto> CreateAsync(CreateDivisionDto input)
+        {
+            var division = ObjectMapper.Map<Division>(input);
+
+            if(division.Name != input.Name)
+            {
+                division = await _repository.InsertAsync(division);                
+            }
+            return ObjectMapper.Map<DivisionDto>(division);
+        }
+
         public async Task<List<DivisionDto>> GetAllDivisions()
         {
             var division = await _repository.GetAllListAsync();

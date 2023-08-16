@@ -210,7 +210,7 @@ p {
 .table thead th, .jsgrid .jsgrid-table thead th {
  border-top: 0;
  border-bottom-width: 1px;
- font-weight: 500;
+ font-weight: bold;
  font-size: .875rem;
  text-transform: uppercase;
 }
@@ -230,7 +230,4 @@ p {
 img{
   width: 50px;
   height: 50;
-}
-th{
-  font-weight: normal;
 }

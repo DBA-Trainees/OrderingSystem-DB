@@ -25,10 +25,7 @@
                     </div>
                 </div>
                 <div class="col-12 text-right">
-                    <a 
-                    href="javascript:;" 
-                    class="create-button btn btn-md" 
-                    (click)="createFood()">
+                    <a href="javascript:;" class="create-button btn btn-md" (click)="createFood()">
                         <i class="fa fa-plus"></i>
                     </a>
                 </div>
@@ -43,22 +40,60 @@
                         <div class="col-md-6">&emsp;</div>
                         <div class="col-md-6">
                             <div class="input-group">
-                                <input 
-                                type="text" 
-                                class="form-control" 
-                                name="keyword"                                    
-                                [placeholder]="'SearchWithThreeDot' | localize" 
-                                [(ngModel)]="keyword"
-                                (keyup.enter)="getDataPage(1)" />
+                                <input type="text" class="form-control" name="keyword"
+                                    [placeholder]="'SearchWithThreeDot' | localize" [(ngModel)]="keyword"
+                                    (keyup.enter)="getDataPage(1)" />
+                                <div class="input-group-append">
+                                    <button type="button" class="btn btn-default"
+                                        (click)="advancedFiltersVisible = !advancedFiltersVisible">
+                                        <i class="fas" [class.fa-angle-up]="advancedFiltersVisible"
+                                            [class.fa-angle-down]="!advancedFiltersVisible"></i>
+                                    </button>
+                                </div>
                             </div>
+                        </div>
+                    </div>
+                    <div *ngIf="advancedFiltersVisible" class="card mb-0 mt-1">
+                        <div class="card-body">
+                            <form class="form-horizontal">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group row mb-0">
+                                            <label class="col-md-3 col-form-label">
+                                                {{ "Category" | localize }}
+                                            </label>
+                                            <div class="col-md-9 pt-2">
+                                                <div class="custom-control custom-radio d-inline"  *ngFor="let food of foods">
+                                                    <input 
+                                                    type="radio" 
+                                                    class="custom-control-input" 
+                                                    id="categoryName"                                                        
+                                                    name="categoryName" 
+                                                    [(ngModel)]="food.category.id"
+                                                        checked />
+                                                    <label class="custom-control-label" >
+                                                        {{ food.category.name }}
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="card-footer">
+                            <button type="button" class="btn bg-blue" (click)="getDataPage(1)">
+                                {{ "Search" | localize }}
+                            </button>
+                            <button type="button" class="btn btn-default float-right" (click)="clearFilters()">
+                                {{ "Clear" | localize }}
+                            </button>
                         </div>
                     </div>
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
-                        <table 
-                        class="table table-bordered" 
-                        [busy]="isTableLoading">
+                        <table class="table table-bordered" [busy]="isTableLoading">
                             <thead class="bg-light">
                                 <tr class="bg-info text-center">
                                     <th>{{ "Image" | localize }}</th>
@@ -72,7 +107,7 @@
                                     <th class="action-th">{{ "Actions" | localize }}</th>
                                 </tr>
                             </thead>
-                            <tbody >
+                            <tbody>
                                 <tr *ngFor="let food of foods | paginate
                             : {
                                 id: 'server',
@@ -85,12 +120,10 @@
                                 'category.name',
                                 'type.name',
                                 'size',
-                                'price']"
-                                >
+                                'price']">
                                     <td>
-                                        <img class="center" 
-                                        [src]="'data:image/' + food.imageType + ';base64,' + food.image" 
-                                        />
+                                        <img class="center"
+                                            [src]="'data:image/' + food.imageType + ';base64,' + food.image" />
                                     </td>
                                     <td>{{ food.name }}</td>
                                     <td *ngIf="food.availability==1; else NotAvailable "><strong>Available</strong></td>
@@ -105,16 +138,10 @@
                                         {{ food.price | currency:'PHP'}}
                                     </td>
                                     <td>
-                                        <button 
-                                        type="button" 
-                                        class="btn btn-sm bg-blue"
-                                        (click)="editFood(food.id)">
+                                        <button type="button" class="btn btn-sm bg-blue" (click)="editFood(food.id)">
                                             <i class="fas fa-pencil-alt"></i>
                                         </button>
-                                        <button 
-                                        type="button" 
-                                        class="btn btn-md bg-danger mx-2"
-                                        (click)="delete(food)">
+                                        <button type="button" class="btn btn-md bg-danger mx-2" (click)="delete(food)">
                                             <i class="fas fa-trash"></i>
                                         </button>
                                     </td>
@@ -128,17 +155,13 @@
         <div class="card-footer table-card-footer bg-light border-top">
             <div class="row">
                 <div class="col-sm-6 col-12 text-sm-left text-center">
-                    <button 
-                    class="btn btn-secondary" 
-                    (click)="refresh()">
+                    <button class="btn btn-secondary" (click)="refresh()">
                         <i class="fas fa-redo-alt"></i>
                     </button>
                 </div>
                 <div class="col-sm-6 col-12">
                     <div class="float-sm-right m-auto">
-                        <abp-pagination-controls 
-                        id="server" 
-                        (pageChange)="getDataPage($event)">
+                        <abp-pagination-controls id="server" (pageChange)="getDataPage($event)">
                         </abp-pagination-controls>
                     </div>
                 </div>

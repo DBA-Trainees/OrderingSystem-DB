@@ -24,7 +24,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-12 text-right">
+                <div class="col-24 text-right">
                     <a 
                     href="javascript:;" 
                     class="create-button btn btn-md" 
@@ -50,7 +50,51 @@
                                 [placeholder]="'SearchWithThreeDot' | localize" 
                                 [(ngModel)]="keyword"
                                 (keyup.enter)="getDataPage(1)" />
+                                <div class="input-group-append">
+                                    <button type="button" class="btn btn-default"
+                                        (click)="advancedFiltersVisible = !advancedFiltersVisible">
+                                        <i class="fas" [class.fa-angle-up]="advancedFiltersVisible"
+                                            [class.fa-angle-down]="!advancedFiltersVisible"></i>
+                                    </button>
+                                </div>
                             </div>
+                        </div>
+                    </div>
+                    <div *ngIf="advancedFiltersVisible" class="card mb-0 mt-1">
+                        <div class="card-body">
+                            <form class="form-horizontal">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group row mb-0">
+                                            <label class="col-md-3 col-form-label">
+                                                {{ "Division" | localize }}
+                                            </label>
+                                            <div class="col-md-9 pt-2">
+                                                <div class="custom-control custom-checkbox d-inline" *ngFor="let customer of customers">
+                                                    <input 
+                                                    type="checkbox" 
+                                                    class="custom-control-input" 
+                                                    id="divisionName"                                                        
+                                                    name="divisionName" 
+                                                    [(ngModel)]="customer.division.id"
+                                                     />
+                                                    <label class="custom-control-label">
+                                                        {{ customer.division.name }}
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="card-footer">
+                            <button type="button" class="btn bg-blue" (click)="getDataPage(1)">
+                                {{ "Search" | localize }}
+                            </button>
+                            <button type="button" class="btn btn-default float-right" (click)="clearFilters()">
+                                {{ "Clear" | localize }}
+                            </button>
                         </div>
                     </div>
                 </div>

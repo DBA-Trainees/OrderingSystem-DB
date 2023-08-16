@@ -29,6 +29,7 @@ export class DivisionsComponent extends PagedListingComponentBase<DivisionDto> {
   id: number;
   keyword = "";
   isActive: boolean | null;
+  advancedFiltersVisible = false;
 
   constructor(
     injector: Injector,
@@ -38,7 +39,11 @@ export class DivisionsComponent extends PagedListingComponentBase<DivisionDto> {
     super(injector);
   }
 
-  
+  clearFilters(): void {
+    this.keyword = '';
+    this.isActive = undefined;
+    this.getDataPage(1);
+  }
 
   protected list(
     request: PagedDivisionsRequestDto,

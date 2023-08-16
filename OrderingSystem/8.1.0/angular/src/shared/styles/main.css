@@ -3,7 +3,7 @@
 } */
 
 .create-button{
-    position: fixed;
+    position: right;
     bottom: 120px;
     right: 40px;
     border-radius: 50%;

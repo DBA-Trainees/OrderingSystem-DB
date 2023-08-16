@@ -5,6 +5,7 @@ import {
   PagedRequestDto,
 } from "@shared/paged-listing-component-base";
 import {
+  CategoryDto,
   FoodDto,
   FoodDtoPagedResultDto,
   FoodServiceProxy
@@ -30,6 +31,9 @@ export class FoodsComponent extends PagedListingComponentBase<FoodDto> {
   keyword = "";
   isActive: boolean | null;
   advancedFiltersVisible = false;
+  food = new FoodDto();
+  category = new CategoryDto();
+  categories: CategoryDto[] = [];
 
   constructor(
     injector: Injector,
@@ -38,6 +42,12 @@ export class FoodsComponent extends PagedListingComponentBase<FoodDto> {
     private _router: Router,
   ) {
     super(injector);
+  }
+
+  clearFilters(): void {
+    this.keyword = '';
+    this.isActive = undefined;
+    this.getDataPage(1);
   }
 
   createFood(): void {
