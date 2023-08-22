@@ -6,6 +6,7 @@ import {
 import {
   OrderDto,
   OrderServiceProxy,
+  TotalSalesDto,
 } from "@shared/service-proxies/service-proxies";
 import * as moment from "moment/moment";
 
@@ -31,6 +32,8 @@ export class ReportsComponent extends AppComponentBase implements OnInit {
   orders: OrderDto[] = [];
   totalSalesForSelectedDay: number = 0;
   salesData: SalesData[] =[]; 
+  totalSalesDto: TotalSalesDto[]=[];
+  today = new Date();
 
   constructor(
     injector: Injector,
@@ -43,6 +46,10 @@ export class ReportsComponent extends AppComponentBase implements OnInit {
     this.dateFilter();
   }
 
+  getMonthName(month: number):string{
+    return moment().month(month - 1).format('MMMM');
+  }
+
   getTotalSales(dateFrom: Date, dateTo: Date) {
     const momentDateFrom = moment(dateFrom);
     const momentDateTo = moment(dateTo);
@@ -51,10 +58,6 @@ export class ReportsComponent extends AppComponentBase implements OnInit {
       console.log("Total Sales:", totalSales);
       this.totalSales = totalSales;
     });
-  }
-
-  calculateTotalSales(salesData: any[]): number {
-    return salesData.reduce((total, data) => total + data.totalAmount, 0);
   }
 
   computeWorkingDays(DateFrom: Date, DateTo: Date) {
@@ -76,41 +79,24 @@ export class ReportsComponent extends AppComponentBase implements OnInit {
   getSalesPerDay(day: Date): number {
     const salesDataForDay = this.salesData.find(data => moment(data.dateTimeOrdered).isSame(day, 'day'));
     return salesDataForDay ? salesDataForDay.totalAmount : 0;
+  }  
+
+  getTotalSalesPerDay(){
+    this._orderService.getDailyTotalSales().subscribe((salesPerDay) =>{
+      this.totalSalesDto = salesPerDay;
+    })
   }
-  
 
-  calculateSalesPerPeriod(periods: Date[], interval: 'day' | 'month' | 'year') {
-    this.salesData = [];
-  
-    for (const period of periods) {
-      let sales = 0;
-  
-      if (interval === 'day') {
-        sales = this.getSalesPerDay(period);
-      } else if (interval === 'year') {
-        const startOfYear = moment(period).startOf('year');
-        const endOfYear = moment(period).endOf('year');
-        sales = this.calculateTotalSales(this.filterSalesData(startOfYear, endOfYear));        
-      }
-  
-      this.salesData.push({
-        dateTimeOrdered: moment(period).format(interval === 'month' ? 'MMMM YYYY' : 'YYYY'),
-        totalAmount: sales,
-      });
-    }
-
-    console.log(this.salesData);
+  getTotalSalesPerMonth(){
+    this._orderService.getMonthlyTotalSales().subscribe((salesPerMonth) =>{
+      this.totalSalesDto = salesPerMonth;
+    })
   }
-  
-  
 
-  filterSalesData(startDate: moment.Moment, endDate: moment.Moment): any[] {
-    const formattedStartDate = startDate;
-    const formattedEndDate = endDate;
-  
-    return this.salesData.filter(data =>
-      moment(data.dateTimeOrdered).isBetween(formattedStartDate, formattedEndDate, null, '[]')
-    );
+  getTotalSalesPerYear(){
+    this._orderService.getYearlyTotalSales().subscribe((salesPerYear) =>{
+      this.totalSalesDto = salesPerYear;
+    })
   }
   
 
@@ -124,53 +110,22 @@ export class ReportsComponent extends AppComponentBase implements OnInit {
         endDate = moment(today).endOf("month").toDate();
         this.computeWorkingDays(startDate, endDate);
         this.getTotalSales(startDate, endDate);
-        this.calculateSalesPerPeriod(this.workingDays, 'day');
+        this.getTotalSalesPerDay();
         break;
       case 'month':
         startDate = moment(today).startOf('year').toDate();
         endDate = today;
+        this.computeWorkingDays(startDate, endDate);
         this.getTotalSales(startDate, endDate);
-        this.calculateSalesPerPeriod(this.getYearMonthsRange(startDate, endDate), 'month');
+        this.getTotalSalesPerMonth();
         break;
       case 'year':
         startDate = moment(today).startOf('year').toDate();
         endDate = today;
+        this.computeWorkingDays(startDate, endDate);
         this.getTotalSales(startDate, endDate);
-        this.calculateSalesPerPeriod(this.getYearsRange(startDate, endDate), 'year');
+        this.getTotalSalesPerYear();
         break;
     }
-  }
-  
-
-  getYearMonthsRange(dateFrom: Date, dateTo: Date): Date[] {
-    const monthsRange: Date[] = [];
-    const currentDate = moment(dateFrom);
-
-    while (currentDate.isSameOrBefore(dateTo, 'month')) {
-      monthsRange.push(currentDate.toDate());
-      currentDate.add(1, 'month');
-    }
-
-    return monthsRange;
-  }
-
-  getYearsRange(dateFrom: Date, dateTo: Date): Date[] {
-    const currentYear = moment().year();
-    const yearsRange: Date[] = [];
-
-    for (let year = currentYear; year <= moment(dateTo).year(); year++) {
-      yearsRange.push(moment({ year }).toDate());
-    }
-
-    return yearsRange;
-  }
-
-  calculateTotalSalesForSelectedDay(selectedDay: Date) {
-    const salesDataForSelectedDay = this.salesData.find(data =>
-      moment(data.dateTimeOrdered).isSame(selectedDay, "day")
-    );
-    this.totalSalesForSelectedDay = salesDataForSelectedDay
-      ? salesDataForSelectedDay.totalAmount
-      : 0;
   }
 }

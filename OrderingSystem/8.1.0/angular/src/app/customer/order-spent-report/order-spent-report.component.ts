@@ -3,7 +3,12 @@ import {
   PagedListingComponentBase,
   PagedRequestDto,
 } from "@shared/paged-listing-component-base";
-import { OrderDto, OrderDtoPagedResultDto, OrderServiceProxy } from "@shared/service-proxies/service-proxies";
+import {
+  OrderDto,
+  OrderDtoPagedResultDto,
+  OrderServiceProxy,
+  TotalSalesDto,
+} from "@shared/service-proxies/service-proxies";
 import * as moment from "moment";
 import { finalize } from "rxjs/operators";
 
@@ -17,7 +22,6 @@ class SalesData {
   totalAmount: number;
 }
 
-
 @Component({
   selector: "order-spent-report",
   templateUrl: "order-spent-report.component.html",
@@ -30,12 +34,10 @@ export class OrderSpentReportComponent extends PagedListingComponentBase<OrderDt
   totalSales: number = 0;
   selectedFiltered: "day" | "month" | "year" = "year";
   totalSalesForSelectedDay: number = 0;
-  salesData: SalesData[] =[];
+  salesData: SalesData[] = [];
+  totalSalesDto: TotalSalesDto[] = [];
 
-  constructor(
-    injector: Injector,
-    private _orderService: OrderServiceProxy
-  ) {
+  constructor(injector: Injector, private _orderService: OrderServiceProxy) {
     super(injector);
   }
 
@@ -68,15 +70,13 @@ export class OrderSpentReportComponent extends PagedListingComponentBase<OrderDt
   getTotalSales(dateFrom: Date, dateTo: Date) {
     const momentDateFrom = moment(dateFrom);
     const momentDateTo = moment(dateTo);
-  
-    this._orderService.getTotalPurchase(momentDateFrom, momentDateTo).subscribe((totalSales) => {
-      console.log("Total Sales:", totalSales);
-      this.totalSales = totalSales;
-    });
-  }
 
-  calculateTotalSales(salesData: any[]): number {
-    return salesData.reduce((total, data) => total + data.totalAmount, 0);
+    this._orderService
+      .getTotalPurchase(momentDateFrom, momentDateTo)
+      .subscribe((totalSales) => {
+        console.log("Total Sales:", totalSales);
+        this.totalSales = totalSales;
+      });
   }
 
   computeWorkingDays(DateFrom: Date, DateTo: Date) {
@@ -95,47 +95,6 @@ export class OrderSpentReportComponent extends PagedListingComponentBase<OrderDt
     return date.getDay() !== 0 && date.getDay() !== 6;
   }
 
-  getSalesPerDay(day: Date): number {
-    const salesDataForDay = this.salesData.find(data => moment(data.dateTimeOrdered).isSame(day, 'day'));
-    return salesDataForDay ? salesDataForDay.totalAmount : 0;
-  }
-  
-
-  calculateSalesPerPeriod(periods: Date[], interval: 'day' | 'month' | 'year') {
-    this.salesData = [];
-  
-    for (const period of periods) {
-      let sales = 0;
-  
-      if (interval === 'day') {
-        sales = this.getSalesPerDay(period);
-      } else if (interval === 'year') {
-        const startOfYear = moment(period).startOf('year');
-        const endOfYear = moment(period).endOf('year');
-        sales = this.calculateTotalSales(this.filterSalesData(startOfYear, endOfYear));        
-      }
-  
-      this.salesData.push({
-        dateTimeOrdered: moment(period).format(interval === 'month' ? 'MMMM YYYY' : 'YYYY'),
-        totalAmount: sales,
-      });
-    }
-
-    console.log(this.salesData);
-  }
-  
-  
-
-  filterSalesData(startDate: moment.Moment, endDate: moment.Moment): any[] {
-    const formattedStartDate = startDate;
-    const formattedEndDate = endDate;
-  
-    return this.salesData.filter(data =>
-      moment(data.dateTimeOrdered).isBetween(formattedStartDate, formattedEndDate, null, '[]')
-    );
-  }
-  
-
   dateFilter() {
     const today = new Date();
     let startDate: Date, endDate: Date;
@@ -146,53 +105,45 @@ export class OrderSpentReportComponent extends PagedListingComponentBase<OrderDt
         endDate = moment(today).endOf("month").toDate();
         this.computeWorkingDays(startDate, endDate);
         this.getTotalSales(startDate, endDate);
-        this.calculateSalesPerPeriod(this.workingDays, 'day');
+        this.getDailyPurchase();
         break;
-      case 'month':
-        startDate = moment(today).startOf('year').toDate();
+      case "month":
+        startDate = moment(today).startOf("year").toDate();
         endDate = today;
+        this.computeWorkingDays(startDate, endDate);
         this.getTotalSales(startDate, endDate);
-        this.calculateSalesPerPeriod(this.getYearMonthsRange(startDate, endDate), 'month');
+        this.getMonthlyPurchase();
         break;
-      case 'year':
-        startDate = moment(today).startOf('year').toDate();
+      case "year":
+        startDate = moment(today).startOf("year").toDate();
         endDate = today;
+        this.computeWorkingDays(startDate, endDate);
         this.getTotalSales(startDate, endDate);
-        this.calculateSalesPerPeriod(this.getYearsRange(startDate, endDate), 'year');
-        break;
+        this.getYearlyPurchase();
     }
   }
-  
 
-  getYearMonthsRange(dateFrom: Date, dateTo: Date): Date[] {
-    const monthsRange: Date[] = [];
-    const currentDate = moment(dateFrom);
-
-    while (currentDate.isSameOrBefore(dateTo, 'month')) {
-      monthsRange.push(currentDate.toDate());
-      currentDate.add(1, 'month');
-    }
-
-    return monthsRange;
+  getMonthName(month: number): string {
+    return moment()
+      .month(month - 1)
+      .format("MMMM");
   }
 
-  getYearsRange(dateFrom: Date, dateTo: Date): Date[] {
-    const currentYear = moment().year();
-    const yearsRange: Date[] = [];
-
-    for (let year = currentYear; year <= moment(dateTo).year(); year++) {
-      yearsRange.push(moment({ year }).toDate());
-    }
-
-    return yearsRange;
+  getMonthlyPurchase(){
+    this._orderService.getMonthlyPurchase().subscribe((monthlyPurchase) =>{
+      this.totalSalesDto = monthlyPurchase;
+    })
   }
 
-  calculateTotalSalesForSelectedDay(selectedDay: Date) {
-    const salesDataForSelectedDay = this.salesData.find(data =>
-      moment(data.dateTimeOrdered).isSame(selectedDay, "day")
-    );
-    this.totalSalesForSelectedDay = salesDataForSelectedDay
-      ? salesDataForSelectedDay.totalAmount
-      : 0;
+  getYearlyPurchase(){
+    this._orderService.getYearlyPurchase().subscribe((yearlyPurchase) =>{
+      this.totalSalesDto = yearlyPurchase;
+    })
+  }
+
+  getDailyPurchase(){
+    this._orderService.getDailyPurchase().subscribe((dailyPurchase) =>{
+      this.totalSalesDto = dailyPurchase;
+    })
   }
 }

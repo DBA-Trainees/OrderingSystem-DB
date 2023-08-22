@@ -28,35 +28,23 @@
                                     } ">
                                 <td>
                                     <div class="col-2">
-                                        <input 
-                                        type="checkbox" 
-                                        [checked]="selectedOrder.includes(order)"                                            
-                                        (change)="selectCart(order, $event.target.checked)" 
-                                        [id]="order.id">
+                                        <input type="checkbox" [checked]="selectedOrder.includes(order)"
+                                            (change)="selectCart(order, $event.target.checked)" [id]="order.id">
                                     </div>
                                 </td>
                                 <td>
-                                    <img 
-                                    [src]="'data:image/png;base64,' + order.food.image" 
-                                    alt="profile-sample1"                                        
-                                    class="background" /></td>
+                                    <img [src]="'data:image/png;base64,' + order.food.image" alt="profile-sample1"
+                                        class="background" />
+                                </td>
                                 <td>{{ order.food.name }}</td>
                                 <td>{{ order.food.price | currency: 'PHP' }}</td>
                                 <td>
-                                    <input 
-                                    type="number" 
-                                    class="form-control" 
-                                    [(ngModel)]="order.quantity"                                        
-                                    (change)="updateOrder(order)" />
+                                    <input type="number" class="form-control" [(ngModel)]="order.quantity"
+                                        (change)="updateOrder(order)" />
                                 </td>
                                 <td *ngIf="order.food.size != 0 else NoSizeAvailable">
-                                    <select 
-                                    class="form-control" 
-                                    [(ngModel)]="order.size" 
-                                    (change)="updateOrder(order)">
-                                        <option 
-                                        *ngFor="let size of availableSizesDict[order.food?.id]" 
-                                        [value]="size">
+                                    <select class="form-control" [(ngModel)]="order.size" (change)="updateOrder(order)">
+                                        <option *ngFor="let size of availableSizesDict[order.food?.id]" [value]="size">
                                             {{ size }}
                                         </option>
                                     </select>
@@ -103,12 +91,7 @@
     </div>
     <div class="card-footer table-card-footer bg-light border-top">
         <div class="row">
-            <div class="col-sm-6 col-12 text-sm-left text-center">
-                <button class="btn btn-secondary" (click)="refresh()">
-                    <i class="fas fa-redo-alt"></i>
-                </button>
-            </div>
-            <div class="col-sm-12 col-12">
+            <div class="col-sm-6 col-12">
                 <div class="float-sm-right m-auto">
                     <abp-pagination-controls id="server" (pageChange)="getDataPage($event)">
                     </abp-pagination-controls>

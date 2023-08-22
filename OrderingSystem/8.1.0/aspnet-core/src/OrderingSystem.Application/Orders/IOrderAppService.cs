@@ -11,8 +11,6 @@ namespace OrderingSystem.Orders
 {
     public interface IOrderAppService : IAsyncCrudAppService <OrderDto, int, PagedOrderResultRequestDto, CreateOrderDto, OrderDto>
     {
-        //Task<OrderDto> UpdateAddToCart(OrderDto input);
-        //Task<ListResultDto<OrderDto>> CreateMultipleCartOrder(List<CreateOrderDto> inputs);
         Task<OrderDto> GetOrder(EntityDto<int> input);
         Task<PagedResultDto<OrderDto>> GetAllPurchaseOrders(PagedOrderResultRequestDto input);
         Task<OrderDto> GetOrderDetails(EntityDto<int> input);
@@ -21,5 +19,13 @@ namespace OrderingSystem.Orders
         Task<OrderDto> UpdateAddToCart(OrderDto input);
         Task<OrderDto> UpdateBeforeProceedOrder(OrderDto input);
         Task<string?> GetMostPurchasedFoodId();
+        Task<List<TotalSalesDto>> GetMonthlyPurchase();
+        Task<List<TotalSalesDto>> GetDailyTotalSales();
+        Task<List<TotalSalesDto>> GetYearlyTotalSales();
+        Task<List<TotalSalesDto>> GetMonthlyTotalSales();
+        Task<List<TotalSalesDto>> GetYearlyPurchase();
+        Task<List<TotalSalesDto>> GetDailyPurchase();
+        List<Guid?> GetOrderIdsByOrderNumber();
+        List<OrderDto> GetAllOrderWithOrderNumbers(List<Guid?> orderNumbers);
     }
 }

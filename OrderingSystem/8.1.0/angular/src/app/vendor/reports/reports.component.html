@@ -13,58 +13,26 @@
             <option value="year">Per Year</option>
           </select>
         </div>
-        <p class="card-text" *ngIf="selectedFiltered === 'day'">
-          {{ totalSalesForSelectedDay | currency : "PHP" }}
-        </p>
-        <p class="card-text" *ngIf="selectedFiltered !== 'day'">
-          {{ totalSales | currency : "PHP" }}
-        </p>
       </div>
     </div>
   </div>
 </section>
-
-<section *ngIf="selectedFiltered === 'day'">
+<section>
   <div class="col-lg-12">
     <div class="card">
       <table class="table">
         <thead>
           <tr>
-            <th>Date</th>
+            <th>Month</th>
             <th>Total Sales</th>
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let workingDay of workingDays">
-            <td>{{ workingDay | date }}</td>
-            <td>{{ getSalesPerDay(workingDay) | currency : "PHP" }}</td>
-          </tr>
-        </tbody>
-        <tfoot>
-          <tr>
-            <td><strong>Total</strong></td>
-            <td>{{ totalSales | currency : "PHP" }}</td>
-          </tr>
-        </tfoot>
-      </table>
-    </div>
-  </div>
-</section>
-
-<section *ngIf="selectedFiltered !== 'day'">
-  <div class="col-lg-12">
-    <div class="card">
-      <table class="table">
-        <thead>
-          <tr>
-            <th>Date</th>
-            <th>Total Sales</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let sales of salesData">
-            <td>{{ sales.dateTimeOrdered }}</td>
-            <td>{{ sales.totalAmount | currency : "PHP" }}</td>
+          <tr *ngFor="let sales of totalSalesDto">
+            <td *ngIf="selectedFiltered === 'day'">{{sales.fullDate | date}}</td>
+            <td *ngIf="selectedFiltered === 'month'">{{ getMonthName(sales.month) }} {{sales.year}}</td>
+            <td *ngIf="selectedFiltered === 'year'">{{sales.year}}</td>
+            <td>{{ sales.totalSales | currency : "PHP" }}</td>
           </tr>
         </tbody>
         <tfoot>

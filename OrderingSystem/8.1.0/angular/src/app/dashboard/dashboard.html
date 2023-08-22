@@ -83,81 +83,6 @@
           </div>
         </div>
       </div>
-    </div>
-
-    <div class="row">
-      <div class="col-xl-6 col-md-12">
-        <div class="card">
-          <div class="card-content">
-            <div class="card-body">
-              <div class="media d-flex">
-                <div class="media-body text-left">
-                  <h3 class="danger"><strong>{{mostPurchasedFood}}</strong></h3>
-                  <span>Most Purchased Food</span>
-                </div>
-                <div class="align-self-center">
-                  <i class="icon-rocket danger font-large-2 float-right"></i>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col-xl-6 col-md-12">
-        <div class="card">
-          <div class="card-content">
-            <div class="card-body">
-              <div class="media d-flex">
-                <div class="media-body text-left">
-                  <h3 class="success"><strong>{{customerMostPurchased}}</strong></h3>
-                  <span>Customer with Most Purchased</span>
-                </div>
-                <div class="align-self-center">
-                  <i class="icon-user success font-large-2 float-right"></i>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-xl-6 col-md-12">
-        <div class="card">
-          <div class="card-content">
-            <div class="card-body">
-              <div class="media d-flex">
-                <div class="media-body text-left">
-                  <h3 class="warning"><strong>{{foodAvailableCount}}</strong></h3>
-                  <span>Available Foods </span>
-                </div>
-                <div class="align-self-center">
-                  <i class="icon-pie-chart warning font-large-2 float-right"></i>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col-xl-6 col-md-12">
-        <div class="card">
-          <div class="card-content">
-            <div class="card-body">
-              <div class="media d-flex">
-                <div class="media-body text-left">
-                  <h3 class="primary"><strong>{{foodUnavailableCount}}</strong></h3>
-                  <span>Not Available Foods</span>
-                </div>
-                <div class="align-self-center">
-                  <i class="icon-pie-chart primary font-large-2 float-right"></i>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="row" *ngIf="roles.id == 4">
       <div class="col-xl-3 col-sm-6 col-12">
         <div class="card">
           <div class="card-content">
@@ -209,6 +134,78 @@
           </div>
         </div>
       </div>
-    </div>
+    </div>  
+
+      <div class="row">
+        <div class="col-xl-6 col-md-12">
+          <div class="card">
+            <div class="card-content">
+              <div class="card-body">
+                <div class="media d-flex">
+                  <div class="media-body text-left">
+                    <h3 class="danger"><strong>{{mostPurchasedFood}}</strong></h3>
+                    <span>Most Purchased Food</span>
+                  </div>
+                  <div class="align-self-center">
+                    <i class="icon-rocket danger font-large-2 float-right"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-6 col-md-12">
+          <div class="card">
+            <div class="card-content">
+              <div class="card-body">
+                <div class="media d-flex">
+                  <div class="media-body text-left">
+                    <h3 class="success"><strong>{{customerMostPurchased}}</strong></h3>
+                    <span>Customer with Most Purchased</span>
+                  </div>
+                  <div class="align-self-center">
+                    <i class="icon-user success font-large-2 float-right"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+  
+        <div class="col-xl-6 col-md-12">
+          <div class="card">
+            <div class="card-content">
+              <div class="card-body">
+                <div class="media d-flex">
+                  <div class="media-body text-left">
+                    <h3 class="warning"><strong>{{foodAvailableCount}}</strong></h3>
+                    <span>Available Foods </span>
+                  </div>
+                  <div class="align-self-center">
+                    <i class="icon-pie-chart warning font-large-2 float-right"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-6 col-md-12">
+          <div class="card">
+            <div class="card-content">
+              <div class="card-body">
+                <div class="media d-flex">
+                  <div class="media-body text-left">
+                    <h3 class="primary"><strong>{{foodUnavailableCount}}</strong></h3>
+                    <span>Not Available Foods</span>
+                  </div>
+                  <div class="align-self-center">
+                    <i class="icon-pie-chart primary font-large-2 float-right"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>      
   </section>
 </div>

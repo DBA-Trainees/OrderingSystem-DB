@@ -1,72 +1,64 @@
-<section class="content px-2">
-  <div class="container-fluid">
-    <div class="container">
-      <div class="container-fluid">
-        <div class="row">
-          <div class="col-xs-12 col-sm-6 col-md-3 p-1" *ngFor="let food of foods">
-            <div class="card-sl" [ariaDisabled]="food.quantity==0">
-              <div class="card-content">
-                <div class="card-image">
-                  <img 
-                  [src]="'data:image/png;base64,' + food.image" 
-                  (click)="displayFoodDetails(food.id)"
-                  class="center card-img-top"
-                  [ngStyle]="{'opacity': food.quantity == 0 ? '0.5' : '1'}" />
-                </div>
-                <a 
-                class="card-action"
-                [hidden]="food.quantity==0" 
-                (click)="addTocart(food)">
-                  <i class="fa fa-shopping-cart"></i>
-                </a>
-                <a 
-                class="card-action-danger"
-                [hidden]="food.quantity!=0">
-                  <i class="fa fa-ban"></i>
-                </a>
-                <div class="card-heading">
-                  {{food.name}}
-                </div>
-                <div class="card-text">
-                  <h6>{{food.category?.name}}</h6>
-                </div>
-                <div class="card-text">
-                  <h5>{{ grandTotalPrice(food) | currency:'PHP'}}</h5>
-                </div>
-                <div class="card-text" *ngIf="food.size != 0">
-                  <label for="foodSize">Food Size:</label>
-                  <select 
-                  class="form-control" 
-                  id="foodSize"
-                  name="foodSize" 
-                  [(ngModel)]="food.size">
-                    <option 
-                    *ngIf="this.food.size.length !==0; else NoAvailableSize" 
-                    class="dropdown-item" 
-                    disabled                        
-                    selected 
-                    [value]="null">
-                    <strong>Select a Food</strong></option>
-                    <ng-template #NoAvailableSize>
-                      <option 
-                      class="dropdown-item" 
-                      disabled 
-                      selected 
-                      [ngValue]="null">
+<div>
+  <section class="content px-2">
+    <div class="container-fluid">
+      <div class="container">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-xs-12 col-sm-6 col-md-3 p-1" *ngFor="let food of foods| paginate
+            : {
+                id: 'server',
+                itemsPerPage: pageSize,
+                currentPage: pageNumber,
+                totalItems: totalItems
+                } ">
+              <div class="card-sl">
+                <div class="card-content">
+                  <div class="card-image">
+                    <img [src]="'data:image/png;base64,' + food.image" (click)="displayFoodDetails(food.id)"
+                      class="center card-img-top"
+                      [ngStyle]="{'opacity': !food.quantity ? soldOutOpacity : defaultOpacity}" />
+                  </div>
+                  <a class="card-action" [hidden]="food.quantity==0" (click)="addTocart(food)">
+                    <i class="fa fa-shopping-cart"></i>
+                  </a>
+                  <a class="card-action-danger" [hidden]="food.quantity!=0">
+                    <i class="fa fa-ban"></i>
+                  </a>
+                  <div class="card-heading">
+                    {{food.name}}
+                  </div>
+                  <div class="card-text">
+                    <h6>{{food.category?.name}}</h6>
+                  </div>
+                  <div class="card-text">
+                    <h5>{{ grandTotalPrice(food) | currency:'PHP'}}</h5>
+                  </div>
+                  <div class="card-text" *ngIf="food.size && food.quantity">
+                    <label for="foodSize">Food Size:</label>
+                    <select class="form-control" id="foodSize" name="foodSize" [(ngModel)]="food.size">
+                      <option *ngIf="this.food.size.length; else NoAvailableSize" class="dropdown-item" disabled
+                        selected [value]="null">
+                        <strong>Select a Food</strong>
                       </option>
-                    </ng-template>
-                    <option *ngFor="let size of availableSizesDict[food.id]" [value]="size">
-                      {{ size }}
-                    </option>
-                  </select>
-                </div>
-                <button 
-                class="card-button" 
-                (click)="displayFoodDetails(food.id)" [hidden]="food.quantity==0">View
-                  More</button>
-                <button class="card-button bg-danger" disabled *ngIf="food.quantity==0"><strong>Sold
-                    Out</strong></button>
-                <div class="col-2">
+                      <ng-template #NoAvailableSize>
+                        <option class="dropdown-item" disabled selected [ngValue]="null">
+                        </option>
+                      </ng-template>
+                      <option *ngFor="let size of availableSizesDict[food.id]" [value]="size">
+                        {{ size }}
+                      </option>
+                    </select>
+                  </div>
+                  <ng-container *ngIf="food.quantity; then AvailableFood else SoldOutFood">
+                  </ng-container>
+                  <ng-template #AvailableFood>
+                    <button class="card-button" (click)="displayFoodDetails(food.id)">View More
+                    </button>
+                  </ng-template>
+                  <ng-template #SoldOutFood>
+                    <button class="card-button bg-danger">
+                      <strong>Sold Out</strong></button>
+                  </ng-template>
                 </div>
               </div>
             </div>
@@ -74,5 +66,15 @@
         </div>
       </div>
     </div>
-  </div>
-</section>
+    <div class="card-footer table-card-footer bg-light border-top">
+      <div class="row">
+        <div class="col-sm-6 col-12">
+          <div class="float-sm-right m-auto">
+            <abp-pagination-controls id="server" (pageChange)="getDataPage($event)">
+            </abp-pagination-controls>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>

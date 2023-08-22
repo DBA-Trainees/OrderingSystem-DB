@@ -4,9 +4,10 @@ import {
   PagedListingComponentBase,
   PagedRequestDto,
 } from "@shared/paged-listing-component-base";
-import { OrderDto, OrderDtoPagedResultDto, OrderServiceProxy } from "@shared/service-proxies/service-proxies";
-import { BsModalService } from "ngx-bootstrap/modal";
-import { finalize } from "rxjs/operators";
+import {
+  OrderDto,
+  OrderServiceProxy,
+} from "@shared/service-proxies/service-proxies";
 
 class PagedOrdersRequestDto extends PagedRequestDto {
   keyword: string;
@@ -19,48 +20,50 @@ class PagedOrdersRequestDto extends PagedRequestDto {
   styleUrls: ["./pruchase-history.component.css"],
 })
 
-export class PurchaseHistoryComponent extends AppComponentBase /* PagedListingComponentBase<OrderDto> */ implements OnInit {
-    keyword = "";
-    isActive: boolean | null;
-    skipCount: number;
-    maxResultCount: number;
-    order: OrderDto = new OrderDto();
-    orders: OrderDto[] = [];
-    orderIds: any[]=[];
-    overallTotalAmount: number = 0;
 
-    constructor(
-        injector: Injector,
-        private _orderService: OrderServiceProxy,
-        private _modalService: BsModalService
-      ) {
-        super(injector);
-      }
+export class PurchaseHistoryComponent
+  extends AppComponentBase
+  implements OnInit
+{
+  keyword = "";
+  isActive: boolean | null;
+  skipCount: number;
+  maxResultCount: number;
+  order: OrderDto = new OrderDto();
+  orders: OrderDto[] = [];
+  orderIds: any[] = [];
+  overallTotalAmount: number = 0;
 
-      ngOnInit(): void {
-        this.displayOrderByOrderNumber();
-        /* this.displayAllPurchaseOrder(); */
-      }
-
-  displayOrderByOrderNumber(): void{
-    this._orderService.getOrderIdsByOrderNumber().subscribe(orders =>{
-      this.orderIds = orders;
-      this.displayAllPurchaseOrder();    
-    })
+  constructor(injector: Injector, private _orderService: OrderServiceProxy) {
+    super(injector);
   }
 
-  displayAllPurchaseOrder(): void{
-    this._orderService.getAllOrderWithOrderNumbers(this.orderIds).subscribe(orders => {      
-      this.orders = orders;
+  ngOnInit(): void {
+    this.displayOrderByOrderNumber();
+  }
+
+  displayOrderByOrderNumber(): void {
+    this._orderService.getOrderIdsByOrderNumber().subscribe((orders) => {
+      this.orderIds = orders;
+      this.displayAllPurchaseOrder();
     });
   }
 
-  getAllOrdersByOrderNumber(orderNumber: string):OrderDto[]{
-    return this.orders.filter (order => order.orderNumber ==  orderNumber && order.dateTimeOrdered)
-  } 
-  
-  sumTotalAmounts(orders:OrderDto[]): number{
+  displayAllPurchaseOrder(): void {
+    this._orderService
+      .getAllOrderWithOrderNumbers(this.orderIds)
+      .subscribe((orders) => {
+        this.orders = orders;
+      });
+  }
+
+  getAllOrdersByOrderNumber(orderNumber: string): OrderDto[] {
+    return this.orders.filter(
+      (order) => order.orderNumber == orderNumber && order.dateTimeOrdered
+    );
+  }
+
+  sumTotalAmounts(orders: OrderDto[]): number {
     return orders.reduce((total, order) => total + order.totalAmount, 0);
   }
-  
 }

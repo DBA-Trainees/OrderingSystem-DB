@@ -8,6 +8,7 @@ using OrderingSystem.Orders.Dto;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Dynamic.Core;
 using System.Threading.Tasks;
 
 namespace OrderingSystem.Orders
@@ -311,5 +312,101 @@ namespace OrderingSystem.Orders
 
             return rowCount;
         }
+
+        public async Task<List<TotalSalesDto>> GetMonthlyTotalSales()
+        {
+            var sales = await _repository.GetAll()
+                .Where(x => x.DateTimeOrdered.HasValue)
+                .GroupBy(x => new { Month = x.DateTimeOrdered.Value.Month, Year = x.DateTimeOrdered.Value.Year })
+                .Select(group => new TotalSalesDto
+                {
+                    Month = group.Key.Month,
+                    Year = group.Key.Year,
+                    TotalSales = group.Sum(x => x.TotalAmount)
+                })
+                .ToListAsync();
+
+            return sales;
+        }
+        
+        public async Task<List<TotalSalesDto>> GetYearlyTotalSales()
+        {
+            var sales = await _repository.GetAll()
+                .Where(x => x.DateTimeOrdered.HasValue)
+                .GroupBy(x => new { Year = x.DateTimeOrdered.Value.Year })
+                .Select(group => new TotalSalesDto
+                {
+                    Year = group.Key.Year, 
+                    TotalSales = group.Sum(x => x.TotalAmount)
+                })
+                .ToListAsync();
+
+            return sales;
+        }
+        public async Task<List<TotalSalesDto>> GetDailyTotalSales()
+        {
+
+            var sales = await _repository.GetAll()
+                .Where(x => x.DateTimeOrdered.HasValue)
+                .GroupBy(x => new { 
+                    Date = x.DateTimeOrdered.Value.Date })
+                .Select(group => new TotalSalesDto
+                {
+                    FullDate = group.Key.Date,
+                    TotalSales = group.Sum(x => x.TotalAmount)
+                })
+                .ToListAsync();
+
+            return sales;
+        }
+
+        public async Task<List<TotalSalesDto>> GetMonthlyPurchase()
+        {
+            var userId = AbpSession.GetUserId();
+            var sales = await _repository.GetAll()
+                .Where(x => x.DateTimeOrdered.HasValue && x.UserId == userId)
+                .GroupBy(x => new { Month = x.DateTimeOrdered.Value.Month, Year = x.DateTimeOrdered.Value.Year })
+                .Select(group => new TotalSalesDto
+                {
+                    Month = group.Key.Month,
+                    Year = group.Key.Year,
+                    TotalSales = group.Sum(x => x.TotalAmount)
+                })
+                .ToListAsync();
+
+            return sales;
+        }
+
+        public async Task<List<TotalSalesDto>> GetYearlyPurchase()
+        {
+            var userId = AbpSession.GetUserId();
+            var sales = await _repository.GetAll()
+                .Where(x => x.DateTimeOrdered.HasValue && x.UserId == userId)
+                .GroupBy(x => new { Year = x.DateTimeOrdered.Value.Year })
+                .Select(group => new TotalSalesDto
+                {
+                    Year = group.Key.Year,
+                    TotalSales = group.Sum(x => x.TotalAmount)
+                })
+                .ToListAsync();
+
+            return sales;
+        }
+
+        public async Task<List<TotalSalesDto>> GetDailyPurchase()
+        {
+            var userId = AbpSession.GetUserId();
+            var sales = await _repository.GetAll()
+                .Where(x => x.DateTimeOrdered.HasValue && x.UserId == userId)
+                .GroupBy(x => new { Date = x.DateTimeOrdered.Value.Date })
+                .Select(group => new TotalSalesDto
+                {
+                    FullDate = group.Key.Date,
+                    TotalSales = group.Sum(x => x.TotalAmount)
+                })
+                .ToListAsync();
+
+            return sales;
+        }       
     }
 }

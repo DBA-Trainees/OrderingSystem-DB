@@ -25,10 +25,7 @@
                     </div>
                 </div>
                 <div class="col-24 text-right">
-                    <a 
-                    href="javascript:;" 
-                    class="create-button btn btn-md" 
-                    (click)="createCustomer()">
+                    <a href="javascript:;" class="create-button btn btn-md" (click)="createCustomer()">
                         <i class="fa fa-plus"></i>
                     </a>
                 </div>
@@ -43,13 +40,9 @@
                         <div class="col-md-6">&emsp;</div>
                         <div class="col-md-6">
                             <div class="input-group">
-                                <input 
-                                type="text" 
-                                class="form-control" 
-                                name="keyword"                                    
-                                [placeholder]="'SearchWithThreeDot' | localize" 
-                                [(ngModel)]="keyword"
-                                (keyup.enter)="getDataPage(1)" />
+                                <input type="text" class="form-control" name="keyword"
+                                    [placeholder]="'SearchWithThreeDot' | localize" [(ngModel)]="keyword"
+                                    (keyup.enter)="getDataPage(1)" />
                                 <div class="input-group-append">
                                     <button type="button" class="btn btn-default"
                                         (click)="advancedFiltersVisible = !advancedFiltersVisible">
@@ -70,14 +63,11 @@
                                                 {{ "Division" | localize }}
                                             </label>
                                             <div class="col-md-9 pt-2">
-                                                <div class="custom-control custom-checkbox d-inline" *ngFor="let customer of customers">
-                                                    <input 
-                                                    type="checkbox" 
-                                                    class="custom-control-input" 
-                                                    id="divisionName"                                                        
-                                                    name="divisionName" 
-                                                    [(ngModel)]="customer.division.id"
-                                                     />
+                                                <div class="custom-control custom-checkbox d-inline"
+                                                    *ngFor="let customer of customers">
+                                                    <input type="checkbox" class="custom-control-input"
+                                                        id="divisionName" name="divisionName"
+                                                        [(ngModel)]="customer.division.id" />
                                                     <label class="custom-control-label">
                                                         {{ customer.division.name }}
                                                     </label>
@@ -100,9 +90,7 @@
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
-                        <table 
-                        class="table table-bordered" 
-                        [busy]="isTableLoading">
+                        <table class="table table-bordered" [busy]="isTableLoading">
                             <thead class="bg-light">
                                 <tr class="bg-info text-center">
                                     <th>{{ "Customers" | localize }}</th>
@@ -121,16 +109,12 @@
                                     <td>{{ customer.user?.fullName }}</td>
                                     <td>{{ customer.division?.name}}</td>
                                     <td>
-                                        <button 
-                                        type="button" 
-                                        class="btn btn-sm bg-blue"
-                                        (click)="editCustomer(customer.id)">
+                                        <button type="button" class="btn btn-sm bg-blue"
+                                            (click)="editCustomer(customer.id)">
                                             <i class="fas fa-pencil-alt"></i>
                                         </button>
-                                        <button 
-                                        type="button" 
-                                        class="btn btn-md bg-danger mx-2"
-                                        (click)="delete(customer)">
+                                        <button type="button" class="btn btn-md bg-danger mx-2"
+                                            (click)="delete(customer)">
                                             <i class="fas fa-trash"></i>
                                         </button>
                                     </td>
@@ -143,18 +127,9 @@
         </div>
         <div class="card-footer table-card-footer bg-light border-top">
             <div class="row">
-                <div class="col-sm-6 col-12 text-sm-left text-center">
-                    <button 
-                    class="btn btn-secondary" 
-                    (click)="refresh()">
-                        <i class="fas fa-redo-alt"></i>
-                    </button>
-                </div>
                 <div class="col-sm-6 col-12">
                     <div class="float-sm-right m-auto">
-                        <abp-pagination-controls 
-                        id="server" 
-                        (pageChange)="getDataPage($event)">
+                        <abp-pagination-controls id="server" (pageChange)="getDataPage($event)">
                         </abp-pagination-controls>
                     </div>
                 </div>

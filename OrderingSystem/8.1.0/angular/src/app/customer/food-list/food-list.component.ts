@@ -1,25 +1,31 @@
-import { DatePipe } from "@angular/common";
 import {
   Component,
   EventEmitter,
   Injector,
-  Input,
   OnInit,
   Output,
 } from "@angular/core";
-import { Router } from "@angular/router";
 import { FoodDetailsComponent } from "@app/customer/food-list/food-details/food-details.component";
 import { appModuleAnimation } from "@shared/animations/routerTransition";
-import { AppComponentBase } from "@shared/app-component-base";
+import {
+  PagedListingComponentBase,
+  PagedRequestDto,
+} from "@shared/paged-listing-component-base";
 import {
   FoodDto,
   FoodServiceProxy,
-  UserDto,
   OrderServiceProxy,
   OrderDto,
+  FoodDtoPagedResultDto,
 } from "@shared/service-proxies/service-proxies";
 import * as moment from "moment";
 import { BsModalRef, BsModalService } from "ngx-bootstrap/modal";
+import { finalize } from "rxjs/operators";
+
+class PagedFoodsRequestDto extends PagedRequestDto {
+  keyword: string;
+  isActive: boolean | null;
+}
 
 @Component({
   selector: "food-list",
@@ -27,59 +33,56 @@ import { BsModalRef, BsModalService } from "ngx-bootstrap/modal";
   styleUrls: ["./food-list.component.css"],
   animations: [appModuleAnimation()],
 })
-export class FoodListComponent extends AppComponentBase implements OnInit {
+
+export class FoodListComponent
+  extends PagedListingComponentBase<OrderDto>
+{
   foods: FoodDto[] = [];
-  food = new FoodDto();
-  order = new OrderDto();
-  keyword = "";
+  food: FoodDto = new FoodDto();
+  order: OrderDto = new OrderDto();
+  keyword: string = "";
   isActive: boolean | null;
-  skipCount: number;
-  maxResultCount: number;
   foodQty: number = 1;
   id: number = 0;
-  saving = false;
-  today = new Date();
-  sizes: string[];
-  user: UserDto = new UserDto();
+  saving: boolean = false;
+  today: Date = new Date();
   availableSizesDict: { [key: number]: string[] } = {};
+  defaultOpacity: number = 1;
+  soldOutOpacity: number = 0.5;
 
   @Output() onSave = new EventEmitter<any>();
-  @Input() saveLabel = this.l("Add To Cart");
-  @Input() saveDisabled: boolean;
 
   constructor(
     injector: Injector,
     private _foodService: FoodServiceProxy,
     private _orderService: OrderServiceProxy,
     private _modalService: BsModalService,
-    public bsModalRef: BsModalRef,
-    private router: Router
+    public bsModalRef: BsModalRef
   ) {
     super(injector);
   }
 
-  ngOnInit(): void {
-    this.getAllFoods();
+  protected list(
+    request: PagedFoodsRequestDto,
+    pageNumber: number,
+    finishedCallback: Function
+  ): void {
+    request.isActive = this.isActive;
+    request.keyword = this.keyword;
 
-    if (this.id) {
-      this._orderService.get(this.id).subscribe((res) => {
-        this.order.foodId = res.foodId;
-        this.order.food.category = res.food.category;
-        /* this.selectedFoodSize = res.size.split(','); */
-      });
-    }
-  }
-
-  getAllFoods(): void {
     this._foodService
       .getAllAvailableFoods(
-        this.keyword,
-        this.isActive,
-        this.skipCount,
-        this.maxResultCount
-      )
-      .subscribe((result) => {
+        request.keyword,
+        request.isActive,
+        request.skipCount,
+        request.maxResultCount
+      ).pipe(
+        finalize(() => {
+        finishedCallback();
+      }))
+      .subscribe((result: FoodDtoPagedResultDto) => {
         this.foods = result.items;
+        this.showPaging(result, pageNumber);
         this.setDefaultFoodSizes();
         this.foods.forEach((food) => (this.foodQty = 1));
       });
@@ -97,7 +100,7 @@ export class FoodListComponent extends AppComponentBase implements OnInit {
     this.order.size = selectedFood.size;
     this.order.orderStatusId = 1;
     this._orderService.updateAddToCart(this.order).subscribe((res) => {
-      this.notify.info(this.l("AddToCart"));
+      abp.notify.info(this.l("AddToCart"));
       this.onSave.emit(res);
     });
   }
@@ -110,11 +113,6 @@ export class FoodListComponent extends AppComponentBase implements OnInit {
     } else if (food.size == "Large") {
       updatedPrice += 25;
     }
-
-    /* if (food.category && food.category.name == "Group") {
-      updatedPrice *= 2;
-    } */
-
     return updatedPrice * this.foodQty;
   }
 
