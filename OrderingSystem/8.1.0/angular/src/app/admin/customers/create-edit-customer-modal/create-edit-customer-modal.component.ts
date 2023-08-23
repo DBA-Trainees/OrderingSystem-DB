@@ -24,17 +24,15 @@ export class CreateEditCustomerModalComponent
   extends AppComponentBase
   implements OnInit
 {
-  saving = false;
-  customer = new CustomerDto();
+  saving: boolean = false;
+  customer: CustomerDto = new CustomerDto();
   id: number = 0;
   divisions: DivisionDto[] = [];
   users: UserDto[] = [];
   selectedDivision: number = null;
   selectedUser: number = null;
-  keyword = "";
+  keyword: string = "";
   isActive: boolean | null;
-  skipCount: number;
-  maxResultCount: number;
 
   @Output() onSave = new EventEmitter<any>();
 

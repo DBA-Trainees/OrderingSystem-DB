@@ -2,10 +2,8 @@ import {
   Component,
   EventEmitter,
   Injector,
-  OnInit,
   Output,
 } from "@angular/core";
-import { Router, Routes } from "@angular/router";
 import { appModuleAnimation } from "@shared/animations/routerTransition";
 import {
   PagedListingComponentBase,
@@ -35,7 +33,7 @@ class PagedOrdersRequestDto extends PagedRequestDto {
 })
 export class AddToCartsComponent extends PagedListingComponentBase<OrderDto> {
   orders: OrderDto[] = [];
-  keyword = "";
+  keyword: string = "";
   isActive: boolean | null;
   foodQty: number = 1;
   order: OrderDto = new OrderDto();
@@ -44,7 +42,7 @@ export class AddToCartsComponent extends PagedListingComponentBase<OrderDto> {
   availableSizesDict: { [key: number]: string[] } = {};
   selected: boolean;
   overallTotalAmount: number = 0;
-  today = new Date();
+  today: Date = new Date();
   selectedOrder: OrderDto[] = [];
   ordernumber: number = 0;
 
@@ -54,8 +52,7 @@ export class AddToCartsComponent extends PagedListingComponentBase<OrderDto> {
     injector: Injector,
     private _orderService: OrderServiceProxy,
     private _modalService: BsModalService,
-    public bsModalRef: BsModalRef,
-    private router: Router
+    public bsModalRef: BsModalRef
   ) {
     super(injector);
   }

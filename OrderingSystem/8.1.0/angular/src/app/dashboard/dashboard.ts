@@ -1,4 +1,4 @@
-import { Component, Inject, Injector, OnInit, Type } from "@angular/core";
+import { Component, Injector, OnInit } from "@angular/core";
 import { AppComponentBase } from "@shared/app-component-base";
 import {
   CategoryServiceProxy,
@@ -10,15 +10,17 @@ import {
   RoleDto,
   TypeServiceProxy,
   UserDto,
+  UserLoginInfoDto,
   UserServiceProxy,
 } from "@shared/service-proxies/service-proxies";
+import { AbpSessionService } from "abp-ng2-module";
 
 @Component({
   selector: "dashboard-main",
   templateUrl: "dashboard.html",
 })
 export class DashboardComponent extends AppComponentBase implements OnInit {
-  order = new OrderDto();
+  order: OrderDto = new OrderDto();
   user = new UserDto();
   orderRowCount: number;
   categoryRowCount: number;
@@ -33,6 +35,8 @@ export class DashboardComponent extends AppComponentBase implements OnInit {
   foodAvailableCount: number;
   foodUnavailableCount: number;
   roles = new RoleDto();
+  id: number;
+  loginInfo: UserLoginInfoDto = new UserLoginInfoDto;
 
   constructor(
     injector: Injector,
@@ -42,12 +46,20 @@ export class DashboardComponent extends AppComponentBase implements OnInit {
     private _typeService: TypeServiceProxy,
     private _divisionService: DivisionServiceProxy,
     private _userService: UserServiceProxy,
-    private _foodService: FoodServiceProxy
+    private _foodService: FoodServiceProxy,
+    private _sessionService: AbpSessionService
   ) {
     super(injector);
   }
 
   ngOnInit(): void {
+
+    console.log(this._sessionService.userId);
+    
+    if(this.id){
+      this.user.id == this._sessionService.userId;
+    }
+
     this.getOrderRowCount();
     this.getCategoryRowCount();
     this.getCustomerRowCount();
@@ -56,11 +68,9 @@ export class DashboardComponent extends AppComponentBase implements OnInit {
     this.getUsersRowCount();
     this.getFoodRowCount();
     this.getMostPurchaseFood();
-    /* this.getMostPurchaseFoodCount(); */
     this.getUserWithMostPurchased();
     this.getAvailableFoodCount();
     this.getUnvailableFoodCount();
-    console.log(this.roles.id);
   }
 
   getOrderRowCount(): void {

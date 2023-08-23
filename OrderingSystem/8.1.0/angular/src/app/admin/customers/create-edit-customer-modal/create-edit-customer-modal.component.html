@@ -46,13 +46,22 @@ autocomplete="off"
                 {{ "Department" | localize }}
             </label>
             <div class="col-md-9">
-                <select class="form-control" name="divisionName" id="divisionName" required [ngModel]="selectedDivision"
-                    (ngModelChange)="selectedDivision=$event">
-                    <option *ngFor="let division of divisions" [ngValue]="division.id">{{division.name}}</option>
+                <select 
+                class="form-control" 
+                name="divisionName" 
+                id="divisionName" 
+                required 
+                [ngModel]="selectedDivision"                    
+                (ngModelChange)="selectedDivision=$event">
+                    <option 
+                    *ngFor="let division of divisions" 
+                    [ngValue]="division.id">{{division.name}}</option>
                 </select>
             </div>
         </div>        
     </div>
-    <abp-modal-footer [cancelDisabled]="saving" [saveDisabled]="!createCustomerModal.form.valid || saving"
-        (onCancelClick)="bsModalRef.hide()"></abp-modal-footer>
+    <abp-modal-footer 
+    [cancelDisabled]="saving" 
+    [saveDisabled]="!createCustomerModal.form.valid || saving"        
+    (onCancelClick)="bsModalRef.hide()"></abp-modal-footer>
 </form>

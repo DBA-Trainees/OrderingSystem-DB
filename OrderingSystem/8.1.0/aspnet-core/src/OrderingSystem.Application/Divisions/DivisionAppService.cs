@@ -12,7 +12,14 @@ using System.Threading.Tasks;
 
 namespace OrderingSystem.Divisions
 {
-    public class DivisionAppService : AsyncCrudAppService<Division, DivisionDto, int, PagedDivisionResultRequestDto, CreateDivisionDto, DivisionDto>, IDivisionAppService
+    public class DivisionAppService : AsyncCrudAppService<
+        Division, 
+        DivisionDto, 
+        int, 
+        PagedDivisionResultRequestDto, 
+        CreateDivisionDto, 
+        DivisionDto>, 
+        IDivisionAppService
     {
         private readonly IRepository<Division, int> _repository;
 
@@ -24,12 +31,15 @@ namespace OrderingSystem.Divisions
         public override async Task<DivisionDto> CreateAsync(CreateDivisionDto input)
         {
             var division = ObjectMapper.Map<Division>(input);
+            var existingDivision = await _repository.FirstOrDefaultAsync(division => division.Name.Contains(input.Name));
 
-            if(division.Name != input.Name)
+            if (existingDivision == null)
             {
-                division = await _repository.InsertAsync(division);                
+                division = await _repository.InsertAsync(division);
+                return ObjectMapper.Map<DivisionDto>(division);
             }
-            return ObjectMapper.Map<DivisionDto>(division);
+
+            return base.MapToEntityDto(division);
         }
 
         public async Task<List<DivisionDto>> GetAllDivisions()

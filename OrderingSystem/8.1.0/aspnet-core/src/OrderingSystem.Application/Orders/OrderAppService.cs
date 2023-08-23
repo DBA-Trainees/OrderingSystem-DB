@@ -291,8 +291,8 @@ namespace OrderingSystem.Orders
 
         public async Task<int> GetEntityRowCountAsync()
         {
-            //return await _repository.CountAsync();
-            return await _repository.CountAsync(order => order.OrderStatusId == 2);
+            return await _repository.CountAsync();
+
         }       
 
         public async Task<string?> GetMostPurchasedFoodId()

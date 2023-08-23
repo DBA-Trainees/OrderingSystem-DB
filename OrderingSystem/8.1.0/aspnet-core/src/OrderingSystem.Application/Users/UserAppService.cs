@@ -297,28 +297,19 @@ namespace OrderingSystem.Users
             return customerDto;
         }
 
-        //public async Task<OrderDto> UpdateBeforeProceedOrder(OrderDto input)
-        //{
-        //    var order = new Order();
-        //    var orderNumber = Guid.NewGuid();
+        public async Task<UserDto> GetCurrentUsersRole()
+        {
+            var customerRoleId = 3;
+            var userId = AbpSession.GetUserId();
 
-        //    foreach (var item in input.Orders)
-        //    {
-        //        order = ObjectMapper.Map<Order>(item);
-        //        order.Id = item.Id;
-        //        order.DateTimeOrdered = item.DateTimeOrdered?.ToLocalTime();
-        //        order.OrderStatusId = 2;
-        //        order.OrderNumber = orderNumber;
-        //        await _repository.UpdateAsync(order);
+            var userRole = await _userManager.Users
+                .Include(x => x.Roles)
+                .Where(x => x.Id == userId && x.Roles.Any(role => role.RoleId == customerRoleId))
+                .Select(x => ObjectMapper.Map<UserDto>(x))
+                .FirstOrDefaultAsync();
 
-        //        var food = await _foodRepository.GetAsync(item.FoodId);
-        //        food.Quantity -= order.Quantity;
-        //        await _foodRepository.UpdateAsync(food);
-        //    }
-
-        //    return base.MapToEntityDto(order);
-        //}
-
+            return userRole;
+        }
     }
 }
 

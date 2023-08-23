@@ -5,10 +5,10 @@ import {
   PagedRequestDto,
 } from "@shared/paged-listing-component-base";
 import {
-    CustomerDto,
+  CustomerDto,
   CustomerDtoPagedResultDto,
   CustomerServiceProxy,
-  DivisionDto
+  DivisionDto,
 } from "@shared/service-proxies/service-proxies";
 import { BsModalRef, BsModalService } from "ngx-bootstrap/modal";
 import { finalize } from "rxjs/operators";
@@ -23,12 +23,12 @@ class PagedCustomersRequestDto extends PagedRequestDto {
 @Component({
   selector: "customers-component",
   templateUrl: "customers.component.html",
-  styleUrls : ['../../../shared/styles/main.css'],
+  styleUrls: ["../../../shared/styles/main.css"],
   animations: [appModuleAnimation()],
 })
 export class CustomersComponent extends PagedListingComponentBase<CustomerDto> {
   customers: CustomerDto[] = [];
-  customer = new CustomerDto();
+  customer: CustomerDto = new CustomerDto();
   keyword = "";
   isActive: boolean | null;
   advancedFiltersVisible = false;
@@ -43,7 +43,7 @@ export class CustomersComponent extends PagedListingComponentBase<CustomerDto> {
   }
 
   clearFilters(): void {
-    this.keyword = '';
+    this.keyword = "";
     this.isActive = undefined;
     this.getDataPage(1);
   }
@@ -54,10 +54,6 @@ export class CustomersComponent extends PagedListingComponentBase<CustomerDto> {
 
   editCustomer(id): void {
     this.showCreateOrEditCustomerModal(id);
-  }
-
-  trackByOption(index, customer) {
-    return customer;
   }
 
   protected list(
@@ -103,20 +99,20 @@ export class CustomersComponent extends PagedListingComponentBase<CustomerDto> {
     );
   }
 
-  private showCreateOrEditCustomerModal(id?: number): void{
+  private showCreateOrEditCustomerModal(id?: number): void {
     let createOrEditCustomerModal: BsModalRef;
-    if(!id){
+    if (!id) {
       createOrEditCustomerModal = this._modalService.show(
         CreateEditCustomerModalComponent,
         {
-          class: 'modal-lg',
+          class: "modal-lg",
         }
       );
-    }else{
+    } else {
       createOrEditCustomerModal = this._modalService.show(
         CreateEditCustomerModalComponent,
         {
-          class: 'modal-lg',
+          class: "modal-lg",
           initialState: {
             id: id,
           },
@@ -124,8 +120,8 @@ export class CustomersComponent extends PagedListingComponentBase<CustomerDto> {
       );
     }
 
-    createOrEditCustomerModal.content.onSave.subscribe(() =>{
+    createOrEditCustomerModal.content.onSave.subscribe(() => {
       this.refresh();
-    })
+    });
   }
 }

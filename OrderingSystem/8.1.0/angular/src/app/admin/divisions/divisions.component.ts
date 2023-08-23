@@ -27,9 +27,9 @@ class PagedDivisionsRequestDto extends PagedRequestDto {
 export class DivisionsComponent extends PagedListingComponentBase<DivisionDto> {
   divisions: DivisionDto[] = [];
   id: number;
-  keyword = "";
+  keyword: string = "";
   isActive: boolean | null;
-  advancedFiltersVisible = false;
+  advancedFiltersVisible: boolean = false;
 
   constructor(
     injector: Injector,

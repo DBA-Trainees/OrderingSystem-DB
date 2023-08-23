@@ -28,23 +28,36 @@
                                     } ">
                                 <td>
                                     <div class="col-2">
-                                        <input type="checkbox" [checked]="selectedOrder.includes(order)"
-                                            (change)="selectCart(order, $event.target.checked)" [id]="order.id">
+                                        <input 
+                                        type="checkbox" 
+                                        [checked]="selectedOrder.includes(order)"                                            
+                                        (change)="selectCart(order, $event.target.checked)" 
+                                        [id]="order.id">
                                     </div>
                                 </td>
                                 <td>
-                                    <img [src]="'data:image/png;base64,' + order.food.image" alt="profile-sample1"
-                                        class="background" />
+                                    <img 
+                                    [src]="'data:image/png;base64,' + order.food.image" 
+                                    alt="profile-sample1"                                        
+                                    class="background" />
                                 </td>
                                 <td>{{ order.food.name }}</td>
                                 <td>{{ order.food.price | currency: 'PHP' }}</td>
                                 <td>
-                                    <input type="number" class="form-control" [(ngModel)]="order.quantity"
-                                        (change)="updateOrder(order)" />
+                                    <input 
+                                    type="number" 
+                                    class="form-control" 
+                                    [(ngModel)]="order.quantity"                                        
+                                    (change)="updateOrder(order)" />
                                 </td>
                                 <td *ngIf="order.food.size != 0 else NoSizeAvailable">
-                                    <select class="form-control" [(ngModel)]="order.size" (change)="updateOrder(order)">
-                                        <option *ngFor="let size of availableSizesDict[order.food?.id]" [value]="size">
+                                    <select 
+                                    class="form-control" 
+                                    [(ngModel)]="order.size" 
+                                    (change)="updateOrder(order)">
+                                        <option 
+                                        *ngFor="let size of availableSizesDict[order.food?.id]" 
+                                        [value]="size">
                                             {{ size }}
                                         </option>
                                     </select>
@@ -54,14 +67,22 @@
                                 </ng-template>
                                 <td>{{ order.food?.category?.name }}</td>
                                 <td>
-                                    <textarea type="text" class="form-control" name="description" id="description"
-                                        [(ngModel)]="order.notes" (change)="updateOrder(order)">
+                                    <textarea 
+                                    type="text" 
+                                    class="form-control" 
+                                    name="description" 
+                                    id="description"                                        
+                                    [(ngModel)]="order.notes" 
+                                    (change)="updateOrder(order)">
                                     </textarea>
                                 </td>
                                 <td class="amount"><strong>{{ grandTotalPrice(order) | currency:'PHP'}}</strong>
                                 </td>
                                 <td>
-                                    <button type="button" class="btn btn-md bg-danger" (click)="delete(order)">
+                                    <button 
+                                    type="button" 
+                                    class="btn btn-md bg-danger" 
+                                    (click)="delete(order)">
                                         <i class="fas fa-trash"></i>
                                     </button>
                                 </td>
@@ -75,11 +96,19 @@
                                     {{ "Total Amount" | localize }}
                                 </label>
                                 <div class="col-12 text-right">
-                                    <input type="text" name="name" id="name" required disabled
-                                        [ngModel]="overallTotalAmount | currency:'PHP'" />
+                                    <input 
+                                    type="text" 
+                                    name="name" 
+                                    id="name" 
+                                    required 
+                                    disabled                                        
+                                    [ngModel]="overallTotalAmount | currency:'PHP'" />
                                 </div><br>
-                                <button href="javascript:;" class="btn bg-blue"
-                                    (click)="proceedOrder(order.orderNumber)" [disabled]="selectedOrder.length === 0">
+                                <button 
+                                href="javascript:;" 
+                                class="btn bg-blue"                                    
+                                (click)="proceedOrder(order.orderNumber)" 
+                                [disabled]="!selectedOrder.length">
                                     {{ "Proceed Order" | localize }}
                                 </button>
                             </div>
