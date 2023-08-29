@@ -1,4 +1,4 @@
-.img-thumbnail{
+/* .img-thumbnail{
   margin: 25px;
   width: 150px;
   height: 150px;
@@ -42,7 +42,6 @@ input[type="radio"] {
   max-width: 300px;
   opacity: 1;
   box-shadow: 3px 3px 20px rgba(0, 0, 0, 0.5);
-  /* border: 2px solid rgba(255, 255, 255, 1); */
   -webkit-transform: translate(-50%, 0%);
   transform: translate(-50%, 0%);
 }
@@ -71,4 +70,91 @@ input[type="radio"] {
   padding-left: 10px;
   font-size: 20px;
   border-radius: 50px;
+}*/
+
+html, body{
+  height: 100%;
+}
+
+
+body {
+  background-color: #daecec;
+  display: grid;
+  place-items: center;
+  
+}
+
+iframe{
+  border-radius: 10px;
+}
+
+.responsive{
+  min-height: 200px;
+  max-height: 400px;
+  padding-left: 15px;
+}
+
+.fa-battery-full{
+  -webkit-transform: rotate(-90deg);
+  -moz-transform: rotate(-90deg);
+}
+
+p{
+  color: #3c3939;
+  font-weight: 200;
+  font-size: 14px;
+}
+
+.btn-display, .btn-display:active, .btn-display:hover{
+  color: #fdfafa;
+  font-size: 18px;
+  border-radius: 10px;
+  border: none;
+}
+
+.btn-display{
+   background-color: #027f8d;
+}
+
+.btn-display:hover, .btn-display:active{
+  background-color: #dddddf;
+}
+
+.btn-display:focus{
+  outline: none;
+  box-shadow: none;
+}
+
+.intro-3{
+  font-size: 22px
+}
+
+*:focus{
+  outline: none;
+}
+
+.modal-body{
+  padding: none
+}
+
+.form-control::placeholder{
+	font-size: 14px;
+}
+.form-control{
+	border: 1px solid #EFEFF1;
+}
+.form-control:focus{
+	box-shadow: none;
+	border: 1px solid #EFEFF1;
+}
+
+.d-flex.justify-content-between{
+	font-size: 14px;
+}
+
+.badge-info{
+	background: #027f8d;
+	padding: 10px 20px;
+	border-radius: 20px;
+	font-size: 15px;
 }

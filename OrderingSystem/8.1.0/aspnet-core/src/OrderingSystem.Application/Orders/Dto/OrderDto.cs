@@ -34,5 +34,6 @@ namespace OrderingSystem.Orders.Dto
         public long? UserId { get; set; }
         public UserDto User { get; set; }
         public List<OrderDto> Orders { get; set; }
+        public List<OrderNumberDto> OrderNumberList { get; set; }
     }
 }

@@ -191,7 +191,7 @@ namespace OrderingSystem.Orders
                 .ThenInclude(x => x.Category)
                 .Include(x => x.User)
                 .Include(x => x.OrderStatus)
-                .Where(x => x.UserId == userId && x.OrderStatusId == 1)
+                .Where(x => x.UserId == userId && x.OrderStatusId == 1 && x.Food.Quantity >0)
                 .OrderByDescending(x => x.DateTimeAddedToCart)
                 .Select(x => ObjectMapper.Map<OrderDto>(x))
                 .ToListAsync();
@@ -407,6 +407,36 @@ namespace OrderingSystem.Orders
                 .ToListAsync();
 
             return sales;
-        }       
+        }
+
+        //public async Task<PagedResultDto<OrderDto>> GetOrdersByOrderNumbersAsync(PagedOrderResultRequestDto input, List<Guid?> orderNumbers)
+        //{
+        //    var userId = AbpSession.GetUserId();
+        //    var orderNumberLatestOrder = _repository.GetAll()
+        //        .Where(x => x.UserId == userId && x.OrderStatusId == 2)
+        //        .GroupBy(x => x.OrderNumber)
+        //        .ToDictionary(
+        //        group => group.Key,
+        //        group => group.Max(x => x.DateTimeOrdered));
+
+        //    var query = orderNumberLatestOrder
+        //        .OrderByDescending(x => x.Value)
+        //        .Select(x => x.Key)
+        //        .ToList();
+            
+
+        //    foreach(var items in orderNumbers)
+        //    {
+        //        var orders = _repository.GetAll()
+        //        .Include(x => x.Food)
+        //        .ThenInclude(x => x.Category)
+        //        .Include(x => x.OrderStatus)
+        //        .Where(x => x.UserId == userId && orderNumbers.Contains(x.OrderNumber) && x.OrderStatusId == 2)
+        //        .ToList();
+        //    }
+
+        //    return new PagedResultDto<OrderDto>(orders.Count(), orders);
+        //}
+        
     }
 }

@@ -5,6 +5,7 @@ import {
   OnInit,
   Output,
 } from "@angular/core";
+import { Router } from "@angular/router";
 import { FoodDetailsComponent } from "@app/customer/food-list/food-details/food-details.component";
 import { appModuleAnimation } from "@shared/animations/routerTransition";
 import {
@@ -57,7 +58,8 @@ export class FoodListComponent
     private _foodService: FoodServiceProxy,
     private _orderService: OrderServiceProxy,
     private _modalService: BsModalService,
-    public bsModalRef: BsModalRef
+    public bsModalRef: BsModalRef,
+    private router: Router
   ) {
     super(injector);
   }
@@ -146,5 +148,9 @@ export class FoodListComponent
         id: id,
       },
     });
+  }
+
+  openAddToCart(): void{
+    this.router.navigate["../app/customer/carts"];
   }
 }

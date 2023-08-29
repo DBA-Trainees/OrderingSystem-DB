@@ -231,3 +231,7 @@ img{
   width: 50px;
   height: 50;
 }
+
+.food-details{
+  max-width: 1000px;
+}

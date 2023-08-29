@@ -3,7 +3,7 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-lg-6 col-6">
-                    <div class="small-box bg-success">
+                    <div class="small-box">
                         <div class="inner">
                             <h1><strong>{{ "Types" | localize }}</strong></h1>
                             <p>Dashboard</p>
@@ -24,13 +24,13 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-12 text-right">
-                    <a 
-                    href="javascript:;" 
-                    class="create-button btn btn-md" 
-                    (click)="createType()">
-                        <i class="fa fa-plus"></i>
-                    </a>
+                <div class="d-flex justify-content-between px-3">
+                    <div>
+                        <button 
+                        type="button" 
+                        class="btn payment"
+                        (click)="createType()"><i class="fa fa-plus"></i> <strong> Add Food Type</strong></button>
+                    </div>
                 </div>
             </div>
         </div>

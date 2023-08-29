@@ -26,6 +26,6 @@ namespace OrderingSystem.Orders
         Task<List<TotalSalesDto>> GetYearlyPurchase();
         Task<List<TotalSalesDto>> GetDailyPurchase();
         List<Guid?> GetOrderIdsByOrderNumber();
-        List<OrderDto> GetAllOrderWithOrderNumbers(List<Guid?> orderNumbers);
+        //Task<PagedResultDto<OrderDto>> GetOrdersByOrderNumbersAsync(PagedOrderResultRequestDto input, List<Guid?> orderNumbers);
     }
 }

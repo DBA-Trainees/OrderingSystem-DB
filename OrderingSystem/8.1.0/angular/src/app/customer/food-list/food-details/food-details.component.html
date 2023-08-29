@@ -1,15 +1,9 @@
-<form
-  class="form-horizontal"
-  autocomplete="off"
-  #foodDetails="ngForm"
-  (ngSubmit)="save(food)"
->
-  <abp-modal-header
-    [title]="'Food Details' | localize"
-    (onCloseClick)="bsModalRef.hide()"
-  ></abp-modal-header>
+<form class="form-horizontal" autocomplete="off" #foodDetails="ngForm" (ngSubmit)="save(food)">
+  <abp-modal-header [title]="food.name" (onCloseClick)="bsModalRef.hide()">
+    <div></div>
+  </abp-modal-header>
   <div class="modal-body">
-    <div class="row">
+    <!-- <div class="row">
       <div class="col-md-5">
         <div class="text-center">
           <img
@@ -33,14 +27,9 @@
           <div class="mt-2">
             <span class="intro-3">Available:<strong> {{ food.quantity }}</strong></span>
           </div>
-          <!-- <div class="mt-2">
-            <ng-container></ng-container>
-            <ng-template></ng-template>
-          </div> -->
           <div class="mt-2">
             <div class="form-group required" *ngIf="food.size">
               <span class="intro-3 required">Size</span>
-              <!-- <label for="foodSize">{{ "Size" | localize }}</label> -->
               <span class="input-group">
                 <select
                 class="form-control"
@@ -64,7 +53,6 @@
           <div class="mt-2">
             <div class="form-group required">
               <span class="intro-3 required">Quantity</span>
-              <!-- <label for="foodQuantity"> {{ "Quantity" | localize }}</label> -->
               <div class="mt-1"><br>
                 <div class="input-group">
                   <div class="input-group-prepend">
@@ -100,11 +88,76 @@
           </div>
         </div>
       </div>
+    </div> -->
+    <div class="container-fluid">
+      <div>
+        <div class="row">
+
+          <div class="col-12 col-md-5">
+            <img *ngIf="food.imageFileType && food.image" [ngStyle]="{'opacity': !food.quantity ? soldOutOpacity : defaultOpacity}"
+              [src]="'data:image/' + food.imageFileType + ';base64,' + food.image" frameborder="0" class="responsive"
+              height="90%" width="90%">
+          </div>
+          <div class="col-12 col-md-7">
+            <h6 class="large my-2">Availability: <strong>{{food.quantity}}</strong></h6>
+            <h6 class="mb-3">
+              <div class="d-flex">
+                <div class="form-group required" *ngIf="food.size">
+                  <h6 class="large my-2">Select Size</h6>
+                  <span class="input-group">
+                    <select [disabled]="!food.quantity" class="form-control" name="foodSize" id="foodSize" required
+                      [(ngModel)]="selectedFoodSize" (ngModelChange)="selectedFoodSize = $event">
+                      <option class="dropdown-item" disabled selected
+                      [value]="null">
+                      <strong>Select a Food</strong>
+                    </option>
+                      <option class="form-control" *ngFor="let size of food.size?.split(',') || []"
+                        [value]="size.trim()">
+                        {{ size }}
+                      </option>
+                    </select>
+                  </span>
+                </div>
+              </div>
+
+              <div class="d-flex">
+                <div class="form-group required">
+                  <div class="mt-1">
+                    <h6 class="large my-2">Quantity</h6>
+                    <div class="input-group">
+                      <div class="input-group-prepend d-flex justify-content-around">
+                        <button class="btn btn-outline-secondary" type="button" (click)="decrementQty()"
+                          [disabled]="foodQty <= 1 || !food.quantity">
+                          -
+                        </button>
+                      </div>
+                      <input type="number" class="form-control" name="foodQuantity" id="foodQuantity"
+                        [(ngModel)]="foodQty" readonly />
+                      <div class="input-group-prepend">
+                        <button class="btn btn-outline-secondary" type="button" (click)="incrementQty(foodQty)"
+                          [disabled]="!food.quantity">
+                          +
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </h6>
+            <div class="d-flex mb-3">
+              <div class="justify-content-between px-4 mt-2">
+                <span class="badge badge-info mr-1">{{ food.price | currency : "PHP" }}</span>
+                <span class="badge badge-info mr-1">{{ food.category?.name }}</span>
+                <span class="badge badge-info" *ngIf="food.typeId">{{ food.type?.name }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
-  <food-order-cart-footer
-    [cancelDisabled]="saving"
-    [saveDisabled]="!foodDetails.form.valid || saving || food.quantity == 0"
-    (onCancelClick)="bsModalRef.hide()"
-  ></food-order-cart-footer>
+  <food-order-cart-footer 
+  [cancelDisabled]="saving"    
+  [saveDisabled]="!foodDetails.form.valid || saving || !food.quantity"    
+  (onCancelClick)="bsModalRef.hide()"></food-order-cart-footer>
 </form>

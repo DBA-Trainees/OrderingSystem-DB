@@ -4,7 +4,8 @@ import { AppComponentBase } from '@shared/app-component-base';
 @Component({
     selector: 'food-order-cart-footer',
     templateUrl: 'food-order-cart-modal.html',
-    changeDetection: ChangeDetectionStrategy.OnPush
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    styleUrls: ["../../../../shared/styles/main.css"]
 })
 
 

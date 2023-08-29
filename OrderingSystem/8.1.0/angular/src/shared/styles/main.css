@@ -15,7 +15,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background-color: #18A558;
+    background-color: #43725c;
     color: white;
 }
 .action-th{
@@ -48,4 +48,17 @@ th,td,img{
 .fa-index {
     font-size: 50px;
 }
+.payment{
+    background-color: #43725c;
+    color: #ffffff;
+}
 
+.small-box, .btn-primary{
+    background-color: #008b61;
+    color: #ffffff;
+    border-color: none;
+}
+
+.page-item-{
+    border-color: none;
+}

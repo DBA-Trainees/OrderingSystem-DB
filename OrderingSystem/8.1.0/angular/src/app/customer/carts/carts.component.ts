@@ -28,7 +28,7 @@ class PagedOrdersRequestDto extends PagedRequestDto {
 @Component({
   selector: "add-to-cart",
   templateUrl: "carts.component.html",
-  styleUrls: ["./carts.component.css"],
+  styleUrls: ["./carts.component.css", "../../../shared/styles/main.css"],
   animations: [appModuleAnimation()],
 })
 export class AddToCartsComponent extends PagedListingComponentBase<OrderDto> {

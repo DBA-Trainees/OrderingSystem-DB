@@ -39,6 +39,8 @@ export class FoodDetailsComponent extends AppComponentBase implements OnInit {
   saving: boolean;
   today = new Date();
   selectedFoodSize: string;
+  defaultOpacity: number = 1;
+  soldOutOpacity: number = 0.5;
 
   @Output() onSave = new EventEmitter<any>();
   @Input() formDisabled: boolean;
@@ -47,8 +49,7 @@ export class FoodDetailsComponent extends AppComponentBase implements OnInit {
     injector: Injector,
     public bsModalRef: BsModalRef,
     private _foodService: FoodServiceProxy,
-    private _orderService: OrderServiceProxy,
-    private router: Router
+    private _orderService: OrderServiceProxy
   ) {
     super(injector);
   }
@@ -58,6 +59,7 @@ export class FoodDetailsComponent extends AppComponentBase implements OnInit {
       this._foodService.getAllFoodWithCategory(this.id).subscribe((res) => {
         this.food = res;
         this.food.category.id = res.category.id;
+        /* this.food.type.id = res.type.id; */
       });
     }
     this.setDefaultFoodSize();
@@ -82,17 +84,6 @@ export class FoodDetailsComponent extends AppComponentBase implements OnInit {
     }
   }
 
-  formatDate(date) {
-    var d = new Date(date);
-    date = [
-      d.getFullYear(),
-      ("0" + (d.getMonth() + 1)).slice(-2),
-      ("0" + d.getDate()).slice(-2),
-    ].join("-");
-
-    return date;
-  }
-
   grandTotalPrice(food: FoodDto): number {
     let updatedPrice = food.price;
 
@@ -100,10 +91,6 @@ export class FoodDetailsComponent extends AppComponentBase implements OnInit {
       updatedPrice += 15;
     } else if (food.size == "Large") {
       updatedPrice += 25;
-    }
-
-    if (food.category && food.category.name == "Group") {
-      updatedPrice *= 2;
     }
 
     return updatedPrice * this.foodQty;
@@ -125,12 +112,11 @@ export class FoodDetailsComponent extends AppComponentBase implements OnInit {
         this.notify.info(this.l("AddToCart"));
         this.bsModalRef.hide();
         this.onSave.emit(res);
-
-        this.router.navigate(["./app/customer/carts"]);
       },
       () => {
         this.saving = false;
       }
     );
   }
+  
 }

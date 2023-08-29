@@ -84,6 +84,7 @@ namespace OrderingSystem.Foods
         {
             var food = await _repository.GetAll()
                 .Include(x => x.Category)
+                .Include (x => x.Type)
                 .Where(x => x.Id == input.Id)
                 .Select(x => ObjectMapper.Map<FoodDto>(x))                
                 .FirstOrDefaultAsync();

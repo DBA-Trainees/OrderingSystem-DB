@@ -8096,6 +8096,7 @@ export class OrderDto implements IOrderDto {
     userId: number | undefined;
     user: UserDto;
     orders: OrderDto[] | undefined;
+    orderNumberList: OrderNumberDto[] | undefined;
 
     constructor(data?: IOrderDto) {
         if (data) {
@@ -8126,6 +8127,11 @@ export class OrderDto implements IOrderDto {
                 this.orders = [] as any;
                 for (let item of _data["orders"])
                     this.orders.push(OrderDto.fromJS(item));
+            }
+            if (Array.isArray(_data["orderNumberList"])) {
+                this.orderNumberList = [] as any;
+                for (let item of _data["orderNumberList"])
+                    this.orderNumberList.push(OrderNumberDto.fromJS(item));
             }
         }
     }
@@ -8158,6 +8164,11 @@ export class OrderDto implements IOrderDto {
             for (let item of this.orders)
                 data["orders"].push(item.toJSON());
         }
+        if (Array.isArray(this.orderNumberList)) {
+            data["orderNumberList"] = [];
+            for (let item of this.orderNumberList)
+                data["orderNumberList"].push(item.toJSON());
+        }
         return data;
     }
 
@@ -8185,6 +8196,7 @@ export interface IOrderDto {
     userId: number | undefined;
     user: UserDto;
     orders: OrderDto[] | undefined;
+    orderNumberList: OrderNumberDto[] | undefined;
 }
 
 export class OrderDtoPagedResultDto implements IOrderDtoPagedResultDto {
@@ -8240,6 +8252,65 @@ export class OrderDtoPagedResultDto implements IOrderDtoPagedResultDto {
 export interface IOrderDtoPagedResultDto {
     items: OrderDto[] | undefined;
     totalCount: number;
+}
+
+export class OrderNumberDto implements IOrderNumberDto {
+    id: number;
+    orderNumbers: string;
+    orderId: number;
+    foodId: number;
+    userId: number | undefined;
+
+    constructor(data?: IOrderNumberDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.orderNumbers = _data["orderNumbers"];
+            this.orderId = _data["orderId"];
+            this.foodId = _data["foodId"];
+            this.userId = _data["userId"];
+        }
+    }
+
+    static fromJS(data: any): OrderNumberDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new OrderNumberDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["orderNumbers"] = this.orderNumbers;
+        data["orderId"] = this.orderId;
+        data["foodId"] = this.foodId;
+        data["userId"] = this.userId;
+        return data;
+    }
+
+    clone(): OrderNumberDto {
+        const json = this.toJSON();
+        let result = new OrderNumberDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IOrderNumberDto {
+    id: number;
+    orderNumbers: string;
+    orderId: number;
+    foodId: number;
+    userId: number | undefined;
 }
 
 export class OrderStatusDto implements IOrderStatusDto {

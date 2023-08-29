@@ -3,7 +3,7 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-lg-6 col-6">
-                    <div class="small-box bg-success">
+                    <div class="small-box">
                         <div class="inner">
                             <h1><strong>{{ "Foods" | localize }}</strong></h1>
                             <p>Dashboard</p>
@@ -24,10 +24,13 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-12 text-right">
-                    <a href="javascript:;" class="create-button btn btn-md" (click)="createFood()">
-                        <i class="fa fa-plus"></i>
-                    </a>
+                <div class="d-flex justify-content-between px-3">
+                    <div>
+                        <button 
+                        type="button" 
+                        class="btn payment"
+                        (click)="createFood()"><i class="fa fa-plus"></i> <strong> Add Food</strong></button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -126,7 +129,7 @@
                                             [src]="'data:image/' + food.imageType + ';base64,' + food.image" />
                                     </td>
                                     <td>{{ food.name }}</td>
-                                    <td *ngIf="food.availability==1; else NotAvailable "><strong>Available</strong></td>
+                                    <td *ngIf="food.availability && food.quantity; else NotAvailable "><strong>Available</strong></td>
                                     <ng-template #NotAvailable>
                                         <td>Not Available</td>
                                     </ng-template>

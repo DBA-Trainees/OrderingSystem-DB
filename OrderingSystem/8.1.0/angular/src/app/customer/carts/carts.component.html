@@ -27,7 +27,7 @@
                                     totalItems: totalItems
                                     } ">
                                 <td>
-                                    <div class="col-2">
+                                    <div class="col">
                                         <input 
                                         type="checkbox" 
                                         [checked]="selectedOrder.includes(order)"                                            
@@ -44,14 +44,17 @@
                                 <td>{{ order.food.name }}</td>
                                 <td>{{ order.food.price | currency: 'PHP' }}</td>
                                 <td>
-                                    <input 
+                                    <div class="row d-flex justify-content-center">
+                                        <input 
                                     type="number" 
                                     class="form-control" 
                                     [(ngModel)]="order.quantity"                                        
                                     (change)="updateOrder(order)" />
+                                    </div>
                                 </td>
                                 <td *ngIf="order.food.size != 0 else NoSizeAvailable">
-                                    <select 
+                                    <div class="col-12 d-flex justify-content-center">
+                                        <select 
                                     class="form-control" 
                                     [(ngModel)]="order.size" 
                                     (change)="updateOrder(order)">
@@ -61,13 +64,15 @@
                                             {{ size }}
                                         </option>
                                     </select>
+                                    </div>
                                 </td>
                                 <ng-template #NoSizeAvailable>
                                     <td><strong>-</strong></td>
                                 </ng-template>
                                 <td>{{ order.food?.category?.name }}</td>
                                 <td>
-                                    <textarea 
+                                    <div class="row d-flex justify-content-center">
+                                        <textarea 
                                     type="text" 
                                     class="form-control" 
                                     name="description" 
@@ -75,6 +80,7 @@
                                     [(ngModel)]="order.notes" 
                                     (change)="updateOrder(order)">
                                     </textarea>
+                                    </div>
                                 </td>
                                 <td class="amount"><strong>{{ grandTotalPrice(order) | currency:'PHP'}}</strong>
                                 </td>
@@ -96,21 +102,17 @@
                                     {{ "Total Amount" | localize }}
                                 </label>
                                 <div class="col-12 text-right">
-                                    <input 
-                                    type="text" 
-                                    name="name" 
-                                    id="name" 
-                                    required 
-                                    disabled                                        
-                                    [ngModel]="overallTotalAmount | currency:'PHP'" />
-                                </div><br>
-                                <button 
-                                href="javascript:;" 
-                                class="btn bg-blue"                                    
+                                    <h6>{{overallTotalAmount | currency:'PHP'}}</h6>
+                                  </div>
+                                <div class="col-12 text-right pt-2">
+                                    <button 
+                                type="button" 
+                                class="btn payment"
                                 (click)="proceedOrder(order.orderNumber)" 
                                 [disabled]="!selectedOrder.length">
-                                    {{ "Proceed Order" | localize }}
+                                {{ "Proceed Order" | localize }}
                                 </button>
+                                </div>
                             </div>
                         </div>
                     </div>

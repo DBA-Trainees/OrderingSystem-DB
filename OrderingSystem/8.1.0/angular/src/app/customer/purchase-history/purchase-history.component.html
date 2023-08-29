@@ -9,11 +9,9 @@
       <div class="table-responsive">
         <table class="table">
           <thead>
-            <tr>
-              <th>Image</th>
-              <th>Food</th>
-              <th>Quantity</th>
-              <th>Size</th>
+            <tr class="text-center">
+              <th></th>
+              <th></th>
               <th>Category</th>
               <th>Date</th>
               <th>Time</th>
@@ -22,19 +20,16 @@
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let order of getAllOrdersByOrderNumber(orderid)">
+            <tr *ngFor="let order of getAllOrdersByOrderNumber(orderid)" class="text-center">
               <td class="profile"><img [src]="'data:image/png;base64,' + order.food?.image" /></td>
-              <td>{{order.food?.name}}</td>
-              <td>{{order.quantity}}</td>
-              <td *ngIf="order.size != null">{{order.size}}</td>
-              <td *ngIf="order.size == null">-</td>
+              <td class="food-details"><strong>({{order.quantity}}) </strong>{{order.size}}<p>{{order.food?.name}}</p></td>
               <td>{{order.food?.category?.name}}</td>
               <td>{{ order.dateTimeOrdered | date: 'mediumDate'}}</td>
               <td>{{ order.dateTimeOrdered | date: 'hh:mm a'}}</td>
-              <td>{{order.totalAmount | currency: 'PHP'}}</td>
-              <td><label class="badge badge-success">{{order.orderStatus?.name}}</label></td>              
+              <td><strong>{{order.totalAmount | currency: 'PHP'}}</strong></td>
+              <td><label class="badge badge-success">{{order.orderStatus?.name}}</label></td>
             </tr>
-          </tbody>          
+          </tbody>
         </table>
         <div class="container-fluid">
           <div class="row">
@@ -47,8 +42,9 @@
               </div>
             </div>
           </div>
-        </div>        
+        </div>
       </div>
     </div>
   </div>
 </div>
+

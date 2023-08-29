@@ -3,12 +3,12 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-lg-6 col-6">
-                    <div class="small-box bg-success">
+                    <div class="small-box">
                         <div class="inner">
                             <h1><strong>{{ "Users" | localize }}</strong></h1>
                             <p>Dashboard</p>
                             <div class="icon">
-                                <i class="fa fa-university"></i>
+                                <i class="fas fa-users"></i>
                             </div>
                         </div>
                     </div>
@@ -24,10 +24,11 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-12 text-right">
-                    <a href="javascript:;" class="create-button btn btn-md" (click)="createUser()">
-                        <i class="fa fa-plus"></i>
-                    </a>
+                <div class="d-flex justify-content-between px-3">
+                    <div>
+                        <button type="button" class="btn payment" (click)="createUser()"><i class="fa fa-plus"></i>
+                            <strong> Add User</strong></button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -159,14 +160,7 @@
                 </div>
                 <div class="card-footer table-card-footer bg-light border-top">
                     <div class="row">
-                        <div class="col-sm-4 col-12 text-sm-left text-center">
-                            <button class="btn btn-secondary" (click)="refresh()">
-                                <i class="fas fa-redo-alt"></i>
-                            </button>
-                        </div>
-                        <div class="col-sm-4 col-12 text-center">
-                        </div>
-                        <div class="col-sm-4 col-12">
+                        <div class="col-sm-6 col-12">
                             <div class="float-sm-right m-auto">
                                 <abp-pagination-controls id="server" (pageChange)="getDataPage($event)">
                                 </abp-pagination-controls>

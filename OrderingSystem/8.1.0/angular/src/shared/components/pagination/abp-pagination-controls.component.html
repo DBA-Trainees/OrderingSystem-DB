@@ -30,7 +30,8 @@
         [style.z-index]="p.getCurrent() === page.value ? '0' : ''"
       >
         <a
-          class="page-link"
+          class="page-link bg-info"
+          style="border-color: none;"
           href="javascript:;"
           (click)="p.setCurrent(page.value)"
         >
