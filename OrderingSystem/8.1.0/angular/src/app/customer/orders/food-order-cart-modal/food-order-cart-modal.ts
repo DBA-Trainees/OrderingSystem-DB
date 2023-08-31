@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Injector, Input, OnInit, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Injector, Input, Output } from '@angular/core';
 import { AppComponentBase } from '@shared/app-component-base';
 
 @Component({
@@ -17,7 +17,9 @@ export class FoodOrderCartModalFooterComponent extends AppComponentBase {
 
     @Output() onCancelClick = new EventEmitter<number>();
 
-    constructor(injector: Injector) {
+    constructor(
+        injector: Injector) 
+        {
         super(injector);
     }
 }

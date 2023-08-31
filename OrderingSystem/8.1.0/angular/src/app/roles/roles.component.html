@@ -1,4 +1,5 @@
 <div [@routerTransition]>
+
   <section class="content-header">
     <div class="container-fluid">
       <div class="row">
@@ -24,17 +25,16 @@
             </div>
           </div>
         </div>
-      <div class="d-flex justify-content-between px-3">
-        <div>
-            <button 
-            type="button" 
-            class="btn payment"
-            (click)="createRole()"><i class="fa fa-plus"></i> <strong> Add Role</strong></button>
+        <div class="d-flex justify-content-between px-3">
+          <div>
+            <button type="button" class="btn payment" (click)="createRole()"><i class="fa fa-plus"></i> 
+              <strong> Add Role</strong></button>
+          </div>
         </div>
-    </div>
       </div>
     </div>
   </section>
+
   <section class="content px-2">
     <div class="container-fluid">
       <div class="card">
@@ -43,8 +43,13 @@
             <div class="col-md-6">&emsp;</div>
             <div class="col-md-6">
               <div class="input-group">
-                <input type="text" class="form-control" name="keyword" [placeholder]="'SearchWithThreeDot' | localize"
-                  [(ngModel)]="keyword" (keyup.enter)="getDataPage(1)" />
+                <input 
+                type="text" 
+                class="form-control" 
+                name="keyword" 
+                [placeholder]="'SearchWithThreeDot' | localize"
+                [(ngModel)]="keyword" 
+                (keyup.enter)="getDataPage(1)" />
               </div>
             </div>
           </div>

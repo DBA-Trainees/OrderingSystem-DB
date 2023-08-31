@@ -52,7 +52,7 @@
                                     (change)="updateOrder(order)" />
                                     </div>
                                 </td>
-                                <td *ngIf="order.food.size != 0 else NoSizeAvailable">
+                                <td *ngIf="order.food.size; else NoSizeAvailable">
                                     <div class="col-12 d-flex justify-content-center">
                                         <select 
                                     class="form-control" 
@@ -106,12 +106,12 @@
                                   </div>
                                 <div class="col-12 text-right pt-2">
                                     <button 
-                                type="button" 
-                                class="btn payment"
-                                (click)="proceedOrder(order.orderNumber)" 
-                                [disabled]="!selectedOrder.length">
-                                {{ "Proceed Order" | localize }}
-                                </button>
+                                    type="button" 
+                                    class="btn payment"
+                                    (click)="proceedOrder(order.orderNumber)" 
+                                    [disabled]="!selectedOrder.length">
+                                    {{ "Proceed Order" | localize }}
+                                    </button>
                                 </div>
                             </div>
                         </div>

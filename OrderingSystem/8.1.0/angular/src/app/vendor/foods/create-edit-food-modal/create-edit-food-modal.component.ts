@@ -30,8 +30,8 @@ export class CreateEditFoodModalComponent
     { id: 2, value: "Medium" },
     { id: 3, value: "Large" },
   ];
-  saving = false;
-  food = new FoodDto();
+  saving: boolean = false;
+  food: FoodDto = new FoodDto();
   types: TypeDto[] = [];
   categories: CategoryDto[] = [];
   id: number = 0;
@@ -41,7 +41,6 @@ export class CreateEditFoodModalComponent
   isAvailable: boolean = true;
 
   @Output() onSave = new EventEmitter<any>();
-  base64ImagePath: string;
 
   constructor(
     injector: Injector,

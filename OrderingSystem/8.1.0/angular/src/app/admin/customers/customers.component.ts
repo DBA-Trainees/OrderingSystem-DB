@@ -29,10 +29,10 @@ class PagedCustomersRequestDto extends PagedRequestDto {
 export class CustomersComponent extends PagedListingComponentBase<CustomerDto> {
   customers: CustomerDto[] = [];
   customer: CustomerDto = new CustomerDto();
-  keyword = "";
+  keyword: string = "";
   isActive: boolean | null;
   advancedFiltersVisible = false;
-  divisions = new DivisionDto();
+  divisions: DivisionDto = new DivisionDto();
 
   constructor(
     injector: Injector,

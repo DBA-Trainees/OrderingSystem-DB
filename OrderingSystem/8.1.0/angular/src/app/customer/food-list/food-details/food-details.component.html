@@ -3,98 +3,13 @@
     <div></div>
   </abp-modal-header>
   <div class="modal-body">
-    <!-- <div class="row">
-      <div class="col-md-5">
-        <div class="text-center">
-          <img
-            *ngIf="food.imageFileType && food.image"
-            class="center"
-            [src]="'data:image/' + food.imageFileType + ';base64,' + food.image"
-            width="150"
-            [ngStyle]="{'opacity': food.quantity == 0 ? '0.5' : '1'}" 
-          />
-        </div>
-      </div>
-      <div class="col-md-7">
-        <div class="">
-          <h6 class="intro-1">{{ food.name }}</h6>
-          <div class="price">
-            <span class="intro-2"><strong> {{ food.price | currency : "PHP" }}</strong></span>            
-          </div>
-          <div class="mt-2">
-            <span class="intro-3"><strong>{{ food.category?.name }}</strong></span>
-          </div>
-          <div class="mt-2">
-            <span class="intro-3">Available:<strong> {{ food.quantity }}</strong></span>
-          </div>
-          <div class="mt-2">
-            <div class="form-group required" *ngIf="food.size">
-              <span class="intro-3 required">Size</span>
-              <span class="input-group">
-                <select
-                class="form-control"
-                  name="foodSize"
-                  id="foodSize"
-                  required
-                  [(ngModel)]="selectedFoodSize"
-                  (ngModelChange)="selectedFoodSize = $event"
-                >
-                  <option
-                  class="form-control"
-                    *ngFor="let size of food.size?.split(',') || []"
-                    [value]="size.trim()"
-                  >
-                    {{ size }}
-                  </option>
-                </select>
-              </span>
-            </div>
-          </div>
-          <div class="mt-2">
-            <div class="form-group required">
-              <span class="intro-3 required">Quantity</span>
-              <div class="mt-1"><br>
-                <div class="input-group">
-                  <div class="input-group-prepend">
-                    <button
-                      class="btn btn-outline-secondary"
-                      type="button"
-                      (click)="decrementQty()"
-                      [disabled]="foodQty <= 1"
-                    >
-                      -
-                    </button>
-                  </div>
-                  <input
-                    type="number"
-                    class="form-control flex"
-                    name="foodQuantity"
-                    id="foodQuantity"
-                    [(ngModel)]="foodQty"
-                    readonly
-                  />
-                  <div class="input-group-prepend">
-                    <button
-                      class="btn btn-outline-secondary"
-                      type="button"
-                      (click)="incrementQty(foodQty)"
-                    >
-                      +
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div> -->
     <div class="container-fluid">
       <div>
         <div class="row">
 
           <div class="col-12 col-md-5">
-            <img *ngIf="food.imageFileType && food.image" [ngStyle]="{'opacity': !food.quantity ? soldOutOpacity : defaultOpacity}"
+            <img *ngIf="food.imageFileType && food.image"
+              [ngStyle]="{'opacity': !food.quantity ? soldOutOpacity : defaultOpacity}"
               [src]="'data:image/' + food.imageFileType + ';base64,' + food.image" frameborder="0" class="responsive"
               height="90%" width="90%">
           </div>
@@ -105,14 +20,25 @@
                 <div class="form-group required" *ngIf="food.size">
                   <h6 class="large my-2">Select Size</h6>
                   <span class="input-group">
-                    <select [disabled]="!food.quantity" class="form-control" name="foodSize" id="foodSize" required
-                      [(ngModel)]="selectedFoodSize" (ngModelChange)="selectedFoodSize = $event">
-                      <option class="dropdown-item" disabled selected
+                    <select 
+                    [disabled]="!food.quantity" 
+                    class="form-control" 
+                    name="foodSize" 
+                    id="foodSize" 
+                    required                      
+                    [(ngModel)]="selectedFoodSize" 
+                    (ngModelChange)="selectedFoodSize = $event">
+                      <option 
+                      class="dropdown-item" 
+                      disabled 
+                      selected 
                       [value]="null">
-                      <strong>Select a Food</strong>
-                    </option>
-                      <option class="form-control" *ngFor="let size of food.size?.split(',') || []"
-                        [value]="size.trim()">
+                        <strong>Select a Food</strong>
+                      </option>
+                      <option 
+                      class="form-control" 
+                      *ngFor="let size of food.size?.split(',')" 
+                      [value]="size.trim()">
                         {{ size }}
                       </option>
                     </select>
@@ -157,7 +83,7 @@
     </div>
   </div>
   <food-order-cart-footer 
-  [cancelDisabled]="saving"    
-  [saveDisabled]="!foodDetails.form.valid || saving || !food.quantity"    
+  [cancelDisabled]="saving" 
+  [saveDisabled]="!foodDetails.form.valid || saving || !food.quantity"
   (onCancelClick)="bsModalRef.hide()"></food-order-cart-footer>
 </form>

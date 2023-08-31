@@ -20,7 +20,7 @@ autocomplete="off"
                 [(ngModel)]="selectedUser"                    
                 (ngModelChange)="selectedUser=$event">
                     <option 
-                    *ngIf="this.users.length !==0; else NoAddedUsers" 
+                    *ngIf="this.users.length; else NoAddedUsers" 
                     class="dropdown-item" 
                     disabled                        
                     selected 

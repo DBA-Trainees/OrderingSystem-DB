@@ -25,7 +25,7 @@ export class PurchaseHistoryComponent
   extends AppComponentBase
   implements OnInit
 {
-  keyword = "";
+  keyword: string = "";
   isActive: boolean | null;
   skipCount: number;
   maxResultCount: number;
@@ -34,7 +34,9 @@ export class PurchaseHistoryComponent
   orderIds: any[] = [];
   overallTotalAmount: number = 0;
 
-  constructor(injector: Injector, private _orderService: OrderServiceProxy) {
+  constructor(
+    injector: Injector, 
+    private _orderService: OrderServiceProxy) {
     super(injector);
   }
 

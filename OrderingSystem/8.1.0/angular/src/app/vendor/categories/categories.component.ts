@@ -26,7 +26,7 @@ class PagedCategoriesRequestDto extends PagedRequestDto {
 })
 export class CategoriesComponent extends PagedListingComponentBase<CategoryDto> {
   categories: CategoryDto[] = [];
-  keyword = "";
+  keyword: string = "";
   isActive: boolean | null;
   advancedFiltersVisible = false;
 

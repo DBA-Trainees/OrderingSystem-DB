@@ -15,8 +15,8 @@ export class CreateEditDivisionModalComponent
   extends AppComponentBase
   implements OnInit
 {
-  saving = false;
-  division = new DivisionDto();
+  saving: boolean = false;
+  division: DivisionDto = new DivisionDto();
   id: number = 0;
 
   @Output() onSave = new EventEmitter<any>();

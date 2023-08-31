@@ -20,6 +20,7 @@ import { BsModalRef } from "ngx-bootstrap/modal";
   selector: "create-edit-customer-modal",
   templateUrl: "create-edit-customer-modal.component.html",
 })
+
 export class CreateEditCustomerModalComponent
   extends AppComponentBase
   implements OnInit

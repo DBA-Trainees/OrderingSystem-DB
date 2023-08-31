@@ -53,12 +53,12 @@ th,td,img{
     color: #ffffff;
 }
 
-.small-box, .btn-primary{
+.small-box, .btn-save{
     background-color: #008b61;
     color: #ffffff;
     border-color: none;
 }
 
-.page-item-{
+.page-item{
     border-color: none;
 }

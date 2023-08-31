@@ -28,7 +28,7 @@ class SalesData {
 })
 export class OrderSpentReportComponent extends PagedListingComponentBase<OrderDto> {
   orders: OrderDto[] = [];
-  keyword = "";
+  keyword: string = "";
   isActive: boolean | null;
   workingDays: Date[] = [];
   totalSales: number = 0;
@@ -37,7 +37,9 @@ export class OrderSpentReportComponent extends PagedListingComponentBase<OrderDt
   salesData: SalesData[] = [];
   totalSalesDto: TotalSalesDto[] = [];
 
-  constructor(injector: Injector, private _orderService: OrderServiceProxy) {
+  constructor(
+    injector: Injector, 
+    private _orderService: OrderServiceProxy) {
     super(injector);
   }
 

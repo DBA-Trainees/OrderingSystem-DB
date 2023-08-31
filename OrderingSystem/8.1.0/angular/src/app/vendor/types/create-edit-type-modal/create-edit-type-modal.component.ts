@@ -13,7 +13,7 @@ import { BsModalRef } from "ngx-bootstrap/modal";
     extends AppComponentBase
     implements OnInit
   {
-    saving = false;
+    saving: boolean = false;
     type: TypeDto = new TypeDto();
     id: number = 0;
 

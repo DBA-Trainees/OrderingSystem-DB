@@ -28,18 +28,17 @@ class PagedFoodsRequestDto extends PagedRequestDto {
 })
 export class FoodsComponent extends PagedListingComponentBase<FoodDto> {
   foods: FoodDto[] = [];
-  keyword = "";
+  keyword: string = "";
   isActive: boolean | null;
-  advancedFiltersVisible = false;
-  food = new FoodDto();
-  category = new CategoryDto();
+  advancedFiltersVisible: boolean = false;
+  food: FoodDto = new FoodDto();
+  category: CategoryDto = new CategoryDto();
   categories: CategoryDto[] = [];
 
   constructor(
     injector: Injector,
     private _foodService: FoodServiceProxy,
-    private _modalService: BsModalService,
-    private _router: Router,
+    private _modalService: BsModalService
   ) {
     super(injector);
   }

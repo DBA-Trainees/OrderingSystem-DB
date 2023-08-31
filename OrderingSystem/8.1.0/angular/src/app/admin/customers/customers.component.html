@@ -29,7 +29,9 @@
                         <button 
                         type="button" 
                         class="btn payment"
-                        (click)="createCustomer()"><i class="fa fa-plus"></i> <strong> Add Customer</strong></button>
+                        (click)="createCustomer()">
+                        <i class="fa fa-plus"></i> <strong> Add Customer</strong>
+                    </button>
                     </div>
                 </div>
             </div>
@@ -43,14 +45,22 @@
                         <div class="col-md-6">&emsp;</div>
                         <div class="col-md-6">
                             <div class="input-group">
-                                <input type="text" class="form-control" name="keyword"
-                                    [placeholder]="'SearchWithThreeDot' | localize" [(ngModel)]="keyword"
-                                    (keyup.enter)="getDataPage(1)" />
+                                <input 
+                                type="text" 
+                                class="form-control" 
+                                name="keyword"                                    
+                                [placeholder]="'SearchWithThreeDot' | localize" 
+                                [(ngModel)]="keyword"                                    
+                                (keyup.enter)="getDataPage(1)" />
                                 <div class="input-group-append">
-                                    <button type="button" class="btn btn-default"
-                                        (click)="advancedFiltersVisible = !advancedFiltersVisible">
-                                        <i class="fas" [class.fa-angle-up]="advancedFiltersVisible"
-                                            [class.fa-angle-down]="!advancedFiltersVisible"></i>
+                                    <button 
+                                    type="button" 
+                                    class="btn btn-default"                                        
+                                    (click)="advancedFiltersVisible = !advancedFiltersVisible">
+                                        <i 
+                                        class="fas" 
+                                        [class.fa-angle-up]="advancedFiltersVisible"                                            
+                                        [class.fa-angle-down]="!advancedFiltersVisible"></i>
                                     </button>
                                 </div>
                             </div>
@@ -68,9 +78,12 @@
                                             <div class="col-md-9 pt-2">
                                                 <div class="custom-control custom-checkbox d-inline"
                                                     *ngFor="let customer of customers">
-                                                    <input type="checkbox" class="custom-control-input"
-                                                        id="divisionName" name="divisionName"
-                                                        [(ngModel)]="customer.division.id" />
+                                                    <input 
+                                                    type="checkbox" 
+                                                    class="custom-control-input"                                                        
+                                                    id="divisionName" 
+                                                    name="divisionName"                                                        
+                                                    [(ngModel)]="customer.division.id" />
                                                     <label class="custom-control-label">
                                                         {{ customer.division.name }}
                                                     </label>
@@ -112,13 +125,15 @@
                                     <td>{{ customer.user?.fullName }}</td>
                                     <td>{{ customer.division?.name}}</td>
                                     <td>
-                                        <button type="button" class="btn btn-sm bg-blue"
+                                        <button type="button" class="btn btn-sm bg-secondary"
                                             (click)="editCustomer(customer.id)">
                                             <i class="fas fa-pencil-alt"></i>
+                                            {{ " Edit" | localize }}
                                         </button>
                                         <button type="button" class="btn btn-md bg-danger mx-2"
                                             (click)="delete(customer)">
                                             <i class="fas fa-trash"></i>
+                                            {{ "Delete" | localize }}
                                         </button>
                                     </td>
                                 </tr>

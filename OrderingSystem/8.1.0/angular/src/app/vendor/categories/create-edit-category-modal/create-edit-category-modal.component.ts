@@ -13,7 +13,7 @@ import { BsModalRef } from "ngx-bootstrap/modal";
     extends AppComponentBase
     implements OnInit
   {
-    saving = false;
+    saving: boolean = false;
     category: CategoryDto = new CategoryDto();
     id: number = 0;
 
@@ -61,7 +61,5 @@ import { BsModalRef } from "ngx-bootstrap/modal";
           }
         );
       }
-
-    }
-    
+    }    
   }

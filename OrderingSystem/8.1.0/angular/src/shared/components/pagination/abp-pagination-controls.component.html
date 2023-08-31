@@ -13,7 +13,7 @@
       >
         <a
           *ngIf="!p.isFirstPage()"
-          class="page-link"
+          class="page-item"
           href="javascript:;"
           (click)="p.previous()"
         >
@@ -30,8 +30,7 @@
         [style.z-index]="p.getCurrent() === page.value ? '0' : ''"
       >
         <a
-          class="page-link bg-info"
-          style="border-color: none;"
+          class="page-link page-item"
           href="javascript:;"
           (click)="p.setCurrent(page.value)"
         >

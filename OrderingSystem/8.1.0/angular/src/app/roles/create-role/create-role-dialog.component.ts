@@ -55,8 +55,6 @@ export class CreateRoleDialogComponent extends AppComponentBase
   }
 
   isPermissionChecked(permissionName: string): boolean {
-    // just return default permission checked status
-    // it's better to use a setting
     return this.defaultPermissionCheckedStatus;
   }
 

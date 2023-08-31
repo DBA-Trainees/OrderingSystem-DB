@@ -2,7 +2,6 @@ import {
   Component,
   EventEmitter,
   Injector,
-  OnInit,
   Output,
 } from "@angular/core";
 import { Router } from "@angular/router";

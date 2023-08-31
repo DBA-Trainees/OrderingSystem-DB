@@ -6,7 +6,6 @@ import {
   OnInit,
   Output,
 } from "@angular/core";
-import { Router } from "@angular/router";
 import { AppComponentBase } from "@shared/app-component-base";
 import {
   CustomerDto,
@@ -25,22 +24,23 @@ import { BsModalRef } from "ngx-bootstrap/modal";
   templateUrl: "food-details.component.html",
   styleUrls: ["../../../../shared/styles/styles.css",'./food-details.component.css'],
 })
+
 export class FoodDetailsComponent extends AppComponentBase implements OnInit {
   foods: FoodDto[] = [];
   food: FoodDto = new FoodDto();
   order: OrderDto = new OrderDto();
   customer: CustomerDto = new CustomerDto();
   user: UserDto = new UserDto();
-  keyword = "";
+  keyword:string = "";
   isActive: boolean | null;
   id: number = 0;
   foodQty: number = 1;
-  typeName: string;
   saving: boolean;
-  today = new Date();
+  today: Date = new Date();
   selectedFoodSize: string;
   defaultOpacity: number = 1;
   soldOutOpacity: number = 0.5;
+  availableSizesDict: { [key: number]: string[] } = {};
 
   @Output() onSave = new EventEmitter<any>();
   @Input() formDisabled: boolean;
@@ -59,10 +59,9 @@ export class FoodDetailsComponent extends AppComponentBase implements OnInit {
       this._foodService.getAllFoodWithCategory(this.id).subscribe((res) => {
         this.food = res;
         this.food.category.id = res.category.id;
-        /* this.food.type.id = res.type.id; */
+        this.food.size = res.size;
       });
     }
-    this.setDefaultFoodSize();
   }
 
   decrementQty(): void {
@@ -74,13 +73,6 @@ export class FoodDetailsComponent extends AppComponentBase implements OnInit {
   incrementQty(maxQty: number): void {
     if (this.foodQty < this.food.quantity) {
       this.foodQty++;
-    }
-  }
-
-  private setDefaultFoodSize(): void {
-    if (this.food.size) {
-      const sizeArray = this.food.size.split(',');
-      this.selectedFoodSize = sizeArray[0].trim();
     }
   }
 

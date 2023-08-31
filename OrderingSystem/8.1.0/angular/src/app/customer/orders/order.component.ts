@@ -30,12 +30,7 @@ export class OrdersComponent extends AppComponentBase implements OnInit {
   }
 
   ngOnInit(): void {
-    /* if (this.id != 0) {
-      this._orderService.getOrder(this.id).subscribe((res) => {
-        this.order = res;
-      });
-    }
- */
+    
     if (this.ordernumber){
       this.getAllOrdersByOrderNumber(this.ordernumber);
     }

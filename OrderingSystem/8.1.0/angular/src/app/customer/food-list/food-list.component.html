@@ -98,9 +98,16 @@
                 <h6>{{ grandTotalPrice(food) | currency:'PHP'}}</h6>
                 <span>{{food.category?.name}}</span>
                 <div class="card-text" *ngIf="food.size">
-                  <select [disabled]="!food.quantity" class="form-control" id="foodSize" name="foodSize"
-                    [(ngModel)]="food.size">
-                    <option class="dropdown-item" disabled selected
+                  <select 
+                  [disabled]="!food.quantity" 
+                  class="form-control" 
+                  id="foodSize" 
+                  name="foodSize"                    
+                  [(ngModel)]="food.size">
+                    <option 
+                    class="dropdown-item" 
+                    disabled 
+                    selected
                       [value]="null">
                       <strong>Select a Food</strong>
                     </option>
